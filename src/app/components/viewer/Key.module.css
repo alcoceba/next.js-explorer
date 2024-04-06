@@ -1,0 +1,71 @@
+.collapsible {
+    position: relative;
+    cursor: pointer;
+    transition: opacity .1s ease-out;
+}
+
+.collapsible:before {
+    content: '▼';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    color: var(--color-text);
+    margin-top: 1px;
+    margin-left: -15px;
+    font-size: 9px;
+    transition: transform .1s ease-out;
+}
+
+.hidden .tree {
+    display: none;
+}
+
+.hidden .collapsible:before {
+    transform: rotate(-90deg);
+}
+
+.info {
+    border-radius: 6px;
+    padding: 0 5px;
+    font-size: 9px;
+    font-style: italic;
+    color: var(--color-pre-key);
+    opacity: .6;
+    visibility: visible;
+    transition: all .15s ease-in-out;
+    margin-left: .5rem;
+}
+
+.info.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.collapsible:hover+.info.hide {
+    opacity: .6;
+    visibility: visible;
+    transition: none;
+}
+
+.critical {
+    border-radius: 2px;
+    padding: 0 4px;
+    background-color: var(--color-critical);
+}
+
+.alert {
+    border-radius: 2px;
+    padding: 0 4px;
+    background-color: var(--color-alert);
+}
+
+.warn {
+    border-radius: 2px;
+    padding: 0 4px;
+    background-color: var(--color-warn);
+}

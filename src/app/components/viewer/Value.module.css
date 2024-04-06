@@ -1,0 +1,20 @@
+.str {
+    color: var(--color-pre-str);
+}
+
+.num {
+    color: var(--color-pre-num);
+}
+
+.bool {
+    color: var(--color-pre-bool);
+}
+
+.null {
+    color: var(--color-pre-null);
+}
+
+.key {
+    color: var(--color-pre-num);
+    opacity: .8;
+}

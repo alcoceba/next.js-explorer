@@ -1,0 +1,45 @@
+html,
+body {
+    font: 0.9rem/1.5 "Courier New", Courier, monospace;
+    font-size: 11px;
+}
+
+body {
+    margin: 0 20px;
+    padding-bottom: 20px;
+    background: var(--color-bg-primary);
+    color: var(--color-text);
+}
+
+body:after {
+    content: " ";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .25s ease-out;
+}
+
+a[href] {
+    color: var(--color-primary);
+    text-decoration: underline;
+    transition: all .15s ease-out;
+}
+
+a[href]:hover {
+    color: var(--color-text);
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
