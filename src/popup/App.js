@@ -1,7 +1,6 @@
 import React from "react";
 import browser from "webextension-polyfill";
 import Popup from "./Popup";
-import { getCurrentTab } from "../helpers/tabs";
 
 let wData = null;
 let isDataRequested = false;
@@ -10,12 +9,14 @@ const Messages = {
   "no-next": "This page doesn't appear to be using Next.js",
 };
 
-function sendMessageToBackground(action, data) {
-  browser.runtime.sendMessage({
-    to: "background",
-    action,
-    data,
-  });
+async function sendMessageToBackground(action, data) {
+  try {
+    await browser.runtime.sendMessage({
+      to: "background",
+      action,
+      data,
+    });
+  } catch (e) {}
 }
 
 function App() {
@@ -24,8 +25,8 @@ function App() {
   const handleOnWindowMessage = async ({ data }) => {
     if (data?.type === "next-window-data") {
       wData = { ...data.data };
-      sendMessageToBackground("init", wData);
-      if (isDataRequested) sendMessageToBackground("data", wData);
+      await sendMessageToBackground("init", wData);
+      if (isDataRequested) await sendMessageToBackground("data", wData);
     }
   };
 

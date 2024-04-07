@@ -1,12 +1,13 @@
+import { classNames } from "../../../helpers/classNames";
 import { isObjectAndNotEmpty } from "../../../helpers/object";
 import Key from "./Key";
 import Value from "./Value";
 
 import styles from "./Tree.module.css";
 
-function Tree({ data }) {
+function Tree({ data, isRoot }) {
   return (
-    <ul className={styles.wrapper}>
+    <ul className={classNames(styles.wrapper, isRoot && styles.root)}>
       {Object.keys(data).map((key) => {
         if (!isObjectAndNotEmpty(data[key]))
           return <Value key={key} index={key} value={data[key]} />;

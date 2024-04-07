@@ -4,3 +4,8 @@ export const THEME = {
   Light: "light",
   Dark: "dark",
 };
+
+export const ROUTER = {
+  Pages: "pages",
+  App: "app",
+};

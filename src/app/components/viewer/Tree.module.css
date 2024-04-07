@@ -1,3 +1,22 @@
 .wrapper {
-    padding-left: 1rem;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.wrapper::before {
+    content: " ";
+    padding-left: 1.5rem;
+    border-left: 1px solid #9d9d9d;
+    position: absolute;
+    height: calc(100% - 8px);
+    top: 2px;
+    left: 2px;
+}
+
+.wrapper.root::before {
+    display: none;
+}
+
+.root {
+    margin-left: -1rem;
 }

@@ -1,6 +1,12 @@
 import React from "react";
+import { ROUTER } from "../../helpers/const";
 import { getContext } from "../../helpers/context";
-import { exportJson, getObjKeysCount, getObjSize } from "../../helpers/object";
+import {
+  exportJson,
+  filterJson,
+  getObjKeysCount,
+  getObjSize,
+} from "../../helpers/object";
 import { getRowsInfo } from "../../helpers/rows";
 import ContextProvider from "../context/context";
 import Actions from "./Actions";
@@ -14,11 +20,19 @@ import Viewer from "./Viewer";
 import styles from "./App.module.css";
 
 function App() {
+  const [json, setJson] = React.useState(null);
   const [context, setContext] = React.useState(null);
   const [rowsInfo, setRowsInfo] = React.useState(getRowsInfo({}));
   const [isInit, setIsInit] = React.useState(false);
 
   const handleOnExport = (space) => exportJson(context?.next, space);
+
+  const handleOnSearch = (value) => {
+    const data = context?.next?.data?.props || context?.next?.data;
+    const clone = JSON.parse(JSON.stringify(data));
+    const json = filterJson(clone, value.toLowerCase());
+    setJson(json);
+  };
 
   React.useEffect(() => {
     if (context) setRowsInfo(getRowsInfo(context));
@@ -28,11 +42,14 @@ function App() {
     const load = async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const context = await getContext(urlParams.get("id"));
+
       setContext({
         ...context,
         keys: getObjKeysCount(context?.next?.data?.props),
         size: getObjSize(context?.next?.data?.props),
       });
+
+      setJson(context?.next?.data?.props || context?.next?.data);
       setIsInit(true);
     };
     load();
@@ -45,22 +62,25 @@ function App() {
           <div className={styles.sticky}>
             <Header
               version={context?.next?.v}
-              isAppRouter={context?.next?.isAppRouter}
+              react={context?.react?.v}
+              router={context?.next?.router}
+              onSearch={handleOnSearch}
             />
-            <Table rows={rowsInfo} />
-            <hr />
-            {!context?.next?.isAppRouter && (
-              <Actions onExport={handleOnExport} />
+            {context?.next?.router === ROUTER.Pages && (
+              <div className={styles.table}>
+                <Table rows={rowsInfo} />
+              </div>
             )}
+            <Actions onExport={handleOnExport} />
           </div>
-          {(!context?.next?.isAppRouter && (
-            <Viewer json={context?.next?.data?.props} />
-          )) || (
+          {context?.next?.router === ROUTER.App && (
             <div className={styles.notice}>
-              The extension is not currently available for APP Router
-              {context?.next?.v ? ` - v${context?.next?.v}` : ``}
+              {json
+                ? "This is the data included in the bundle and sent to the client"
+                : "🔴 Sorry, but we haven't been able to unpack the bundles sent to the client"}
             </div>
           )}
+          <Viewer json={json} />
           <Footer />
         </Loading>
       </Theme>

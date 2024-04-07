@@ -28,18 +28,24 @@ function Key({ index, tree, children }) {
   React.useEffect(() => setIsHidden(!isCollapsed), [isCollapsed]);
 
   return (
-    <li
-      className={classNames(!isHidden && styles.hidden)}
-      onClick={handleOnKeyClick}
-    >
-      <span className={classNames(styles.collapsible)}>{index}</span>
-      <span className={classNames(styles.info, !showSizes && styles.hide)}>
-        {length} keys /&nbsp;
-        <span className={color(size)}>
-          {size < 1000 ? `${size} bytes` : `${size / 1000} Kb`}
-        </span>
+    <li className={classNames(!isHidden && styles.hidden)}>
+      <span onClick={handleOnKeyClick} className={styles.collapsible}>
+        {index}
       </span>
-      <div className={styles.tree}>{children}</div>
+      <span className={styles.open}>{Array.isArray(tree) ? "[" : "{"}</span>
+
+      {showSizes && (
+        <span className={styles.info}>
+          {length} keys /&nbsp;
+          <span className={color(size)}>
+            {size < 1000 ? `${size} bytes` : `${size / 1000} Kb`}
+          </span>
+        </span>
+      )}
+
+      {isHidden ? <div className={styles.tree}>{children}</div> : " ... "}
+
+      <span className={styles.close}>{Array.isArray(tree) ? "]" : "}"}</span>
     </li>
   );
 }

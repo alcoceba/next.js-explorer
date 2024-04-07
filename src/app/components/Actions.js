@@ -16,7 +16,7 @@ function Actions({ onExport }) {
 
   return (
     <div className={styles.actions}>
-      <span onClick={handleOnShowSizesClick}>
+      <span className={styles.highlight} onClick={handleOnShowSizesClick}>
         {showSizes ? "hide sizes" : "show sizes"}
       </span>
       <span onClick={handleOnCollapseClick}>collapse</span>

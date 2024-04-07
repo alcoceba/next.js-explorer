@@ -11,15 +11,18 @@ const getIcon = (size, isAppRouter) => {
 
 async function sendMessageToContent(action, data) {
   const tab = await getCurrentTab();
-  browser.tabs.sendMessage(tab.id, {
-    to: "content",
-    action,
-    data,
-  });
+  if (tab.id) {
+    try {
+      await browser.tabs.sendMessage(tab.id, {
+        to: "content",
+        action,
+        data,
+      });
+    } catch (e) {}
+  }
 }
 
 const handleOnDomLoaded = async (data) => {
-  console.log(data);
   if (data?.next?.data || data?.next?.isAppRouter) {
     const size = getObjSize(data?.next?.data) || 0;
     const tab = await getCurrentTab();
@@ -63,10 +66,10 @@ const handleOnMessage = (message) => {
         throw new Error("Invalid action");
     }
   }
+  return true;
 };
 
 export async function init() {
-  // await browser.storage.local.clear();
   browser.runtime.onMessage.addListener(handleOnMessage);
   browser.action.onClicked.addListener(handleOnIconClick);
 }

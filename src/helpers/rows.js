@@ -1,16 +1,17 @@
 import { DEFAULT_SIZE } from "./const";
 
-export const getRowsInfo = ({ next, version, react, size, keys }) => {
+export const getRowsInfo = (data) => {
+  const { next, react, size, keys } = data;
   return [
-    version && {
+    next?.v && {
       key: "Next.js version",
-      value: (version && `v${version}`) || "-",
+      value: (next?.v && `v${next?.v}`) || "-",
       isVisible: false,
     },
     {
       key: "React ⚛ version",
-      value: (react?.version && `v${react?.version}`) || "unkown version",
-      isVisible: react?.version,
+      value: (react?.v && `v${react?.v}`) || "unkown version",
+      isVisible: false,
     },
     {
       key: "Total size",
@@ -26,13 +27,13 @@ export const getRowsInfo = ({ next, version, react, size, keys }) => {
     },
     {
       key: "Assets prefix",
-      value: next?.assetPrefix || "-",
+      value: next?.data?.assetPrefix || "-",
       isVisible: false,
     },
-    { key: "Page", value: next?.page || "-", isVisible: false },
+    { key: "Page", value: next?.data?.page || "-", isVisible: false },
     {
       key: "Query",
-      value: (next?.query && JSON.stringify(next?.query)) || "-",
+      value: (next?.data?.query && JSON.stringify(next.data.query)) || "-",
       isVisible: false,
     },
   ].filter((f) => f);

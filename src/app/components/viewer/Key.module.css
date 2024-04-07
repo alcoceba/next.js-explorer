@@ -2,6 +2,8 @@
     position: relative;
     cursor: pointer;
     transition: opacity .1s ease-out;
+    font-weight: bold;
+    padding-left: 11px;
 }
 
 .collapsible:before {
@@ -15,7 +17,6 @@
     width: 15px;
     height: 15px;
     color: var(--color-text);
-    margin-top: 1px;
     margin-left: -15px;
     font-size: 9px;
     transition: transform .1s ease-out;
@@ -36,20 +37,12 @@
     font-style: italic;
     color: var(--color-pre-key);
     opacity: .6;
-    visibility: visible;
     transition: all .15s ease-in-out;
     margin-left: .5rem;
 }
 
-.info.hide {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.collapsible:hover+.info.hide {
-    opacity: .6;
-    visibility: visible;
-    transition: none;
+.open {
+    margin-left: 5px;
 }
 
 .critical {

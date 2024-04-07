@@ -21,6 +21,15 @@
     color: var(--color-primary);
 }
 
+.actions .highlight {
+    color: var(--color-warn);
+    border-color: var(--color-warn);
+}
+
+.actions .highlight:after {
+    background: var(--color-warn);
+}
+
 .actions span+span:before {
     content: " | ";
     color: var(--color-text);

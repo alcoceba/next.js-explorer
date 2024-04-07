@@ -6,10 +6,10 @@ function Viewer({ json }) {
   return (
     <div className={styles.viewer}>
       <pre>
-        {!json ? (
-          <div className={styles.loading}>Loading...</div>
+        {!json || (json && !Object.entries(json)?.length) ? (
+          <div className={styles.loading}>No data was found</div>
         ) : (
-          <Tree data={json} />
+          <Tree data={json} isRoot />
         )}
       </pre>
     </div>

@@ -17,4 +17,5 @@
 .key {
     color: var(--color-pre-num);
     opacity: .8;
+    font-weight: bold;
 }

@@ -20,3 +20,29 @@ export const exportJson = (obj, space) => {
   document.body.appendChild(element);
   element.click();
 };
+
+export const filterJson = (json, searchString, found) => {
+  for (var key in json) {
+    if (typeof json[key] === "object" && json[key] !== null) {
+      found = found || key.toLowerCase().indexOf(searchString) > -1;
+      json[key] = filterJson(json[key], searchString, found);
+      if (!found && !Object.entries(json[key])?.length) delete json[key];
+    } else {
+      try {
+        if (
+          key.toLowerCase().indexOf(searchString) > -1 ||
+          json[key] === undefined ||
+          json[key].toString().toLowerCase().indexOf(searchString) > -1
+        ) {
+          found = true;
+        }
+
+        if (!found) delete json[key];
+      } catch (e) {
+        delete json[key];
+      }
+    }
+  }
+
+  return json;
+};
