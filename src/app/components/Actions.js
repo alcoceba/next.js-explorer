@@ -1,18 +1,32 @@
 import React from "react";
 import { SetIsCollapsed, SetShowSizes } from "../context/actions";
 import { Context } from "../context/context";
+import { getShowSizes, setShowSizes } from "../../helpers/config";
 
 import styles from "./Actions.module.css";
 
 function Actions({ onExport }) {
   const [{ showSizes, isCollapsed }, dispatch] = React.useContext(Context);
 
-  const handleOnShowSizesClick = () => dispatch(SetShowSizes(!showSizes));
+  const handleOnShowSizesClick = () => {
+    setShowSizes(!showSizes);
+    dispatch(SetShowSizes(!showSizes));
+  };
+
   const handleOnCollapseClick = () => dispatch(SetIsCollapsed(isCollapsed + 1));
   const handleOnExpandClick = () => dispatch(SetIsCollapsed(false));
 
   const handleOnExportRawClick = () => onExport?.(0);
   const handleOnExportFormattedClick = () => onExport?.(2);
+
+  React.useEffect(() => {
+    const handleInit = async () => {
+      const showSizes = await getShowSizes();
+      dispatch(SetShowSizes(showSizes?.sizes));
+    };
+
+    handleInit();
+  }, []);
 
   return (
     <div className={styles.actions}>

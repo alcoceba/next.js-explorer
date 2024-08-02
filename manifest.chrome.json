@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Next.js Explorer - NextJS App & Pages Router",
+  "description": "Quickly check if a webpage is built with Next.js and explore static properties and other related NextJS useful metrics.",
+  "version": "1.5.0",
+  "icons": {
+    "16": "public/images/icon-16.png",
+    "32": "public/images/icon-32.png",
+    "48": "public/images/icon-48.png",
+    "128": "public/images/icon-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "popup.js"
+      ]
+    }
+  ],
+  "incognito": "split",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Click to explore Next.js page properties or open the web inspector to get NextJS metrics",
+    "default_icon": {
+      "16": "public/images/icon-16.png",
+      "32": "public/images/icon-32.png",
+      "48": "public/images/icon-48.png",
+      "128": "public/images/icon-128.png"
+    }
+  }
+}

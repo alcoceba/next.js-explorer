@@ -1,6 +1,6 @@
 import React from "react";
 import { THEME } from "../../helpers/const";
-import { getTheme, setTheme } from "../../helpers/theme";
+import { getTheme, setTheme } from "../../helpers/config";
 import { SetTheme } from "../context/actions";
 import { Context } from "../context/context";
 
@@ -10,7 +10,7 @@ function useTheme() {
 
   const getBrowserTheme = () =>
     window?.matchMedia &&
-    window?.matchMedia("(prefers-color-scheme: dark)")?.matches
+      window?.matchMedia("(prefers-color-scheme: dark)")?.matches
       ? THEME.Dark
       : THEME.Light;
 
@@ -24,7 +24,7 @@ function useTheme() {
 
   React.useEffect(() => {
     const load = async () => {
-      const themeConfig = await getTheme("theme");
+      const themeConfig = await getTheme();
       dispatch(SetTheme(themeConfig?.theme || getBrowserTheme() || THEME.Dark));
       setIsInit(true);
     };

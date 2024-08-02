@@ -45,4 +45,12 @@ export const filterJson = (json, searchString, found) => {
   }
 
   return json;
+
+  // const wordsToSearch = JSON.stringify(json);
+  // const escapedSearchWord = searchString.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // const regex = new RegExp(`(${escapedSearchWord})`, 'gi');
+  // const highlihgtedText = wordsToSearch.replace(regex, '<span style=\'background:yellow\'>$1</span>');
+
+  // return JSON.parse(highlihgtedText);
 };

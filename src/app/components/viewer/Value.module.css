@@ -1,17 +1,21 @@
 .str {
     color: var(--color-pre-str);
+    cursor: pointer;
 }
 
 .num {
     color: var(--color-pre-num);
+    cursor: pointer;
 }
 
 .bool {
     color: var(--color-pre-bool);
+    cursor: pointer;
 }
 
 .null {
     color: var(--color-pre-null);
+    cursor: pointer;
 }
 
 .key {

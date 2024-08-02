@@ -1,9 +1,9 @@
 .collapsible {
     position: relative;
-    cursor: pointer;
     transition: opacity .1s ease-out;
     font-weight: bold;
     padding-left: 11px;
+    cursor: pointer;
 }
 
 .collapsible:before {
@@ -22,8 +22,17 @@
     transition: transform .1s ease-out;
 }
 
+.ellipsis {
+    display: none;
+    cursor: pointer;
+}
+
 .hidden .tree {
     display: none;
+}
+
+.hidden .ellipsis {
+    display: inline-block;
 }
 
 .hidden .collapsible:before {

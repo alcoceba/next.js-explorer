@@ -2,14 +2,16 @@ const path = require("path");
 const HTMLPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
+const Browser = process.env.DIST_BROWSER ?? "chrome";
+const Environment = process.env.NODE_ENV ?? "development";
+
 module.exports = {
   entry: {
     background: "./src/background/index.js",
     popup: "./src/popup/index.js",
     app: "./src/app/index.js",
-    main: "./src/main/index.js",
   },
-  mode: "development", // set auto
+  mode: Environment,
   devtool: "cheap-module-source-map",
   module: {
     rules: [
@@ -36,7 +38,7 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: "manifest.json", to: "manifest.json" },
+        { from: `manifest.${Browser}.json`, to: "manifest.json" },
         { from: "public/**/*" },
       ],
     }),
@@ -52,7 +54,7 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   output: {
-    path: path.join(__dirname, "dist"),
+    path: path.join(__dirname, `dist_${Browser}`),
     filename: "[name].js",
   },
 };

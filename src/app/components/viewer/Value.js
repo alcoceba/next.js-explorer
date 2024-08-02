@@ -1,3 +1,4 @@
+import React from 'react';
 import { sanitize } from "../../../helpers/utils";
 
 import styles from "./Value.module.css";
@@ -15,13 +16,16 @@ const highlight = (value) => {
     case "object":
     default:
       if (value === null) return <span className={styles.null}>null</span>;
-      return <span>{}</span>;
+      return <span>{ }</span>;
   }
 };
 
-function Value({ index, value }) {
+
+function Value({ index, value, onCopy }) {
+  const handleOnClickValue = () => onCopy?.({ value });
+
   return (
-    <li>
+    <li onClick={handleOnClickValue}>
       <span className={styles.key}>{index}:</span> {highlight(sanitize(value))}
     </li>
   );

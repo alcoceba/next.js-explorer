@@ -1,16 +1,72 @@
 import browser from "webextension-polyfill";
-import { DEFAULT_SIZE } from "../helpers/const";
+import { DEFAULT_SIZE, ROUTER } from "../helpers/const";
 import { setContext } from "../helpers/context";
 import { getObjSize } from "../helpers/object";
 import { getCurrentTab } from "../helpers/tabs";
+import { decode } from "../helpers/utils";
+
+let nextModel = null;
 
 const getIcon = (size, isAppRouter) => {
   if (isAppRouter) return "app";
   return size > DEFAULT_SIZE ? "ko" : "ok";
 };
 
-async function sendMessageToContent(action, data) {
+const getRawData = async () => {
+  const currentTab = await getCurrentTab();
+
+  const [results] = await browser.scripting.executeScript({
+    target: { tabId: currentTab?.id || 0 },
+    func: () => {
+      try {
+        const getReactVersion = () => {
+          if (window?.React?.version) return window.React.version;
+          if (!window?.__REACT_DEVTOOLS_GLOBAL_HOOK__) return null;
+          return window.__REACT_DEVTOOLS_GLOBAL_HOOK__?.renderers?.get(1)?.version;
+        }
+
+        return {
+          appRawData: window?.__next_f,
+          pagesRawData: document.getElementById("__NEXT_DATA__")?.textContent,
+          isAppRouter: !!window?.__next_f,
+          reactVersion: getReactVersion(),
+          nextVersion: window?.next?.version,
+        };
+      } catch (e) {
+        return null;
+      }
+    },
+    args: [],
+    world: 'MAIN',
+  });
+
+  return results?.result;
+};
+
+const parseData = (data) => {
+  const model = data && {
+    data: {
+      next: {
+        router: data?.isAppRouter ? ROUTER.App : ROUTER.Pages,
+        isAppRouter: !!data?.isAppRouter,
+        data: decode({
+          appRawData: data?.appRawData,
+          pagesRawData: data?.pagesRawData,
+        }),
+        v: data?.nextVersion,
+      },
+      react: {
+        v: data?.reactVersion,
+      },
+    }
+  };
+
+  nextModel = model;
+}
+
+const sendMessageToContent = async (action, data) => {
   const tab = await getCurrentTab();
+
   if (tab.id) {
     try {
       await browser.tabs.sendMessage(tab.id, {
@@ -18,15 +74,18 @@ async function sendMessageToContent(action, data) {
         action,
         data,
       });
-    } catch (e) {}
+    } catch (e) {
+
+    }
   }
 }
 
-const handleOnDomLoaded = async (data) => {
-  if (data?.next?.data || data?.next?.isAppRouter) {
-    const size = getObjSize(data?.next?.data) || 0;
+const updateExtensionIcon = async () => {
+  if (nextModel?.data?.next?.data) {
     const tab = await getCurrentTab();
-    const icon = getIcon(size, data?.next?.isAppRouter);
+    const size = getObjSize(nextModel?.data?.next?.data) || 0;
+    const icon = getIcon(size, nextModel?.data?.next?.isAppRouter);
+
     browser.action.setIcon({
       path: {
         16: `./public/images/icon-${icon}-16.png`,
@@ -39,43 +98,21 @@ const handleOnDomLoaded = async (data) => {
   }
 };
 
-const handleOnGetData = async (data) => {
-  if (data?.next?.data || data?.next?.isAppRouter) {
+const handleOnIconClick = async () => {
+  if (nextModel?.data?.next?.data) {
     const tab = await getCurrentTab();
-    await setContext({ [tab?.id]: data });
+    await setContext({ [tab?.id]: nextModel?.data });
     browser.tabs.create({ url: `index.html?id=${tab?.id}` });
   } else {
     sendMessageToContent("show-message", "no-next");
   }
 };
 
-const handleOnIconClick = async () => {
-  sendMessageToContent("get-data");
+const handleOnTabUpdated = async () => {
+  const raw = await getRawData();
+  parseData(raw);
+  updateExtensionIcon();
 };
 
-const handleOnMessage = (message) => {
-  if (message?.to === "background") {
-    switch (message?.action) {
-      case "init":
-        handleOnDomLoaded(message?.data);
-        break;
-      case "data":
-        handleOnGetData(message?.data);
-        break;
-      default:
-        throw new Error("Invalid action");
-    }
-  }
-  return true;
-};
-
-export async function init() {
-  browser.runtime.onMessage.addListener(handleOnMessage);
-  browser.action.onClicked.addListener(handleOnIconClick);
-}
-
-browser.runtime.onInstalled.addListener(() => {
-  init().then(() => {
-    /* content loaded */
-  });
-});
+browser.tabs.onUpdated.addListener(handleOnTabUpdated);
+browser.action.onClicked.addListener(handleOnIconClick);

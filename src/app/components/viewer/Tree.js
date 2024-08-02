@@ -5,15 +5,17 @@ import Value from "./Value";
 
 import styles from "./Tree.module.css";
 
-function Tree({ data, isRoot }) {
+function Tree({ data, isRoot, onCopy }) {
   return (
     <ul className={classNames(styles.wrapper, isRoot && styles.root)}>
       {Object.keys(data).map((key) => {
-        if (!isObjectAndNotEmpty(data[key]))
-          return <Value key={key} index={key} value={data[key]} />;
+        if (!isObjectAndNotEmpty(data[key])) {
+          return <Value key={key} index={key} value={data[key]} onCopy={onCopy} />;
+        }
+
         return (
           <Key key={key} index={key} tree={data[key]}>
-            <Tree data={data[key]} />
+            <Tree data={data[key]} onCopy={onCopy} />
           </Key>
         );
       })}
