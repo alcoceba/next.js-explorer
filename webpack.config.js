@@ -54,7 +54,7 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   output: {
-    path: path.join(__dirname, `dist_${Browser}`),
+    path: path.join(__dirname, `dist/${Browser}`),
     filename: "[name].js",
   },
 };

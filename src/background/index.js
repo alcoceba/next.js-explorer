@@ -136,6 +136,7 @@ const handleOnTabUpdated = async () => {
 const init = () => {
   try {
     browser.tabs.onUpdated.addListener(handleOnTabUpdated);
+    browser.tabs.onActivated.addListener(handleOnTabUpdated);
     browser.action.onClicked.addListener(handleOnIconClick);
     // eslint-disable-next-line no-unused-vars,no-empty
   } catch (e) {

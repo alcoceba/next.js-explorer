@@ -116,7 +116,7 @@ function App() {
             onCopy={handleOnCopy}
           />
 
-          {showMessage && (
+          {!!showMessage?.id && (
             <Portal key={showMessage.id}>
               <Message>{showMessage.text}</Message>
             </Portal>
