@@ -1,8 +1,9 @@
+import PropTypes from "prop-types";
 import React from "react";
-import Tree from "./viewer/Tree";
+import copy from "../../helpers/copy";
 import Message from "./Message";
 import Portal from "./Portal";
-import copy from "../../helpers/copy";
+import Tree from "./viewer/Tree";
 
 import styles from "./Viewer.module.css";
 
@@ -37,5 +38,9 @@ function Viewer({ json }) {
     </div>
   );
 }
+
+Viewer.propTypes = {
+  json: PropTypes.object,
+};
 
 export default Viewer;

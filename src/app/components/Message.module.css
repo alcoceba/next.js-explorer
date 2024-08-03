@@ -16,14 +16,14 @@
   border-radius: 1px;
   transition: all .2s ease-in-out;
   opacity: 0;
-  background: #229955;
-  color: #ddffee;
+  background: #295;
+  color: #dfe;
   z-index: 999999;
-  animation: popInAndOut 2s ease-in-out forwards;
+  animation: pop-in-and-out 2s ease-in-out forwards;
 }
 
 
-@keyframes popInAndOut {
+@keyframes pop-in-and-out {
   0% {
     bottom: -20px;
     opacity: 0;

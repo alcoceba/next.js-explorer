@@ -23,6 +23,7 @@ export const decode = ({ appRawData, pagesRawData }) => {
 
     try {
       return JSON.parse(`[[${appData}]]`);
+      // eslint-disable-next-line no-unused-vars
     } catch (e) {
       return null;
     }

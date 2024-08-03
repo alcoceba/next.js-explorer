@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { classNames } from "../../../helpers/classNames";
 import { DEFAULT_SIZE } from "../../../helpers/const";
 import { getObjSize } from "../../../helpers/object";
@@ -49,5 +50,11 @@ function Key({ index, tree, children }) {
     </li>
   );
 }
+
+Key.propTypes = {
+  index: PropTypes.string,
+  tree: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  children: PropTypes.element,
+};
 
 export default Key;

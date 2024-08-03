@@ -1,11 +1,13 @@
+import PropTypes from "prop-types";
 import React from "react";
+
 import styles from "./Table.module.css";
 
 function Table({ rows }) {
   const [showMore, setShowMore] = React.useState(false);
 
   return (
-    rows?.length && (
+    !!rows?.length && (
       <div className={styles.table}>
         <table>
           <tbody>
@@ -28,5 +30,9 @@ function Table({ rows }) {
     )
   );
 }
+
+Table.propTypes = {
+  rows: PropTypes.array,
+};
 
 export default Table;

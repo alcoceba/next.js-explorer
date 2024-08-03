@@ -1,3 +1,6 @@
+import PropTypes from "prop-types";
+import React from "react";
+
 import styles from "./SearchBox.module.css";
 
 function SearchBox({ onChange }) {
@@ -10,5 +13,9 @@ function SearchBox({ onChange }) {
     />
   );
 }
+
+SearchBox.propTypes = {
+  onChange: PropTypes.func,
+};
 
 export default SearchBox;

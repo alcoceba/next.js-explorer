@@ -17,7 +17,7 @@
     top: 1px;
     display: inline-block;
     font-size: 1rem;
-    color: #ff0000;
+    color: #f00;
     animation: animateHeart 5s infinite;
     animation-delay: 2s;
 }

@@ -1,6 +1,6 @@
 html,
 body {
-    font: 0.9rem/1.5 "Courier New", Courier, monospace;
+    font: 0.9rem/1.5 "Roboto Mono", "Courier New", Courier, monospace;
     font-size: 11px;
 }
 
@@ -11,7 +11,7 @@ body {
     color: var(--color-text);
 }
 
-body:after {
+body::after {
     content: " ";
     position: fixed;
     top: 0;

@@ -1,3 +1,6 @@
+import PropTypes from "prop-types";
+import React from "react";
+
 import styles from "./Switch.module.css";
 
 function Switch({ children, id, isActive, onClick }) {
@@ -15,5 +18,12 @@ function Switch({ children, id, isActive, onClick }) {
     </label>
   );
 }
+
+Switch.propTypes = {
+  id: PropTypes.string,
+  isActive: PropTypes.bool,
+  onClick: PropTypes.func,
+  children: PropTypes.any,
+};
 
 export default Switch;

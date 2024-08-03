@@ -1,4 +1,4 @@
-.loading:after {
+.loading::after {
     background-color: var(--color-bg-secondary);
     opacity: 1;
     visibility: visible;

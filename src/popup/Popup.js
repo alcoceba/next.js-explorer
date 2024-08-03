@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { classNames } from "../helpers/classNames";
 
@@ -39,5 +40,11 @@ function Popup({ message, timeout = TIMEOUT, onClose }) {
     </div>
   );
 }
+
+Popup.propTypes = {
+  message: PropTypes.string,
+  timeout: PropTypes.number,
+  onClose: PropTypes.func,
+};
 
 export default Popup;

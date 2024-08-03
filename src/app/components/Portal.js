@@ -1,10 +1,15 @@
+import PropTypes from "prop-types";
 import ReactDOM from 'react-dom';
 
-const PortalComponent = ({ children }) => {
+const Portal = ({ children }) => {
     return ReactDOM.createPortal(
         children,
         document.body
     );
 };
 
-export default PortalComponent;
+Portal.propTypes = {
+    children: PropTypes.element,
+};
+
+export default Portal;

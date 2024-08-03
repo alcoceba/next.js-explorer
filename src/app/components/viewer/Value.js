@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from 'react';
 import { sanitize } from "../../../helpers/utils";
 
@@ -10,7 +11,7 @@ const highlight = (value) => {
       return <span className={styles.num}>{value}</span>;
     case "string":
     case "symbol":
-      return <span className={styles.str}>"{value.length ? value : ""}"</span>;
+      return <span className={styles.str}>&quot;{value.length ? value : ""}&quot;</span>;
     case "boolean":
       return <span className={styles.bool}>{value ? "true" : "false"}</span>;
     case "object":
@@ -19,7 +20,6 @@ const highlight = (value) => {
       return <span>{ }</span>;
   }
 };
-
 
 function Value({ index, value, onCopy }) {
   const handleOnClickValue = () => onCopy?.({ value });
@@ -30,5 +30,11 @@ function Value({ index, value, onCopy }) {
     </li>
   );
 }
+
+Value.propTypes = {
+  index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  onCopy: PropTypes.func,
+};
 
 export default Value;

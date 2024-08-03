@@ -38,6 +38,7 @@ export const filterJson = (json, searchString, found) => {
         }
 
         if (!found) delete json[key];
+        // eslint-disable-next-line no-unused-vars
       } catch (e) {
         delete json[key];
       }

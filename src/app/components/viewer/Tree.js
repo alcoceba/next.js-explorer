@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+import React from "react";
 import { classNames } from "../../../helpers/classNames";
 import { isObjectAndNotEmpty } from "../../../helpers/object";
 import Key from "./Key";
@@ -22,5 +24,11 @@ function Tree({ data, isRoot, onCopy }) {
     </ul>
   );
 }
+
+Tree.propTypes = {
+  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  isRoot: PropTypes.bool,
+  onCopy: PropTypes.func,
+};
 
 export default Tree;

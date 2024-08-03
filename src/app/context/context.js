@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { THEME } from "../../helpers/const";
 import reducer from "./reducer";
@@ -15,6 +16,10 @@ const ContextProvider = ({ children }) => {
   return (
     <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
   );
+};
+
+ContextProvider.propTypes = {
+  children: PropTypes.element,
 };
 
 export default ContextProvider;

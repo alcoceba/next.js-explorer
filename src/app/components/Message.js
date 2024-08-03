@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 
 import styles from "./Message.module.css";
@@ -9,5 +10,9 @@ function Message({ children }) {
         </div>
     );
 }
+
+Message.propTypes = {
+    children: PropTypes.element,
+};
 
 export default Message;

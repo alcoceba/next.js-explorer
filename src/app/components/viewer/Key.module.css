@@ -6,9 +6,8 @@
     cursor: pointer;
 }
 
-.collapsible:before {
+.collapsible::before {
     content: '▼';
-    display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -35,7 +34,7 @@
     display: inline-block;
 }
 
-.hidden .collapsible:before {
+.hidden .collapsible::before {
     transform: rotate(-90deg);
 }
 

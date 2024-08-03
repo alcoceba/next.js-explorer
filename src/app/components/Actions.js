@@ -1,7 +1,8 @@
+import PropTypes from "prop-types";
 import React from "react";
+import { getShowSizes, setShowSizes } from "../../helpers/config";
 import { SetIsCollapsed, SetShowSizes } from "../context/actions";
 import { Context } from "../context/context";
-import { getShowSizes, setShowSizes } from "../../helpers/config";
 
 import styles from "./Actions.module.css";
 
@@ -47,5 +48,9 @@ function Actions({ onExport }) {
     </div>
   );
 }
+
+Actions.propTypes = {
+  onExport: PropTypes.func,
+};
 
 export default Actions;

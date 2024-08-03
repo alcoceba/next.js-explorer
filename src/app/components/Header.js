@@ -1,9 +1,11 @@
+import PropTypes from "prop-types";
 import React from "react";
+import { classNames } from "../../helpers/classNames";
 import { ROUTER, THEME } from "../../helpers/const";
 import { SetTheme } from "../context/actions";
 import { Context } from "../context/context";
-import Switch from "./Switch";
 import SearchBox from "./SearchBox";
+import Switch from "./Switch";
 
 import styles from "./Header.module.css";
 
@@ -21,9 +23,8 @@ function Header({ router, version, react, onSearch }) {
         <a
           target="_blank"
           rel="noreferrer"
-          href={`https://nextjs.org/docs/${
-            router === ROUTER.App ? "app" : "pages"
-          }`}
+          href={`https://nextjs.org/docs/${router === ROUTER.App ? "app" : "pages"
+            }`}
           className={styles.router}
         >
           {router === ROUTER.App ? "APP" : "Pages"} Router
@@ -50,17 +51,20 @@ function Header({ router, version, react, onSearch }) {
         <SearchBox onChange={(v) => onSearch?.(v)} />
       </div>
 
-      <div className={styles.switch}>
-        <Switch
-          id="theme"
-          onClick={handleOnThemeToggle}
-          isActive={theme === THEME.Light}
-        >
-          -
-        </Switch>
+      <div
+        className={classNames(styles.box, styles.theme, theme === THEME.Light && styles.light)}
+      >
+        <span onClick={handleOnThemeToggle}>&nbsp;</span>
       </div>
-    </div>
+    </div >
   );
 }
+
+Header.propTypes = {
+  router: PropTypes.oneOf([ROUTER.App, ROUTER.Pages]),
+  version: PropTypes.string,
+  react: PropTypes.string,
+  onSearch: PropTypes.func,
+};
 
 export default Header;

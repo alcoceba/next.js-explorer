@@ -1,3 +1,6 @@
+import PropTypes from "prop-types";
+import React from "react";
+
 import styles from "./Loading.module.css";
 
 function Loading({ isLoading, children }) {
@@ -12,5 +15,10 @@ function Loading({ isLoading, children }) {
     </>
   );
 }
+
+Loading.propTypes = {
+  isLoading: PropTypes.bool,
+  children: PropTypes.any,
+};
 
 export default Loading;

@@ -5,8 +5,7 @@
     background: var(--color-bg-secondary);
     color: var(--color-text);
     white-space: pre-wrap;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden auto;
 }
 
 .loading {

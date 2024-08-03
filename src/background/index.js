@@ -15,32 +15,39 @@ const getIcon = (size, isAppRouter) => {
 const getRawData = async () => {
   const currentTab = await getCurrentTab();
 
-  const [results] = await browser.scripting.executeScript({
-    target: { tabId: currentTab?.id || 0 },
-    func: () => {
-      try {
-        const getReactVersion = () => {
-          if (window?.React?.version) return window.React.version;
-          if (!window?.__REACT_DEVTOOLS_GLOBAL_HOOK__) return null;
-          return window.__REACT_DEVTOOLS_GLOBAL_HOOK__?.renderers?.get(1)?.version;
-        }
-
-        return {
-          appRawData: window?.__next_f,
-          pagesRawData: document.getElementById("__NEXT_DATA__")?.textContent,
-          isAppRouter: !!window?.__next_f,
-          reactVersion: getReactVersion(),
-          nextVersion: window?.next?.version,
-        };
-      } catch (e) {
-        return null;
+  const handleScript = () => {
+    try {
+      const getReactVersion = () => {
+        if (window?.React?.version) return window.React.version;
+        if (!window?.__REACT_DEVTOOLS_GLOBAL_HOOK__) return null;
+        return window.__REACT_DEVTOOLS_GLOBAL_HOOK__?.renderers?.get(1)?.version;
       }
-    },
-    args: [],
-    world: 'MAIN',
-  });
 
-  return results?.result;
+      return {
+        appRawData: window?.__next_f,
+        pagesRawData: document.getElementById("__NEXT_DATA__")?.textContent,
+        isAppRouter: !!window?.__next_f,
+        reactVersion: getReactVersion(),
+        nextVersion: window?.next?.version,
+      };
+      // eslint-disable-next-line no-unused-vars
+    } catch (e) {
+      return null;
+    }
+  };
+
+  try {
+    const [results] = await browser.scripting.executeScript({
+      target: { tabId: currentTab?.id || 0 },
+      func: handleScript,
+      args: [],
+      world: 'MAIN',
+    });
+    return results?.result;
+    // eslint-disable-next-line no-unused-vars  
+  } catch (e) {
+    return null;
+  }
 };
 
 const parseData = (data) => {
@@ -74,6 +81,7 @@ const sendMessageToContent = async (action, data) => {
         action,
         data,
       });
+      // eslint-disable-next-line no-unused-vars,no-empty
     } catch (e) {
 
     }
@@ -86,23 +94,35 @@ const updateExtensionIcon = async () => {
     const size = getObjSize(nextModel?.data?.next?.data) || 0;
     const icon = getIcon(size, nextModel?.data?.next?.isAppRouter);
 
-    browser.action.setIcon({
-      path: {
-        16: `./public/images/icon-${icon}-16.png`,
-        32: `./public/images/icon-${icon}-32.png`,
-        48: `./public/images/icon-${icon}-48.png`,
-        128: `./public/images/icon-${icon}-128.png`,
-      },
-      tabId: tab.id,
-    });
+    try {
+      browser.action.setIcon({
+        path: {
+          16: `./public/images/icon-${icon}-16.png`,
+          32: `./public/images/icon-${icon}-32.png`,
+          48: `./public/images/icon-${icon}-48.png`,
+          128: `./public/images/icon-${icon}-128.png`,
+        },
+        tabId: tab.id,
+      });
+      // eslint-disable-next-line no-unused-vars,no-empty
+    }
+    catch (e) {
+
+    }
+
   }
 };
 
 const handleOnIconClick = async () => {
   if (nextModel?.data?.next?.data) {
-    const tab = await getCurrentTab();
-    await setContext({ [tab?.id]: nextModel?.data });
-    browser.tabs.create({ url: `index.html?id=${tab?.id}` });
+    try {
+      const tab = await getCurrentTab();
+      await setContext({ [tab?.id]: nextModel?.data });
+      browser.tabs.create({ url: `index.html?id=${tab?.id}` });
+      // eslint-disable-next-line no-unused-vars
+    } catch (e) {
+      sendMessageToContent("show-message", "no-next");
+    }
   } else {
     sendMessageToContent("show-message", "no-next");
   }
@@ -114,5 +134,13 @@ const handleOnTabUpdated = async () => {
   updateExtensionIcon();
 };
 
-browser.tabs.onUpdated.addListener(handleOnTabUpdated);
-browser.action.onClicked.addListener(handleOnIconClick);
+const init = () => {
+  try {
+    browser.tabs.onUpdated.addListener(handleOnTabUpdated);
+    browser.action.onClicked.addListener(handleOnIconClick);
+    // eslint-disable-next-line no-unused-vars,no-empty
+  } catch (e) {
+  }
+};
+
+init();
