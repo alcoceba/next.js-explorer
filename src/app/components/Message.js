@@ -12,7 +12,7 @@ function Message({ children }) {
 }
 
 Message.propTypes = {
-    children: PropTypes.element,
+    children: PropTypes.any,
 };
 
 export default Message;

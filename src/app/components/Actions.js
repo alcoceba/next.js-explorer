@@ -6,7 +6,7 @@ import { Context } from "../context/context";
 
 import styles from "./Actions.module.css";
 
-function Actions({ onExport }) {
+function Actions({ onExport, onCopy }) {
   const [{ showSizes, isCollapsed }, dispatch] = React.useContext(Context);
 
   const handleOnShowSizesClick = () => {
@@ -16,6 +16,7 @@ function Actions({ onExport }) {
 
   const handleOnCollapseClick = () => dispatch(SetIsCollapsed(isCollapsed + 1));
   const handleOnExpandClick = () => dispatch(SetIsCollapsed(false));
+  const handleOnCopy = () => onCopy?.();
 
   const handleOnExportRawClick = () => onExport?.(0);
   const handleOnExportFormattedClick = () => onExport?.(2);
@@ -36,6 +37,8 @@ function Actions({ onExport }) {
       </span>
       <span onClick={handleOnCollapseClick}>collapse</span>
       <span onClick={handleOnExpandClick}>expand</span>
+      <span onClick={handleOnCopy}>copy JSON</span>
+
       <div className={styles.right}>
         <span className={styles.selector}>
           +++
@@ -50,6 +53,7 @@ function Actions({ onExport }) {
 }
 
 Actions.propTypes = {
+  onCopy: PropTypes.func,
   onExport: PropTypes.func,
 };
 

@@ -105,8 +105,7 @@ const updateExtensionIcon = async () => {
         tabId: tab.id,
       });
       // eslint-disable-next-line no-unused-vars,no-empty
-    }
-    catch (e) {
+    } catch (e) {
 
     }
 

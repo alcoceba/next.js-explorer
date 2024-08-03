@@ -5,7 +5,6 @@ import { ROUTER, THEME } from "../../helpers/const";
 import { SetTheme } from "../context/actions";
 import { Context } from "../context/context";
 import SearchBox from "./SearchBox";
-import Switch from "./Switch";
 
 import styles from "./Header.module.css";
 

@@ -107,7 +107,7 @@
     cursor: pointer;
 }
 
-.theme>span:after {
+.theme>span::after {
     position: absolute;
     content: " ";
     width: 1rem;
@@ -118,14 +118,14 @@
     transition: all .15s ease-in-out;
 }
 
-.theme>span:hover:after {
+.theme>span:hover::after {
     background-color: transparent;
 }
 
-.theme.light>span:after {
+.theme.light>span::after {
     background-color: transparent;
 }
 
-.theme.light>span:hover:after {
+.theme.light>span:hover::after {
     background-color: var(--color-bg-secondary);
 }
