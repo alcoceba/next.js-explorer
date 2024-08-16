@@ -4,35 +4,55 @@ import { sanitize } from "../../../helpers/utils";
 
 import styles from "./Value.module.css";
 
-const highlight = (value) => {
+const highlight = ({ value }) => {
   switch (typeof value) {
     case "number":
     case "bigint":
-      return <span className={styles.num}>{value}</span>;
+      return [value, styles.num];
     case "string":
     case "symbol":
-      return <span className={styles.str}>&quot;{value.length ? value : ""}&quot;</span>;
+      return [`&quot;${value.length ? value : ""}&quot;`, styles.str];
     case "boolean":
-      return <span className={styles.bool}>{value ? "true" : "false"}</span>;
+      return [value ? "true" : "false", styles.bool];
     case "object":
     default:
-      if (value === null) return <span className={styles.null}>null</span>;
-      else if (Array.isArray(value)) return <span>[]</span>
-      return <span>{'{}'}</span>;
+      if (value === null) return ['null', styles.null];
+      else if (Array.isArray(value)) return ['[]', undefined];
+      return ['{}', undefined];
   }
 };
 
 function Value({ index, value, onCopy }) {
+  const refValue = React.useRef(null);
+
+  const [formattedValue, valueStyle] = highlight({ value: sanitize(value) });
+
+  const selectText = () => {
+    const range = document.createRange();
+    range.selectNodeContents(refValue?.current);
+
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+
   const handleOnClickValue = (e) => {
     if (e?.detail === 2) {
       e.preventDefault();
       onCopy?.({ value });
+      selectText();
     }
   }
 
   return (
     <li onClick={handleOnClickValue}>
-      <span className={styles.key}>{index}:</span> {highlight(sanitize(value))}
+      <span className={styles.key}>{index}:</span>
+      {' '}
+      <span
+        ref={refValue}
+        className={valueStyle}
+        dangerouslySetInnerHTML={{ __html: formattedValue }}
+      />
     </li>
   );
 }
