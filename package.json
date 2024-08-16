@@ -9,6 +9,7 @@
     "webextension-polyfill": "^0.10.0"
   },
   "scripts": {
+    "build": "rm -rf ./dist && npm run build:chrome && npm run build:firefox",
     "build:chrome": "DIST_BROWSER=chrome NODE_ENV=production webpack --config webpack.config.js",
     "watch:chrome": "DIST_BROWSER=chrome NODE_ENV=development webpack -w --config webpack.config.js",
     "build:firefox": "DIST_BROWSER=firefox NODE_ENV=production webpack --config webpack.config.js",
