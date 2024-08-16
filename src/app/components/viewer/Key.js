@@ -15,11 +15,13 @@ const color = (size) => {
 };
 
 function Key({ index, tree, children }) {
+  const refChildren = React.useRef(null);
   const [isHidden, setIsHidden] = React.useState(true);
   const [{ showSizes, isCollapsed }] = React.useContext(Context);
   const [size, length] = React.useMemo(() => [getObjSize(tree), Object.keys(tree)?.length], [tree]);
 
   const handleOnKeyClick = (e) => {
+    if (refChildren?.current?.contains(e?.target)) return;
     e.stopPropagation();
     setIsHidden(!isHidden);
   };
@@ -27,8 +29,8 @@ function Key({ index, tree, children }) {
   React.useEffect(() => setIsHidden(!isCollapsed), [isCollapsed]);
 
   return (
-    <li className={classNames(!isHidden && styles.hidden)}>
-      <span onClick={handleOnKeyClick} className={styles.collapsible}>
+    <li onClick={handleOnKeyClick} className={classNames(styles.li, !isHidden && styles.hidden)}>
+      <span className={styles.collapsible}>
         {index}
       </span>
 
@@ -43,8 +45,8 @@ function Key({ index, tree, children }) {
         </span>
       )}
 
-      <div className={styles.tree}>{children}</div>
-      <span onClick={handleOnKeyClick} className={styles.ellipsis}> ... </span>
+      <div ref={refChildren} className={styles.tree}>{children}</div>
+      <span className={styles.ellipsis}> ... </span>
 
       <span className={styles.close}>{Array.isArray(tree) ? "]" : "}"}</span>
     </li>

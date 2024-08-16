@@ -1,9 +1,12 @@
+.li {
+    cursor: pointer;
+}
+
 .collapsible {
     position: relative;
     transition: opacity .1s ease-out;
     font-weight: bold;
     padding-left: 11px;
-    cursor: pointer;
 }
 
 .collapsible::before {
@@ -23,7 +26,6 @@
 
 .ellipsis {
     display: none;
-    cursor: pointer;
 }
 
 .hidden .tree {

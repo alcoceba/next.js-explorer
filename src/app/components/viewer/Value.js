@@ -17,12 +17,18 @@ const highlight = (value) => {
     case "object":
     default:
       if (value === null) return <span className={styles.null}>null</span>;
-      return <span>{ }</span>;
+      else if (Array.isArray(value)) return <span>[]</span>
+      return <span>{'{}'}</span>;
   }
 };
 
 function Value({ index, value, onCopy }) {
-  const handleOnClickValue = () => onCopy?.({ value });
+  const handleOnClickValue = (e) => {
+    if (e?.detail === 2) {
+      e.preventDefault();
+      onCopy?.({ value });
+    }
+  }
 
   return (
     <li onClick={handleOnClickValue}>
@@ -33,7 +39,7 @@ function Value({ index, value, onCopy }) {
 
 Value.propTypes = {
   index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  value: PropTypes.any,
   onCopy: PropTypes.func,
 };
 
