@@ -10,25 +10,27 @@ export const decode = ({ appRawData, pagesRawData }) => {
 
   if (appRawData) {
     const raw = appRawData
-      .reduce((p, n) => [...p, n[1]], [])
+      .reduce((p, n) => {
+        const isValid = 1
+        return isValid ? [...p, n[1]] : p;
+      }, [])
       .filter(Boolean)
       .join("");
 
-    const appData = raw
-      .replace(/^.*?\[|\][^\]]*$/g, "")
-      .replace(/\n+[^[\n{]*/g, ",")
-      .replace(/,,/g, ",")
-      .replace(/\\\\/g, "/")
-      .replace(/\/\//g, "/");
+    const matches = raw.match(/\[[^\[\]]*\]/g);
 
-    try {
-      return JSON.parse(`[[${appData}]]`);
-      // eslint-disable-next-line no-unused-vars
-    } catch (e) {
-      return null;
-    }
-  }
+    const totals = matches
+      ?.filter(Boolean)
+      .map(match => {
+        try {
+          return JSON.parse(match)
+        } catch (e) {
+          return null;
+        }
+      });
+
+    return totals.filter((f) => !!f && f?.length)
+  };
 
   return null;
 };
-
