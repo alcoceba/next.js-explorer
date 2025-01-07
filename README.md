@@ -3,7 +3,7 @@
 Next.js Explorer is a browser extension for Google Chrome and Firefox designed to help developers explore and visualize the structure and data of their Next.js applications.
 
 [![Chome Web Store](public/chrome-store.png)](https://chromewebstore.google.com/detail/nextjs-explorer-nextjs-ap/iiekmbomdcmddchlplbdlkkpdgncgpdg)
-[![Firefox Add-On](public/get-the-add-on.png)](https://addons.mozilla.org/en-US/developers/addon/next-js)
+[![Firefox Add-On](public/get-the-add-on.png)](https://addons.mozilla.org/en-US/firefox/addon/nextjs/)
 
 ## Getting Started
 
