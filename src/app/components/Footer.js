@@ -14,7 +14,7 @@ function Footer() {
 
   return (
     <div className={styles.footer} onClick={handleOnIconClick}>
-      made with <span>{icon}</span> for all developers - v1.6.1 / 1.0.3
+      made with <span>{icon}</span> for all developers - v1.7.0 / 1.1.0
     </div>
   );
 }
