@@ -20,7 +20,7 @@ import Table from "./Table";
 import Theme from "./Theme";
 import Viewer from "./Viewer";
 
-import styles from "./App.module.css";
+import * as styles from "./App.module.css";
 
 function App() {
   const timeout = React.useRef(null);

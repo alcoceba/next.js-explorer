@@ -5,7 +5,7 @@ import { DEFAULT_SIZE } from "../../../helpers/const";
 import { getObjSize } from "../../../helpers/object";
 import { Context } from "../../context/context";
 
-import styles from "./Key.module.css";
+import * as styles from "./Key.module.css";
 
 const color = (size) => {
   if (size > DEFAULT_SIZE) return styles.critical;
@@ -48,7 +48,7 @@ function Key({ index, tree, children }) {
       <div ref={refChildren} className={styles.tree}>{children}</div>
       <span className={styles.ellipsis}> ... </span>
 
-      <span className={styles.close}>{Array.isArray(tree) ? "]" : "}"}</span>
+      <span>{Array.isArray(tree) ? "]" : "}"}</span>
     </li>
   );
 }

@@ -5,7 +5,7 @@ import { isObjectAndNotEmpty } from "../../../helpers/object";
 import Key from "./Key";
 import Value from "./Value";
 
-import styles from "./Tree.module.css";
+import * as styles from "./Tree.module.css";
 
 function Tree({ data, isRoot, onCopy }) {
   return (

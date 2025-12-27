@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import styles from "./Message.module.css";
+import * as styles from "./Message.module.css";
 
 function Message({ children }) {
     return (

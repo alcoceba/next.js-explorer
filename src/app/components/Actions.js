@@ -4,7 +4,7 @@ import { getShowSizes, setShowSizes } from "../../helpers/config";
 import { SetIsCollapsed, SetShowSizes } from "../context/actions";
 import { Context } from "../context/context";
 
-import styles from "./Actions.module.css";
+import * as styles from "./Actions.module.css";
 
 function Actions({ onExport, onCopy }) {
   const [{ showSizes, isCollapsed }, dispatch] = React.useContext(Context);

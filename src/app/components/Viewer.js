@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import Tree from "./viewer/Tree";
 
-import styles from "./Viewer.module.css";
+import * as styles from "./Viewer.module.css";
 
 function Viewer({ json, onCopy }) {
   return (

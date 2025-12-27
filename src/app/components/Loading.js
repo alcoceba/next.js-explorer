@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import styles from "./Loading.module.css";
+import * as styles from "./Loading.module.css";
 
 function Loading({ isLoading, children }) {
   return (

@@ -6,7 +6,7 @@ import { SetTheme } from "../context/actions";
 import { Context } from "../context/context";
 import SearchBox from "./SearchBox";
 
-import styles from "./Header.module.css";
+import * as styles from "./Header.module.css";
 
 function Header({ router, version, react, onSearch }) {
   const [{ theme }, dispatch] = React.useContext(Context);

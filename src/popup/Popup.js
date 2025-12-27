@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { classNames } from "../helpers/classNames";
 
-import styles from "./Popup.module.css";
+import * as styles from "./Popup.module.css";
 
 const TIMEOUT = 3000;
 

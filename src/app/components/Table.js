@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import styles from "./Table.module.css";
+import * as styles from "./Table.module.css";
 
 function Table({ rows }) {
   const [showMore, setShowMore] = React.useState(false);

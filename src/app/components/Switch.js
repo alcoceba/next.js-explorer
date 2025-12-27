@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import styles from "./Switch.module.css";
+import * as styles from "./Switch.module.css";
 
 function Switch({ children, id, isActive, onClick }) {
   return (
