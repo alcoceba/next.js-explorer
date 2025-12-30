@@ -1,22 +1,22 @@
-# Next.js Explorer - Agents Architecture
+# Next.js Explorer - Application Architecture
 
-This document describes the different agents (modules and components) that make up the Next.js Explorer browser extension. The extension follows a modular architecture with clear separation of concerns.
+This document describes the different applications (modules and components) that make up the Next.js Explorer browser extension. The extension follows a modular architecture with clear separation of concerns.
 
 ## Overview
 
-The Next.js Explorer extension is composed of three main agents:
+The Next.js Explorer extension is composed of three main applications:
 
-1. **Background Agent** - Service worker that manages extension logic and page data inspection
-2. **App Agent** - Main content interface for exploring Next.js data
-3. **Popup Agent** - Quick access UI that appears when the extension icon is clicked
+1. **Background Script** - Service worker that manages extension logic and page data inspection
+2. **App** - Main interface for exploring Next.js data
+3. **Popup** - Quick access UI that appears when the extension icon is clicked
 
 ---
 
-## Background Agent
+## Background Script
 
 **Location:** [src/background/index.js](src/background/index.js)
 
-The background agent is the core service worker that runs continuously and handles:
+The background script is the core service worker that runs continuously and handles:
 
 ### Responsibilities
 - **Data Extraction:** Inspects the current webpage to extract Next.js application data using `executeScript()`
@@ -24,7 +24,7 @@ The background agent is the core service worker that runs continuously and handl
 - **Router Detection:** Distinguishes between App Router and Pages Router
 - **Data Processing:** Decodes and parses Flight data from Next.js streaming responses
 - **State Management:** Maintains badge icons indicating page analysis status
-- **Message Handling:** Communicates with popup and app agents via message passing
+- **Message Handling:** Communicates with popup and app via message passing
 
 ### Key Functions
 - `getRawData()` - Extracts raw Next.js data from the page
@@ -39,11 +39,11 @@ The background agent is the core service worker that runs continuously and handl
 
 ---
 
-## App Agent
+## App
 
 **Location:** [src/app/](src/app/)
 
-The app agent is the main interface for detailed exploration of Next.js data. It's injected into pages and provides a full-featured UI.
+The app is the main interface for detailed exploration of Next.js data. It's injected into pages and provides a full-featured UI.
 
 ### Key Components
 
@@ -85,11 +85,11 @@ State management using React Context API:
 
 ---
 
-## Popup Agent
+## Popup
 
 **Location:** [src/popup/](src/popup/)
 
-The popup agent provides a lightweight UI accessed through the extension icon in the browser toolbar.
+The popup provides a lightweight UI accessed through the extension icon in the browser toolbar.
 
 ### Components
 
@@ -158,7 +158,7 @@ Utility functions shared across all agents:
 
 ```
 ┌─────────────────────┐
-│  Background Agent   │  (Service Worker)
+│ Background Script   │  (Service Worker)
 │  - Data Extraction  │
 │  - Page Inspection  │
 └──────────┬──────────┘
@@ -168,7 +168,7 @@ Utility functions shared across all agents:
     ┌──────┴──────┐
     │             │
 ┌───▼────────┐  ┌─▼────────────┐
-│ App Agent  │  │ Popup Agent  │
+│    App     │  │    Popup     │
 │ (Full UI)  │  │ (Quick View) │
 └────────────┘  └──────────────┘
 ```
@@ -211,12 +211,12 @@ npm run stylelint:fix # Fix CSS issues
 
 ```
 src/
-├── background/          # Background service worker agent
-├── app/                 # Main explorer app agent
+├── background/          # Background service worker script
+├── app/                 # Main explorer application
 │   ├── components/      # React components (TypeScript)
 │   ├── context/         # State management (TypeScript)
 │   ├── hooks/           # Custom hooks (TypeScript)
-├── popup/               # Popup agent
+├── popup/               # Popup application
 ├── helpers/             # Shared utilities
 └── global.d.ts          # Global TypeScript declarations for CSS modules
 ```
@@ -225,8 +225,8 @@ src/
 
 ## Technologies Used
 
-- **React 19.2.3** - UI framework for App and Popup agents
-- **TypeScript** - Type-safe React components in App agent
+- **React 19.2.3** - UI framework for App and Popup
+- **TypeScript** - Type-safe React components in App
 - **webextension-polyfill** - Cross-browser extension API compatibility
 - **Webpack** - Module bundler with CSS Modules support
 - **Babel** - JavaScript transpiler
