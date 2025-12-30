@@ -1,3 +1,34 @@
+:root,
+[data-theme="dark"] {
+    --color-primary: #01df74;
+    --color-bg-primary: #222;
+    --color-bg-secondary: #555;
+    --color-text: #fff;
+    --color-pre-key: #fff;
+    --color-pre-str: #01df74;
+    --color-pre-num: #6cf;
+    --color-pre-null: #f0f;
+    --color-pre-bool: #ff4d00;
+    --color-critical: #ff4d00;
+    --color-alert: #ff7300;
+    --color-warn: #c0a901;
+}
+
+[data-theme="light"] {
+    --color-primary: #12b300;
+    --color-bg-primary: #fff;
+    --color-bg-secondary: #ddd;
+    --color-text: #222;
+    --color-pre-key: #222;
+    --color-pre-str: #12b300;
+    --color-pre-num: #0060d8;
+    --color-pre-null: #960096;
+    --color-pre-bool: #f00;
+    --color-critical: #f00;
+    --color-alert: #ff7300;
+    --color-warn: #c0a901;
+}
+
 html,
 body {
     font: 0.9rem/1.5 "Roboto Mono", "Courier New", Courier, monospace;
