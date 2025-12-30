@@ -4,9 +4,9 @@ import { getShowSizes, setShowSizes } from "../../helpers/config";
 import { SetIsCollapsed, SetShowSizes } from "../context/actions";
 import { Context } from "../context/context";
 
-import * as styles from "./Actions.module.css";
+import * as styles from "./ControlBar.module.css";
 
-function Actions({ onExport, onCopy }) {
+function ControlBar({ onExport, onCopy }) {
   const [{ showSizes, isCollapsed }, dispatch] = React.useContext(Context);
 
   const handleOnShowSizesClick = () => {
@@ -52,9 +52,9 @@ function Actions({ onExport, onCopy }) {
   );
 }
 
-Actions.propTypes = {
+ControlBar.propTypes = {
   onCopy: PropTypes.func,
   onExport: PropTypes.func,
 };
 
-export default Actions;
+export default ControlBar;

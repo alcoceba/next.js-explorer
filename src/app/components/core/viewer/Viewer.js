@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Tree from "./viewer/Tree";
+import Tree from "./tree/Tree";
 
 import * as styles from "./Viewer.module.css";
 

@@ -4,7 +4,7 @@ import { classNames } from "../../helpers/classNames";
 import { ROUTER, THEME } from "../../helpers/const";
 import { SetTheme } from "../context/actions";
 import { Context } from "../context/context";
-import SearchBox from "./SearchBox";
+import SearchBox from "./core/searchBox/SearchBox";
 
 import * as styles from "./Header.module.css";
 

@@ -47,42 +47,72 @@ The background script is the core service worker that runs continuously and hand
 
 The app is the main interface for detailed exploration of Next.js data. It's injected into pages and provides a full-featured UI.
 
-### Key Components
+### Component Architecture
 
-#### [src/app/components/App.js](src/app/components/App.js)
-- Main application component that renders the explorer interface
-- Manages overall layout and theme
+Components are organized by complexity level following **atomic design principles**:
 
-#### [src/app/components/Viewer.js](src/app/components/Viewer.js)
-- Displays the tree structure of Next.js data
-- Handles data visualization
+#### Core Atomic Components ([src/app/components/core/](src/app/components/core/))
 
-#### [src/app/components/SearchBox.js](src/app/components/SearchBox.js)
-- Provides search/filter functionality for exploring data
-- Enables quick navigation through large data structures
+Simple, reusable components with no dependencies on other custom components:
 
-#### [src/app/components/Table.js](src/app/components/Table.js)
-- Displays data in tabular format
-- Shows structured information about page routes and data
+- **[switch/](src/app/components/core/switch/)** - Toggle checkbox for boolean inputs
+- **[searchBox/](src/app/components/core/searchBox/)** - Controlled search input field
+- **[loading/](src/app/components/core/loading/)** - Loading spinner and overlay display
+- **[message/](src/app/components/core/message/)** - Notification/toast message component
+- **[portal/](src/app/components/core/portal/)** - React portal wrapper for rendering outside DOM hierarchy
+- **[table/](src/app/components/core/table/)** - Data table display for structured information
+- **[viewer/](src/app/components/core/viewer/)** - Agnostic JSON tree visualizer
+  - **[tree/](src/app/components/core/viewer/tree/)** - Recursive tree structure renderer
+  - **[key/](src/app/components/core/viewer/key/)** - Object/array key renderer with collapsible functionality
+  - **[value/](src/app/components/core/viewer/value/)** - Leaf value renderer with syntax highlighting
 
-#### [src/app/components/Actions.js](src/app/components/Actions.js)
-- Provides action buttons (export, copy, etc.)
-- Handles user interactions with displayed data
+#### Composite Components
 
-#### [src/app/context/](src/app/context/)
-State management using React Context API:
-- **[context.js](src/app/context/context.js)** - Context definition
-- **[reducer.js](src/app/context/reducer.js)** - State reducer for handling actions
-- **[actions.js](src/app/context/actions.js)** - Action creators
+- **[Header.js](src/app/components/Header.js)** - Navigation header with title, version info, theme toggle, search
+- **[Footer.js](src/app/components/Footer.js)** - Footer section with version display
+- **[ControlBar.js](src/app/components/ControlBar.js)** - Toolbar controls for data manipulation
 
-#### [src/app/hooks/useTheme.js](src/app/hooks/useTheme.js)
-- Custom hook for theme management
-- Handles light/dark mode switching
+#### Root/Layout Components
+
+- **[App.js](src/app/components/App.js)** - Root component managing global state
+- **[Theme.js](src/app/components/Theme.js)** - Theme provider wrapper
+
+### Folder Naming Convention
+
+Folders use **camelCase** naming:
+- Aligns with modern React project conventions
+- Keeps folder names lowercase (modular structure)
+- Component names remain PascalCase (e.g., `switch/Switch.js`)
+
+### Key Components Details
+
+#### [src/app/components/core/viewer/Viewer.js](src/app/components/core/viewer/Viewer.js)
+- Agnostic JSON tree visualizer
+- No Next.js-specific dependencies
+- Reusable for any JSON data visualization
+- Delegates rendering to Tree component
+
+#### [src/app/components/core/viewer/tree/Tree.js](src/app/components/core/viewer/tree/Tree.js)
+- Recursive tree structure renderer
+- Combines Key and Value components
+- Handles nested object/array expansion
+- Manages tree hierarchy and collapse/expand state
+
+#### [src/app/components/core/viewer/key/Key.js](src/app/components/core/viewer/key/Key.js)
+- Renders object/array keys
+- Provides collapsible functionality
+- Calculates and displays object size with color-coding
+- Shows key count and memory usage
+
+#### [src/app/components/core/viewer/value/Value.js](src/app/components/core/viewer/value/Value.js)
+- Renders primitive values (strings, numbers, booleans, null)
+- Applies syntax highlighting based on type
+- Provides copy-to-clipboard functionality
+- Handles large value display
 
 ### Styling
-- [src/app/index.css](src/app/index.css) - Global styles
-- [src/app/theme.css](src/app/theme.css) - Theme variables and color schemes
-- CSS Module files for component-scoped styling (`.module.css`)
+- [src/app/index.css](src/app/index.css) - Global styles and theme variables (unified file)
+- CSS Module files for component-scoped styling (`.module.css` pattern)
 - Webpack configured with `css-loader` modules option for CSS Modules support
 
 ---
@@ -193,9 +223,23 @@ The project uses TypeScript for type-safe React components. Key configuration:
 src/
 ├── background/          # Background service worker script
 ├── app/                 # Main explorer application
-│   ├── components/      # React components
-│   ├── context/         # State management
+│   ├── components/      # React components using atomic design
+│   │   ├── core/        # Reusable atomic components
+│   │   │   ├── switch/
+│   │   │   ├── searchBox/
+│   │   │   ├── loading/
+│   │   │   ├── message/
+│   │   │   ├── portal/
+│   │   │   ├── table/
+│   │   │   └── viewer/  # Agnostic JSON tree visualizer
+│   │   │       ├── tree/
+│   │   │       ├── key/
+│   │   │       └── value/
+│   │   ├── Header.js, Footer.js, ControlBar.js
+│   │   ├── App.js, Theme.js
+│   ├── context/         # State management with Context API
 │   ├── hooks/           # Custom hooks
+│   └── index.css        # Global and theme styles (unified)
 ├── popup/               # Popup application
 └── helpers/             # Shared utilities
 ```

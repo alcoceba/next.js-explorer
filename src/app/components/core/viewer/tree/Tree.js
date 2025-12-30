@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { classNames } from "../../../helpers/classNames";
-import { isObjectAndNotEmpty } from "../../../helpers/object";
-import Key from "./Key";
-import Value from "./Value";
+import { classNames } from "../../../../../helpers/classNames";
+import { isObjectAndNotEmpty } from "../../../../../helpers/object";
+import Key from "../key/Key";
+import Value from "../value/Value";
 
 import * as styles from "./Tree.module.css";
 

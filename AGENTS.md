@@ -73,10 +73,27 @@ No formal test suite exists currently. Manual testing is required:
 ### Key Directories
 
 - **`src/background/`** - Service worker entry point (`index.js`)
-- **`src/app/`** - Full explorer UI (React components)
-  - `components/` - Individual React components
+- **`src/app/`** - Full explorer UI (React components and state management)
+  - `components/` - React components using atomic design pattern
+    - `core/` - Reusable atomic components
+      - `switch/` - Toggle checkbox component
+      - `searchBox/` - Search input component
+      - `loading/` - Loading spinner overlay
+      - `message/` - Notification/toast messages
+      - `portal/` - React portal wrapper
+      - `table/` - Data table display component
+      - `viewer/` - Agnostic JSON tree visualizer
+        - `tree/` - Recursive tree renderer
+        - `key/` - Object/array key renderer
+        - `value/` - Leaf value renderer
+    - `Header.js` - Navigation header
+    - `Footer.js` - Footer section
+    - `ControlBar.js` - Toolbar controls
+    - `App.js` - Root application component
+    - `Theme.js` - Theme provider wrapper
   - `context/` - State management with Context API
   - `hooks/` - Custom React hooks
+  - `index.css` - Global and theme styles (unified)
 - **`src/popup/`** - Quick access popup UI
 - **`src/helpers/`** - Shared utility functions
 
@@ -93,6 +110,38 @@ No formal test suite exists currently. Manual testing is required:
 
 ## Key Components and Modules
 
+### Component Architecture
+
+The component structure follows **atomic design principles** with components organized by reusability level:
+
+#### Core Atomic Components (`src/app/components/core/`)
+
+Simple, reusable, self-contained components with no dependencies on other custom components:
+
+- **switch/** - Toggle checkbox for boolean inputs
+- **searchBox/** - Controlled search input field
+- **loading/** - Loading spinner and overlay display
+- **message/** - Notification/toast message component
+- **portal/** - React portal wrapper for rendering outside DOM hierarchy
+- **viewer/** - Agnostic JSON tree visualizer (self-contained, reusable)
+  - **tree/** - Recursive tree structure renderer
+  - **key/** - Object/array key with collapsible functionality and size display
+  - **value/** - Leaf value renderer with syntax highlighting
+
+#### Composite Components
+
+Components combining atoms and providing feature-specific functionality:
+
+- **Header** - Navigation with title, version info, theme toggle, search integration
+- **Footer** - Footer section with version display
+- **Actions** - Toolbar controls (collapse, export, copy, show sizes)
+- **Table** - Tabular data display with expandable rows
+
+#### Root/Layout Components
+
+- **App** - Root component managing global state and orchestrating all components
+- **Theme** - Theme provider wrapper applying CSS theme variables
+
 ### Background Script (`src/background/index.js`)
 
 The main service worker:
@@ -104,15 +153,6 @@ The main service worker:
 Key functions:
 - `getRawData()` - Extracts Next.js data from the page
 - `getIcon()` - Determines badge icon based on context
-
-### App (`src/app/`)
-
-Full-featured explorer UI injected into pages:
-- Tree viewer for data structure exploration
-- Search/filter functionality
-- Table display for routes
-- Export/copy utilities
-- Theme switching
 
 ### Popup (`src/popup/`)
 

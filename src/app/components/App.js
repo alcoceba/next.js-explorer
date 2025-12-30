@@ -10,15 +10,15 @@ import {
 } from "../../helpers/object";
 import { getRowsInfo } from "../../helpers/rows";
 import ContextProvider from "../context/context";
-import Actions from "./Actions";
+import ControlBar from "./ControlBar";
 import Footer from "./Footer";
 import Header from "./Header";
-import Loading from "./Loading";
-import Message from "./Message";
-import Portal from "./Portal";
-import Table from "./Table";
+import Loading from "./core/loading/Loading";
+import Message from "./core/message/Message";
+import Portal from "./core/portal/Portal";
+import Table from "./core/table/Table";
 import Theme from "./Theme";
-import Viewer from "./Viewer";
+import Viewer from "./core/viewer/Viewer";
 
 import * as styles from "./App.module.css";
 
@@ -97,7 +97,7 @@ function App() {
                 <Table rows={rowsInfo} />
               </div>
             )}
-            <Actions
+            <ControlBar
               onExport={handleOnExport}
               onCopy={(value) => handleOnCopyJson(value)}
             />

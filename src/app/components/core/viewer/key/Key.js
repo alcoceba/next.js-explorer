@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { classNames } from "../../../helpers/classNames";
-import { DEFAULT_SIZE } from "../../../helpers/const";
-import { getObjSize } from "../../../helpers/object";
-import { Context } from "../../context/context";
+import { classNames } from "../../../../../helpers/classNames";
+import { DEFAULT_SIZE } from "../../../../../helpers/const";
+import { getObjSize } from "../../../../../helpers/object";
+import { Context } from "../../../../context/context";
 
 import * as styles from "./Key.module.css";
 
