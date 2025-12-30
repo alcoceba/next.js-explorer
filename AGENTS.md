@@ -1,239 +1,227 @@
-# Next.js Explorer - Application Architecture
+# AGENTS.md
 
-This document describes the different applications (modules and components) that make up the Next.js Explorer browser extension. The extension follows a modular architecture with clear separation of concerns.
+Practical guidance for AI coding agents working on the Next.js Explorer browser extension project.
 
-## Overview
-
-The Next.js Explorer extension is composed of three main applications:
-
-1. **Background Script** - Service worker that manages extension logic and page data inspection
-2. **App** - Main interface for exploring Next.js data
-3. **Popup** - Quick access UI that appears when the extension icon is clicked
+For detailed architecture and component documentation, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ---
 
-## Background Script
+## Setup and Installation
 
-**Location:** [src/background/index.js](src/background/index.js)
-
-The background script is the core service worker that runs continuously and handles:
-
-### Responsibilities
-- **Data Extraction:** Inspects the current webpage to extract Next.js application data using `executeScript()`
-- **Version Detection:** Identifies Next.js version and React version running on the page
-- **Router Detection:** Distinguishes between App Router and Pages Router
-- **Data Processing:** Decodes and parses Flight data from Next.js streaming responses
-- **State Management:** Maintains badge icons indicating page analysis status
-- **Message Handling:** Communicates with popup and app via message passing
-
-### Key Functions
-- `getRawData()` - Extracts raw Next.js data from the page
-- `getIcon()` - Determines the extension badge icon based on router type and data size
-- Context management using the helper functions
-
-### Data Extraction Strategy
-- Accesses `window.__next_f` for App Router data
-- Accesses `document.getElementById("__NEXT_DATA__")` for Pages Router data
-- Retrieves React version from `window.React` or React DevTools hook
-- Uses web extension scripting API with `world: 'MAIN'` for main context access
+- Install dependencies: `npm install`
+- The project uses npm with workspaces configured in `package.json`
+- Node.js 20+ is required
 
 ---
 
-## App
+## Development Workflow
 
-**Location:** [src/app/](src/app/)
+### Build Commands
 
-The app is the main interface for detailed exploration of Next.js data. It's injected into pages and provides a full-featured UI.
+- **Watch mode (Chrome):** `npm run watch:chrome`
+- **Watch mode (Firefox):** `npm run watch:firefox`
+- **Production build (Chrome):** `npm run build:chrome`
+- **Production build (Firefox):** `npm run build:firefox`
 
-### Key Components
+The built extension will be in the `dist/` folder.
 
-#### [src/app/components/App.tsx](src/app/components/App.tsx)
-- Main application component that renders the explorer interface
-- Manages overall layout and theme
+### Running the Extension
 
-#### [src/app/components/Viewer.tsx](src/app/components/Viewer.tsx)
-- Displays the tree structure of Next.js data
-- Handles data visualization
-
-#### [src/app/components/SearchBox.tsx](src/app/components/SearchBox.tsx)
-- Provides search/filter functionality for exploring data
-- Enables quick navigation through large data structures
-
-#### [src/app/components/Table.tsx](src/app/components/Table.tsx)
-- Displays data in tabular format
-- Shows structured information about page routes and data
-
-#### [src/app/components/Actions.tsx](src/app/components/Actions.tsx)
-- Provides action buttons (export, copy, etc.)
-- Handles user interactions with displayed data
-
-#### [src/app/context/](src/app/context/)
-State management using React Context API:
-- **[context.tsx](src/app/context/context.tsx)** - Context definition
-- **[reducer.ts](src/app/context/reducer.ts)** - State reducer for handling actions
-- **[actions.ts](src/app/context/actions.ts)** - Action creators
-
-#### [src/app/hooks/useTheme.ts](src/app/hooks/useTheme.ts)
-- Custom hook for theme management
-- Handles light/dark mode switching
-
-### Styling
-- [src/app/index.css](src/app/index.css) - Global styles
-- [src/app/theme.css](src/app/theme.css) - Theme variables and color schemes
-- CSS Module files for component-scoped styling (`.module.css`)
-- Webpack configured with `css-loader` modules option for CSS Modules support
+1. Build the extension using watch mode for your target browser
+2. Load the unpacked extension from `dist/chrome/` or `dist/firefox/`
+3. The extension will activate on any page with a Next.js application detected
 
 ---
 
-## Popup
-
-**Location:** [src/popup/](src/popup/)
-
-The popup provides a lightweight UI accessed through the extension icon in the browser toolbar.
-
-### Components
-
-#### [src/popup/App.js](src/popup/App.js)
-- Main popup application component
-- Displays quick summary of Next.js app detection
-- Provides navigation to full app interface
-
-#### [src/popup/Popup.js](src/popup/Popup.js)
-- Popup container and layout
-
-#### [src/popup/Popup.module.css](src/popup/Popup.module.css)
-- Popup-specific styling
-
-### Purpose
-- Quick preview of detected Next.js data
-- Links to open the full explorer interface
-- Shows page status and version information
-
----
-
-## Helper Modules
-
-**Location:** [src/helpers/](src/helpers/)
-
-Utility functions shared across all agents:
-
-### [src/helpers/const.js](src/helpers/const.js)
-- Application constants (router types, default sizes, etc.)
-- Configuration values
-
-### [src/helpers/context.js](src/helpers/context.js)
-- Context-related helper functions
-- Message passing utilities
-
-### [src/helpers/tabs.js](src/helpers/tabs.js)
-- Browser tab management utilities
-- `getCurrentTab()` - Gets the active tab information
-
-### [src/helpers/utils.js](src/helpers/utils.js)
-- General utility functions
-- `decode()` - Decodes data from Next.js streams
-
-### [src/helpers/object.js](src/helpers/object.js)
-- Object manipulation utilities
-- `getObjSize()` - Calculates object size
-
-### [src/helpers/rows.js](src/helpers/rows.js)
-- Data row processing for table display
-
-### [src/helpers/copy.js](src/helpers/copy.js)
-- Copy-to-clipboard utilities
-
-### [src/helpers/classNames.js](src/helpers/classNames.js)
-- CSS class name composition utility
-
-### [src/helpers/config.js](src/helpers/config.js)
-- Configuration helpers
-
-### [src/helpers/parseFlightData.js](src/helpers/parseFlightData.js)
-- Parses Next.js Flight streaming data format
-
----
-
-## Agent Communication Flow
-
-```
-┌─────────────────────┐
-│ Background Script   │  (Service Worker)
-│  - Data Extraction  │
-│  - Page Inspection  │
-└──────────┬──────────┘
-           │
-           │ Message Passing
-           │
-    ┌──────┴──────┐
-    │             │
-┌───▼────────┐  ┌─▼────────────┐
-│    App     │  │    Popup     │
-│ (Full UI)  │  │ (Quick View) │
-└────────────┘  └──────────────┘
-```
-
----
-
-## Development
-
-### TypeScript Configuration
-
-The project uses TypeScript for type-safe React components. Key configuration:
-
-- **[global.d.ts](global.d.ts)** - Global type declarations for CSS modules
-- **[tsconfig.json](tsconfig.json)** - TypeScript compiler configuration with strict mode enabled
-- **Webpack CSS Module Loader** - Configured in `webpack.config.js` with `css-loader` modules option to handle `.module.css` files
-
-### Building the Extension
-
-For development with watch mode:
-- **Chrome:** `npm run watch:chrome`
-- **Firefox:** `npm run watch:firefox`
-
-For production builds:
-- **Chrome:** `npm run build:chrome`
-- **Firefox:** `npm run build:firefox`
+## Code Quality
 
 ### Linting
 
-Run linters to check code quality:
-```bash
-npm run lint          # ESLint check
-npm run lint:fix      # Fix ESLint issues
-npm run stylelint     # Check CSS
-npm run stylelint:fix # Fix CSS issues
-```
+Run linters to check code quality before committing:
+
+- **ESLint check:** `npm run lint`
+- **Fix ESLint issues:** `npm run lint:fix`
+- **Check CSS:** `npm run stylelint`
+- **Fix CSS issues:** `npm run stylelint:fix`
+
+Always run `npm run lint:fix` before pushing changes.
+
+### Code Style
+
+- **JavaScript/Files:** Standard JavaScript with ESLint rules
+- **CSS:** Use CSS Modules for component styling (`.module.css` pattern)
+- **Component Structure:** React functional components with hooks
+- **State Management:** Use React Context API for cross-component state
 
 ---
 
-## File Structure
+## Testing and Verification
 
-```
-src/
-├── background/          # Background service worker script
-├── app/                 # Main explorer application
-│   ├── components/      # React components (TypeScript)
-│   ├── context/         # State management (TypeScript)
-│   ├── hooks/           # Custom hooks (TypeScript)
-├── popup/               # Popup application
-├── helpers/             # Shared utilities
-└── global.d.ts          # Global TypeScript declarations for CSS modules
-```
+No formal test suite exists currently. Manual testing is required:
+
+1. Build the extension with watch mode
+2. Load it in Chrome or Firefox
+3. Navigate to any Next.js application
+4. Verify data is correctly extracted
+5. Check popup displays detected version information
+6. Test the full explorer view loads without errors
 
 ---
 
-## Technologies Used
+## File Organization
 
-- **React 19.2.3** - UI framework for App and Popup
-- **TypeScript** - Type-safe React components in App
-- **webextension-polyfill** - Cross-browser extension API compatibility
-- **Webpack** - Module bundler with CSS Modules support
-- **Babel** - JavaScript transpiler
-- **CSS Modules** - Component-scoped styling
+### Key Directories
+
+- **`src/background/`** - Service worker entry point (`index.js`)
+- **`src/app/`** - Full explorer UI (React components)
+  - `components/` - Individual React components
+  - `context/` - State management with Context API
+  - `hooks/` - Custom React hooks
+- **`src/popup/`** - Quick access popup UI
+- **`src/helpers/`** - Shared utility functions
+
+### Configuration Files
+
+- **`webpack.config.js`** - Module bundler configuration
+- **`tsconfig.json`** - TypeScript settings (strict mode enabled)
+- **`global.d.ts`** - Global type declarations for CSS Modules
+- **`eslint.config.mjs`** - ESLint configuration
+- **`manifest.chrome.json`** - Chrome extension manifest
+- **`manifest.firefox.json`** - Firefox extension manifest
+
+---
+
+## Key Components and Modules
+
+### Background Script (`src/background/index.js`)
+
+The main service worker:
+- Detects Next.js apps and their router type
+- Extracts application data from the page
+- Manages extension badge state
+- Communicates with app and popup via message passing
+
+Key functions:
+- `getRawData()` - Extracts Next.js data from the page
+- `getIcon()` - Determines badge icon based on context
+
+### App (`src/app/`)
+
+Full-featured explorer UI injected into pages:
+- Tree viewer for data structure exploration
+- Search/filter functionality
+- Table display for routes
+- Export/copy utilities
+- Theme switching
+
+### Popup (`src/popup/`)
+
+Quick-access UI shown when extension icon is clicked:
+- Shows detected Next.js version
+- Links to open full explorer
+- Displays page status
+
+### Helper Modules (`src/helpers/`)
+
+Shared utilities for all parts:
+- Data parsing and decoding
+- Message passing helpers
+- Object utilities (size calculation, etc.)
+- DOM utilities
+- Configuration management
+
+---
+
+## Data Flow
+
+1. **Detection:** Background script scans page for `window.__next_f` (App Router) or `__NEXT_DATA__` (Pages Router)
+2. **Parsing:** Flight data is decoded and parsed into structured format
+3. **Storage:** Data is processed and made available to app/popup
+4. **Display:** React components render data in tree, table, or other views
+
+---
+
+## Extension Manifest Notes
+
+Two manifests maintained:
+- **`manifest.chrome.json`** - Chrome/Chromium manifest (MV3)
+- **`manifest.firefox.json`** - Firefox manifest (MV2 compatibility)
+
+Build process selects appropriate manifest based on target browser.
+
+---
+
+## Debugging Tips
+
+- **Check service worker:** Open `chrome://extensions/` → Next.js Explorer → Service Worker
+- **Check popup errors:** Right-click extension icon → Inspect popup
+- **Page data:** Open browser DevTools → check `window.__next_f` or `window.__NEXT_DATA__`
+- **Message passing:** Check background script logs for message failures
+- **CSS Issues:** Verify CSS Module imports in components (should reference `.module.css` files)
+
+---
+
+## Dependencies
+
+Core dependencies (see `package.json` for versions):
+- **React** - UI framework
+- **webextension-polyfill** - Cross-browser API compatibility
+- **Webpack** - Module bundling
+- **Babel** - JavaScript transpilation
+- **ESLint** - Code linting
+- **StyleLint** - CSS linting
+
+---
+
+## Common Development Tasks
+
+### Adding a New Component
+
+1. Create `.js` file in `src/app/components/`
+2. Create corresponding `.module.css` file for styles
+3. Import and use in parent component
+4. Add any required Context hooks
+
+### Adding a Helper Function
+
+1. Create or edit file in `src/helpers/`
+2. Export function with clear naming
+3. Import where needed (avoid circular dependencies)
+
+### Changing the Data Extraction Logic
+
+1. Modify `src/background/index.js` getRawData() function
+2. Update parsing in `src/helpers/parseFlightData.js` if needed
+3. Test with different Next.js app variations
+4. Rebuild and reload extension
+
+### Modifying UI Components
+
+1. Edit component in `src/app/components/`
+2. Update styles in corresponding `.module.css`
+3. Test theme switching (dark/light mode)
+4. Verify responsive layout
+
+---
+
+## Browser Support
+
+- **Chrome/Chromium:** Full support via MV3 manifest
+- **Firefox:** Support via MV2-compatible manifest
+
+Build for your target browser using appropriate npm script.
+
+---
+
+## Performance Considerations
+
+- Data parsing happens in background script to avoid blocking main thread
+- Component memoization used in Viewer for large data trees
+- CSS Modules keep styling scoped and minimal
+- Lazy loading in app explorer for large datasets
 
 ---
 
 ## License
 
-This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
+BSD 3-Clause License - See [LICENSE](LICENSE) file for details.
