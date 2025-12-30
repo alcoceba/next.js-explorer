@@ -9,14 +9,28 @@ module.exports = {
   entry: {
     background: "./src/background/index.js",
     popup: "./src/popup/index.js",
-    app: "./src/app/index.js",
+    app: "./src/app/index.tsx",
   },
   mode: Environment,
   devtool: "cheap-module-source-map",
   module: {
     rules: [
       {
-        test: /\.?jsx?$/,
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [
+              "@babel/preset-env",
+              "@babel/preset-typescript",
+              ["@babel/preset-react", { runtime: "automatic" }],
+            ],
+          },
+        },
+      },
+      {
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
@@ -30,7 +44,21 @@ module.exports = {
       },
       {
         exclude: /node_modules/,
+        test: /\.module\.css$/i,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+            },
+          },
+        ],
+      },
+      {
+        exclude: /node_modules/,
         test: /\.css$/i,
+        exclude: /\.module\.css$/i,
         use: ["style-loader", "css-loader"],
       },
     ],
