@@ -35,20 +35,20 @@ The built extension will be in the `dist/` folder.
 
 ## Code Quality
 
-### Linting
+Run linters and formatters to check code quality before committing:
 
-Run linters to check code quality before committing:
-
+- **Prettier check:** `npm run format:check`
+- **Format with Prettier:** `npm run format`
 - **ESLint check:** `npm run lint`
 - **Fix ESLint issues:** `npm run lint:fix`
 - **Check CSS:** `npm run stylelint`
 - **Fix CSS issues:** `npm run stylelint:fix`
 
-Always run `npm run lint:fix` before pushing changes.
+Always run `npm run lint:fix` and `npm run format` before pushing changes.
 
 ### Code Style
 
-- **JavaScript/Files:** Standard JavaScript with ESLint rules
+- **JavaScript/Files:** Standard JavaScript with ESLint and Prettier rules
 - **CSS:** Use CSS Modules for component styling (`.module.css` pattern)
 - **Component Structure:** React functional components with hooks
 - **State Management:** Use React Context API for cross-component state
