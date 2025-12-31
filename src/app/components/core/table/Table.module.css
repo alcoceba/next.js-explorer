@@ -1,30 +1,30 @@
 .table {
-    display: flex;
+  display: flex;
 }
 
 .table table {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 .table table td {
-    min-width: 100px;
-    padding: .25rem .75rem;
-    border: 1px solid var(--color-bg-secondary);
+  min-width: 100px;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--color-bg-secondary);
 }
 
 .table table td:last-child {
-    min-width: 200px;
+  min-width: 200px;
 }
 
 .button {
-    align-self: flex-end;
-    margin-left: 1rem;
-    color: var(--color-primary);
-    cursor: pointer;
-    transition: all .15s ease-out;
-    white-space: nowrap;
+  align-self: flex-end;
+  margin-left: 1rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+  white-space: nowrap;
 }
 
 .button:hover {
-    opacity: .9;
+  opacity: 0.9;
 }

@@ -1,76 +1,80 @@
 :root,
-[data-theme="dark"] {
-    --color-primary: #01df74;
-    --color-bg-primary: #222;
-    --color-bg-secondary: #555;
-    --color-text: #fff;
-    --color-pre-key: #fff;
-    --color-pre-str: #01df74;
-    --color-pre-num: #6cf;
-    --color-pre-null: #f0f;
-    --color-pre-bool: #ff4d00;
-    --color-critical: #ff4d00;
-    --color-alert: #ff7300;
-    --color-warn: #c0a901;
+[data-theme='dark'] {
+  --color-primary: #01df74;
+  --color-bg-primary: #222;
+  --color-bg-secondary: #555;
+  --color-text: #fff;
+  --color-pre-key: #fff;
+  --color-pre-str: #01df74;
+  --color-pre-num: #6cf;
+  --color-pre-null: #f0f;
+  --color-pre-bool: #ff4d00;
+  --color-critical: #ff4d00;
+  --color-alert: #ff7300;
+  --color-warn: #c0a901;
 }
 
-[data-theme="light"] {
-    --color-primary: #12b300;
-    --color-bg-primary: #fff;
-    --color-bg-secondary: #ddd;
-    --color-text: #222;
-    --color-pre-key: #222;
-    --color-pre-str: #12b300;
-    --color-pre-num: #0060d8;
-    --color-pre-null: #960096;
-    --color-pre-bool: #f00;
-    --color-critical: #f00;
-    --color-alert: #ff7300;
-    --color-warn: #c0a901;
+[data-theme='light'] {
+  --color-primary: #12b300;
+  --color-bg-primary: #fff;
+  --color-bg-secondary: #ddd;
+  --color-text: #222;
+  --color-pre-key: #222;
+  --color-pre-str: #12b300;
+  --color-pre-num: #0060d8;
+  --color-pre-null: #960096;
+  --color-pre-bool: #f00;
+  --color-critical: #f00;
+  --color-alert: #ff7300;
+  --color-warn: #c0a901;
 }
 
 html,
 body {
-    font: 0.9rem/1.5 "Roboto Mono", "Courier New", Courier, monospace;
-    font-size: 11px;
+  font:
+    0.9rem/1.5 'Roboto Mono',
+    'Courier New',
+    Courier,
+    monospace;
+  font-size: 11px;
 }
 
 body {
-    margin: 0 20px;
-    padding-bottom: 20px;
-    background: var(--color-bg-primary);
-    color: var(--color-text);
+  margin: 0 20px;
+  padding-bottom: 20px;
+  background: var(--color-bg-primary);
+  color: var(--color-text);
 }
 
 body::after {
-    content: " ";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    visibility: hidden;
-    transition: all .25s ease-out;
+  content: ' ';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease-out;
 }
 
 a[href] {
-    color: var(--color-primary);
-    text-decoration: underline;
-    transition: all .15s ease-out;
+  color: var(--color-primary);
+  text-decoration: underline;
+  transition: all 0.15s ease-out;
 }
 
 a[href]:hover {
-    color: var(--color-text);
+  color: var(--color-text);
 }
 
 ul {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 li {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }

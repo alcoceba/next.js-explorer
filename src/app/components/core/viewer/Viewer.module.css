@@ -1,13 +1,13 @@
 .viewer pre {
-    margin-top: 0;
-    height: 100%;
-    padding: 12px;
-    background: var(--color-bg-secondary);
-    color: var(--color-text);
-    white-space: pre-wrap;
-    overflow: hidden auto;
+  margin-top: 0;
+  height: 100%;
+  padding: 12px;
+  background: var(--color-bg-secondary);
+  color: var(--color-text);
+  white-space: pre-wrap;
+  overflow: hidden auto;
 }
 
 .loading {
-    margin: 0;
+  margin: 0;
 }

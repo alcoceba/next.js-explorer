@@ -1,15 +1,15 @@
-import browser from "webextension-polyfill";
-import { DEFAULT_SIZE, ROUTER } from "../helpers/const";
-import { setContext } from "../helpers/context";
-import { getObjSize } from "../helpers/object";
-import { getCurrentTab } from "../helpers/tabs";
-import { decode } from "../helpers/utils";
+import browser from 'webextension-polyfill';
+import { DEFAULT_SIZE, ROUTER } from '../helpers/const';
+import { setContext } from '../helpers/context';
+import { getObjSize } from '../helpers/object';
+import { getCurrentTab } from '../helpers/tabs';
+import { decode } from '../helpers/utils';
 
 let nextModel = null;
 
 const getIcon = (size, isAppRouter) => {
-  if (isAppRouter) return "app";
-  return size > DEFAULT_SIZE ? "ko" : "ok";
+  if (isAppRouter) return 'app';
+  return size > DEFAULT_SIZE ? 'ko' : 'ok';
 };
 
 const getRawData = async () => {
@@ -21,11 +21,11 @@ const getRawData = async () => {
         if (window?.React?.version) return window.React.version;
         if (!window?.__REACT_DEVTOOLS_GLOBAL_HOOK__) return null;
         return window.__REACT_DEVTOOLS_GLOBAL_HOOK__?.renderers?.get(1)?.version;
-      }
+      };
 
       return {
         appRawData: window?.__next_f,
-        pagesRawData: document.getElementById("__NEXT_DATA__")?.textContent,
+        pagesRawData: document.getElementById('__NEXT_DATA__')?.textContent,
         isAppRouter: !!window?.__next_f,
         reactVersion: getReactVersion(),
         nextVersion: window?.next?.version,
@@ -44,7 +44,7 @@ const getRawData = async () => {
       world: 'MAIN',
     });
     return results?.result;
-    // eslint-disable-next-line no-unused-vars  
+    // eslint-disable-next-line no-unused-vars
   } catch (e) {
     return null;
   }
@@ -65,11 +65,11 @@ const parseData = (data) => {
       react: {
         v: data?.reactVersion,
       },
-    }
+    },
   };
 
   nextModel = model;
-}
+};
 
 const sendMessageToContent = async (action, data) => {
   const tab = await getCurrentTab();
@@ -77,16 +77,14 @@ const sendMessageToContent = async (action, data) => {
   if (tab.id) {
     try {
       await browser.tabs.sendMessage(tab.id, {
-        to: "content",
+        to: 'content',
         action,
         data,
       });
       // eslint-disable-next-line no-unused-vars,no-empty
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }
-}
+};
 
 const updateExtensionIcon = async () => {
   if (nextModel?.data?.next?.data) {
@@ -105,10 +103,7 @@ const updateExtensionIcon = async () => {
         tabId: tab.id,
       });
       // eslint-disable-next-line no-unused-vars,no-empty
-    } catch (e) {
-
-    }
-
+    } catch (e) {}
   }
 };
 
@@ -120,10 +115,10 @@ const handleOnIconClick = async () => {
       browser.tabs.create({ url: `index.html?id=${tab?.id}` });
       // eslint-disable-next-line no-unused-vars
     } catch (e) {
-      sendMessageToContent("show-message", "no-next");
+      sendMessageToContent('show-message', 'no-next');
     }
   } else {
-    sendMessageToContent("show-message", "no-next");
+    sendMessageToContent('show-message', 'no-next');
   }
 };
 
@@ -139,8 +134,7 @@ const init = () => {
     browser.tabs.onActivated.addListener(handleOnTabUpdated);
     browser.action.onClicked.addListener(handleOnIconClick);
     // eslint-disable-next-line no-unused-vars,no-empty
-  } catch (e) {
-  }
+  } catch (e) {}
 };
 
 init();

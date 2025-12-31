@@ -1,74 +1,74 @@
 .li {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .collapsible {
-    position: relative;
-    transition: opacity .1s ease-out;
-    font-weight: bold;
-    padding-left: 11px;
+  position: relative;
+  transition: opacity 0.1s ease-out;
+  font-weight: bold;
+  padding-left: 11px;
 }
 
 .collapsible::before {
-    content: '▼';
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    position: absolute;
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    color: var(--color-text);
-    margin-left: -15px;
-    font-size: 9px;
-    transition: transform .1s ease-out;
+  content: '▼';
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  color: var(--color-text);
+  margin-left: -15px;
+  font-size: 9px;
+  transition: transform 0.1s ease-out;
 }
 
 .ellipsis {
-    display: none;
+  display: none;
 }
 
 .hidden .tree {
-    display: none;
+  display: none;
 }
 
 .hidden .ellipsis {
-    display: inline-block;
+  display: inline-block;
 }
 
 .hidden .collapsible::before {
-    transform: rotate(-90deg);
+  transform: rotate(-90deg);
 }
 
 .info {
-    border-radius: 6px;
-    padding: 0 5px;
-    font-size: 9px;
-    font-style: italic;
-    color: var(--color-pre-key);
-    opacity: .6;
-    transition: all .15s ease-in-out;
-    margin-left: .5rem;
+  border-radius: 6px;
+  padding: 0 5px;
+  font-size: 9px;
+  font-style: italic;
+  color: var(--color-pre-key);
+  opacity: 0.6;
+  transition: all 0.15s ease-in-out;
+  margin-left: 0.5rem;
 }
 
 .open {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 .critical {
-    border-radius: 2px;
-    padding: 0 4px;
-    background-color: var(--color-critical);
+  border-radius: 2px;
+  padding: 0 4px;
+  background-color: var(--color-critical);
 }
 
 .alert {
-    border-radius: 2px;
-    padding: 0 4px;
-    background-color: var(--color-alert);
+  border-radius: 2px;
+  padding: 0 4px;
+  background-color: var(--color-alert);
 }
 
 .warn {
-    border-radius: 2px;
-    padding: 0 4px;
-    background-color: var(--color-warn);
+  border-radius: 2px;
+  padding: 0 4px;
+  background-color: var(--color-warn);
 }

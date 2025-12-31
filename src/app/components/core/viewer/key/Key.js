@@ -1,17 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { classNames } from "../../../../../helpers/classNames";
-import { DEFAULT_SIZE } from "../../../../../helpers/const";
-import { getObjSize } from "../../../../../helpers/object";
-import { Context } from "../../../../context/context";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { classNames } from '../../../../../helpers/classNames';
+import { DEFAULT_SIZE } from '../../../../../helpers/const';
+import { getObjSize } from '../../../../../helpers/object';
+import { Context } from '../../../../context/context';
 
-import * as styles from "./Key.module.css";
+import * as styles from './Key.module.css';
 
 const color = (size) => {
   if (size > DEFAULT_SIZE) return styles.critical;
   else if (size > DEFAULT_SIZE * 0.5) return styles.alert;
   else if (size > DEFAULT_SIZE * 0.2) return styles.warn;
-  else return "";
+  else return '';
 };
 
 function Key({ index, tree, children }) {
@@ -30,25 +30,23 @@ function Key({ index, tree, children }) {
 
   return (
     <li onClick={handleOnKeyClick} className={classNames(styles.li, !isHidden && styles.hidden)}>
-      <span className={styles.collapsible}>
-        {index}
-      </span>
+      <span className={styles.collapsible}>{index}</span>
 
-      <span className={styles.open}>{Array.isArray(tree) ? "[" : "{"}</span>
+      <span className={styles.open}>{Array.isArray(tree) ? '[' : '{'}</span>
 
       {showSizes && (
         <span className={styles.info}>
           {length} keys /&nbsp;
-          <span className={color(size)}>
-            {size < 1000 ? `${size} bytes` : `${size / 1000} Kb`}
-          </span>
+          <span className={color(size)}>{size < 1000 ? `${size} bytes` : `${size / 1000} Kb`}</span>
         </span>
       )}
 
-      <div ref={refChildren} className={styles.tree}>{children}</div>
+      <div ref={refChildren} className={styles.tree}>
+        {children}
+      </div>
       <span className={styles.ellipsis}> ... </span>
 
-      <span>{Array.isArray(tree) ? "]" : "}"}</span>
+      <span>{Array.isArray(tree) ? ']' : '}'}</span>
     </li>
   );
 }

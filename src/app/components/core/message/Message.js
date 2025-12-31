@@ -1,18 +1,18 @@
-import PropTypes from "prop-types";
-import React from "react";
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import * as styles from "./Message.module.css";
+import * as styles from './Message.module.css';
 
 function Message({ children }) {
-    return (
-        <div className={styles.message}>
-            <span>{children}</span>
-        </div>
-    );
+  return (
+    <div className={styles.message}>
+      <span>{children}</span>
+    </div>
+  );
 }
 
 Message.propTypes = {
-    children: PropTypes.any,
+  children: PropTypes.any,
 };
 
 export default Message;

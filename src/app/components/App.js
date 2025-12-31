@@ -1,26 +1,21 @@
-import React from "react";
-import { ROUTER } from "../../helpers/const";
-import { getContext } from "../../helpers/context";
-import copy from "../../helpers/copy";
-import {
-  exportJson,
-  filterJson,
-  getObjKeysCount,
-  getObjSize,
-} from "../../helpers/object";
-import { getRowsInfo } from "../../helpers/rows";
-import ContextProvider from "../context/context";
-import ControlBar from "./ControlBar";
-import Footer from "./Footer";
-import Header from "./Header";
-import Loading from "./core/loading/Loading";
-import Message from "./core/message/Message";
-import Portal from "./core/portal/Portal";
-import Table from "./core/table/Table";
-import Theme from "./Theme";
-import Viewer from "./core/viewer/Viewer";
+import React from 'react';
+import { ROUTER } from '../../helpers/const';
+import { getContext } from '../../helpers/context';
+import copy from '../../helpers/copy';
+import { exportJson, filterJson, getObjKeysCount, getObjSize } from '../../helpers/object';
+import { getRowsInfo } from '../../helpers/rows';
+import ContextProvider from '../context/context';
+import ControlBar from './ControlBar';
+import Footer from './Footer';
+import Header from './Header';
+import Loading from './core/loading/Loading';
+import Message from './core/message/Message';
+import Portal from './core/portal/Portal';
+import Table from './core/table/Table';
+import Theme from './Theme';
+import Viewer from './core/viewer/Viewer';
 
-import * as styles from "./App.module.css";
+import * as styles from './App.module.css';
 
 function App() {
   const timeout = React.useRef(null);
@@ -67,7 +62,7 @@ function App() {
   React.useEffect(() => {
     const load = async () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const context = await getContext(urlParams.get("id"));
+      const context = await getContext(urlParams.get('id'));
 
       setContext({
         ...context,
@@ -97,24 +92,18 @@ function App() {
                 <Table rows={rowsInfo} />
               </div>
             )}
-            <ControlBar
-              onExport={handleOnExport}
-              onCopy={(value) => handleOnCopyJson(value)}
-            />
+            <ControlBar onExport={handleOnExport} onCopy={(value) => handleOnCopyJson(value)} />
           </div>
 
           {context?.next?.router === ROUTER.App && (
             <div className={styles.notice}>
               {json
-                ? "This is the data included in the bundle and sent to the client"
+                ? 'This is the data included in the bundle and sent to the client'
                 : "🔴 Sorry, but we haven't been able to unpack the bundles sent to the client"}
             </div>
           )}
 
-          <Viewer
-            json={json}
-            onCopy={handleOnCopy}
-          />
+          <Viewer json={json} onCopy={handleOnCopy} />
 
           {!!showMessage?.id && (
             <Portal key={showMessage.id}>

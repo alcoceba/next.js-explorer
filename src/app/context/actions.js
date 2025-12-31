@@ -1,6 +1,6 @@
-export const SET_THEME = "SET_THEME";
-export const SET_SHOW_SIZES = "SET_SHOW_SIZES";
-export const SET_IS_COLLAPSED = "SET_IS_COLLAPSED";
+export const SET_THEME = 'SET_THEME';
+export const SET_SHOW_SIZES = 'SET_SHOW_SIZES';
+export const SET_IS_COLLAPSED = 'SET_IS_COLLAPSED';
 
 export const SetTheme = (payload) => {
   return {

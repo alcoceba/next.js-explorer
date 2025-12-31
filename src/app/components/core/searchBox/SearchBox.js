@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
-import React from "react";
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import * as styles from "./SearchBox.module.css";
+import * as styles from './SearchBox.module.css';
 
 function SearchBox({ onChange }) {
   return (

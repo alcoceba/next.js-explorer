@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { getShowSizes, setShowSizes } from "../../helpers/config";
-import { SetIsCollapsed, SetShowSizes } from "../context/actions";
-import { Context } from "../context/context";
+import PropTypes from 'prop-types';
+import React from 'react';
+import { getShowSizes, setShowSizes } from '../../helpers/config';
+import { SetIsCollapsed, SetShowSizes } from '../context/actions';
+import { Context } from '../context/context';
 
-import * as styles from "./ControlBar.module.css";
+import * as styles from './ControlBar.module.css';
 
 function ControlBar({ onExport, onCopy }) {
   const [{ showSizes, isCollapsed }, dispatch] = React.useContext(Context);
@@ -33,7 +33,7 @@ function ControlBar({ onExport, onCopy }) {
   return (
     <div className={styles.actions}>
       <span className={styles.highlight} onClick={handleOnShowSizesClick}>
-        {showSizes ? "hide sizes" : "show sizes"}
+        {showSizes ? 'hide sizes' : 'show sizes'}
       </span>
       <span onClick={handleOnCollapseClick}>collapse</span>
       <span onClick={handleOnExpandClick}>expand</span>

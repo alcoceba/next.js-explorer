@@ -1,112 +1,112 @@
 .actions {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    padding: .4rem;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 0.4rem;
 }
 
 .actions ul {
-    padding-left: 1.5rem;
+  padding-left: 1.5rem;
 }
 
 .actions li {
-    list-style: none;
+  list-style: none;
 }
 
 .actions span {
-    position: relative;
-    margin: .1rem .5rem;
-    transition: all .2s ease-out;
-    cursor: pointer;
-    color: var(--color-primary);
+  position: relative;
+  margin: 0.1rem 0.5rem;
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+  color: var(--color-primary);
 }
 
 .actions .highlight {
-    color: var(--color-warn);
-    border-color: var(--color-warn);
+  color: var(--color-warn);
+  border-color: var(--color-warn);
 }
 
 .actions .highlight::after {
-    background: var(--color-warn);
+  background: var(--color-warn);
 }
 
-.actions span+span::before {
-    content: " | ";
-    color: var(--color-text);
-    width: 0;
+.actions span + span::before {
+  content: ' | ';
+  color: var(--color-text);
+  width: 0;
 }
 
 .actions span:first-child {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 .actions span:last-child {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 .actions .right {
-    text-align: right;
-    flex-grow: 1;
+  text-align: right;
+  flex-grow: 1;
 }
 
 .actions span:hover {
-    opacity: .9;
+  opacity: 0.9;
 }
 
 .actions span::after {
-    position: absolute;
-    left: 14px;
-    bottom: 0;
-    content: ' ';
-    display: inline-block;
-    width: 0;
-    height: 1px;
-    margin: 5px auto 0;
-    background: var(--color-primary);
-    transition: width .2s ease-in-out;
-    opacity: .7;
+  position: absolute;
+  left: 14px;
+  bottom: 0;
+  content: ' ';
+  display: inline-block;
+  width: 0;
+  height: 1px;
+  margin: 5px auto 0;
+  background: var(--color-primary);
+  transition: width 0.2s ease-in-out;
+  opacity: 0.7;
 }
 
 .actions span:first-child::after {
-    left: 0;
+  left: 0;
 }
 
 .actions span:hover::after {
-    width: calc(100% - 14px);
+  width: calc(100% - 14px);
 }
 
 .actions span:first-child:hover::after {
-    width: 100%;
+  width: 100%;
 }
 
 .selector ul {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-    right: -4px;
-    width: 200px;
-    margin-top: 5px;
-    padding: 0;
-    background-color: var(--color-bg-primary);
-    border: 1px solid var(--color-primary);
-    text-align: right;
-    transition: .15s ease-in-out .3s;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  right: -4px;
+  width: 200px;
+  margin-top: 5px;
+  padding: 0;
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-primary);
+  text-align: right;
+  transition: 0.15s ease-in-out 0.3s;
 }
 
 .selector:hover ul {
-    opacity: 1;
-    visibility: visible;
-    transition: .15s ease-in-out;
+  opacity: 1;
+  visibility: visible;
+  transition: 0.15s ease-in-out;
 }
 
 .selector ul li {
-    margin: 0;
-    padding: .25rem .75rem;
-    transition: all .2s ease-out;
-    color: var(--color-text);
+  margin: 0;
+  padding: 0.25rem 0.75rem;
+  transition: all 0.2s ease-out;
+  color: var(--color-text);
 }
 
 .actions ul li:hover {
-    background-color: var(--color-bg-secondary);
-    color: var(--color-primary);
+  background-color: var(--color-bg-secondary);
+  color: var(--color-primary);
 }

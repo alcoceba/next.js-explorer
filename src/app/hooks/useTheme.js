@@ -1,16 +1,15 @@
-import React from "react";
-import { THEME } from "../../helpers/const";
-import { getTheme, setTheme } from "../../helpers/config";
-import { SetTheme } from "../context/actions";
-import { Context } from "../context/context";
+import React from 'react';
+import { THEME } from '../../helpers/const';
+import { getTheme, setTheme } from '../../helpers/config';
+import { SetTheme } from '../context/actions';
+import { Context } from '../context/context';
 
 function useTheme() {
   const [isInit, setIsInit] = React.useState(false);
   const [{ theme }, dispatch] = React.useContext(Context);
 
   const getBrowserTheme = () =>
-    window?.matchMedia &&
-      window?.matchMedia("(prefers-color-scheme: dark)")?.matches
+    window?.matchMedia && window?.matchMedia('(prefers-color-scheme: dark)')?.matches
       ? THEME.Dark
       : THEME.Light;
 

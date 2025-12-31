@@ -1,9 +1,10 @@
-import browser from "webextension-polyfill";
+import browser from 'webextension-polyfill';
 
 export const getContext = async (id) => {
-  const { context } = await browser.storage.local.get("context");
+  const { context } = await browser.storage.local.get('context');
   return context?.[id];
 };
 
-export const setContext = async (context) =>
+export const setContext = async (context) => {
   browser.storage.local.set({ context });
+};

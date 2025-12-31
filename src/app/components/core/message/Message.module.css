@@ -7,14 +7,14 @@
   right: 0;
   left: 0;
   margin: 0 auto;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   height: 20px;
   width: fit-content;
   font-size: 11px;
   text-align: center;
   line-height: 1.2;
   border-radius: 1px;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   opacity: 0;
   background: #295;
   color: #dfe;
@@ -22,12 +22,10 @@
   animation: pop-in-and-out 2s ease-in-out forwards;
 }
 
-
 @keyframes pop-in-and-out {
   0% {
     bottom: -20px;
     opacity: 0;
-
   }
 
   5% {

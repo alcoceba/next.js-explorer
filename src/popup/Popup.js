@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { classNames } from "../helpers/classNames";
+import PropTypes from 'prop-types';
+import React from 'react';
+import { classNames } from '../helpers/classNames';
 
-import * as styles from "./Popup.module.css";
+import * as styles from './Popup.module.css';
 
 const TIMEOUT = 3000;
 
@@ -26,13 +26,7 @@ function Popup({ message, timeout = TIMEOUT, onClose }) {
   }, [timeout, onClose]);
 
   return (
-    <div
-      className={classNames(
-        styles.popup,
-        isVisible && styles.show,
-        isExit && styles.exit
-      )}
-    >
+    <div className={classNames(styles.popup, isVisible && styles.show, isExit && styles.exit)}>
       <span className={styles.close} onClick={handleOnClose}>
         &times;
       </span>

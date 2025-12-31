@@ -1,20 +1,20 @@
 .sticky {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    background: var(--color-bg-primary);
-    z-index: 10;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: var(--color-bg-primary);
+  z-index: 10;
 }
 
 .sticky .table {
-    margin-top: 1rem;
-    padding-bottom: 1rem;
-    border: none;
-    border-bottom: 1px solid var(--color-bg-secondary);
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+  border: none;
+  border-bottom: 1px solid var(--color-bg-secondary);
 }
 
 .notice {
-    margin: 0 0 .75rem;
-    padding: .75rem;
-    border: 1px solid var(--color-bg-secondary);
+  margin: 0 0 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--color-bg-secondary);
 }

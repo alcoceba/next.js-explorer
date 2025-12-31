@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
-import React from "react";
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import * as styles from "./Table.module.css";
+import * as styles from './Table.module.css';
 
 function Table({ rows }) {
   const [showMore, setShowMore] = React.useState(false);
@@ -24,7 +24,7 @@ function Table({ rows }) {
         </table>
 
         <div className={styles.button} onClick={() => setShowMore(!showMore)}>
-          {!showMore ? "+ show more" : "- show less"}
+          {!showMore ? '+ show more' : '- show less'}
         </div>
       </div>
     )

@@ -1,8 +1,8 @@
-import parseFlightPushData from "./parseFlightData";
+import parseFlightPushData from './parseFlightData';
 
 export const sanitize = (str) => {
-  if (typeof str !== "string") return str;
-  return str.replace(/<\/?[^>]+>/gi, "");
+  if (typeof str !== 'string') return str;
+  return str.replace(/<\/?[^>]+>/gi, '');
 };
 
 export const decode = ({ appRawData, pagesRawData }) => {
@@ -27,7 +27,7 @@ export const decode = ({ appRawData, pagesRawData }) => {
     const flightString = flightRawData.join('\n');
 
     return parseFlightPushData(flightString);
-  };
+  }
 
   return null;
 };

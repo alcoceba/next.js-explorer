@@ -1,4 +1,4 @@
-import { SET_IS_COLLAPSED, SET_SHOW_SIZES, SET_THEME } from "./actions";
+import { SET_IS_COLLAPSED, SET_SHOW_SIZES, SET_THEME } from './actions';
 
 const reducer = (state, action) => {
   const { type, data } = action;
@@ -11,7 +11,7 @@ const reducer = (state, action) => {
     case SET_IS_COLLAPSED:
       return { ...state, ...data };
     default:
-      throw new Error("Invalid action");
+      throw new Error('Invalid action');
   }
 };
 

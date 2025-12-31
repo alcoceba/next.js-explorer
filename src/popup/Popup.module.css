@@ -7,21 +7,21 @@
   right: 10px;
   background: #295;
   color: #dfe;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   font-size: 11px;
   line-height: 1.2;
   border-radius: 1px;
-  transition: all .2s ease-out;
+  transition: all 0.2s ease-out;
   opacity: 0;
   z-index: 999999;
 }
 
 .show {
-  animation: slide-down .25s ease-in-out forwards;
+  animation: slide-down 0.25s ease-in-out forwards;
 }
 
 .exit {
-  animation: slide-fade .25s ease-in-out forwards;
+  animation: slide-fade 0.25s ease-in-out forwards;
 }
 
 .close {

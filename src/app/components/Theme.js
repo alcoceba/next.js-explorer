@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import useTheme from "../hooks/useTheme";
+import useTheme from '../hooks/useTheme';
 
 function Theme({ children }) {
   useTheme();
