@@ -26,7 +26,10 @@ function Popup({ message, timeout = TIMEOUT, onClose }) {
   }, [timeout, onClose]);
 
   return (
-    <div className={classNames(styles.popup, isVisible && styles.show, isExit && styles.exit)}>
+    <div
+      className={classNames(styles.popup, isVisible && styles.show, isExit && styles.exit)}
+      data-testid="popup-root"
+    >
       <span className={styles.close} onClick={handleOnClose}>
         &times;
       </span>

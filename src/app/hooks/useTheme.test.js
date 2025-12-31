@@ -9,7 +9,7 @@ jest.mock('../../helpers/config', () => ({
   setTheme: jest.fn(),
 }));
 
-jest.mock('../../helpers/const', () => ({
+jest.mock('../../helpers/constants', () => ({
   THEME: {
     Dark: 'dark',
     Light: 'light',
