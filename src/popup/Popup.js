@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { classNames } from '../helpers/classNames';
+import { classNames } from './utils/classNames';
 
 import * as styles from './Popup.module.css';
 

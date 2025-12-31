@@ -1,11 +1,6 @@
-import parseFlightPushData from './parseFlightData';
+import parseFlightPushData from './parseFlightPushData';
 
-export const sanitize = (str) => {
-  if (typeof str !== 'string') return str;
-  return str.replace(/<\/?[^>]+>/gi, '');
-};
-
-export const decode = ({ appRawData, pagesRawData }) => {
+const decode = ({ appRawData, pagesRawData }) => {
   if (pagesRawData) {
     return JSON.parse(pagesRawData) || null;
   }
@@ -31,3 +26,5 @@ export const decode = ({ appRawData, pagesRawData }) => {
 
   return null;
 };
+
+export default decode;

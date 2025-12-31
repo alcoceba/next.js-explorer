@@ -4,15 +4,14 @@ import userEvent from '@testing-library/user-event';
 import Key from './Key';
 import { Context } from '../../../../context/context';
 
-// Mock helpers
-jest.mock('../../../../../helpers/object', () => ({
+jest.mock('../../../../utils/object', () => ({
   getObjSize: jest.fn().mockReturnValue(500),
   isObjectAndNotEmpty: jest.fn(
     (val) => typeof val === 'object' && val !== null && Object.keys(val).length > 0
   ),
 }));
 
-jest.mock('../../../../../helpers/classNames', () => ({
+jest.mock('../../../../utils/classNames', () => ({
   classNames: jest.fn((...args) => {
     return args
       .filter((arg) => {

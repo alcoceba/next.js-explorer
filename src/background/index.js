@@ -1,9 +1,9 @@
 import browser from 'webextension-polyfill';
 import { DEFAULT_SIZE, ROUTER } from '../helpers/constants';
-import { setContext } from '../helpers/context';
-import { getObjSize } from '../helpers/object';
-import { getCurrentTab } from '../helpers/tabs';
-import { decode } from '../helpers/utils';
+import { getObjSize } from './utils/getObjSize';
+import { getCurrentTab } from './utils/tabs';
+import decode from './utils/decode';
+import { setContext } from '../app/utils/context';
 
 let nextModel = null;
 

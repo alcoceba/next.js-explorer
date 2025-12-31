@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { sanitize } from '../../../../../helpers/utils';
+import { sanitize } from '../../../../utils/sanitize';
 
 import * as styles from './Value.module.css';
 

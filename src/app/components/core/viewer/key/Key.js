@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { classNames } from '../../../../../helpers/classNames';
+import { classNames } from '../../../../utils/classNames';
 import { DEFAULT_SIZE } from '../../../../../helpers/constants';
-import { getObjSize } from '../../../../../helpers/object';
+import { getObjSize } from '../../../../utils/object';
 import { Context } from '../../../../context/context';
 
 import * as styles from './Key.module.css';

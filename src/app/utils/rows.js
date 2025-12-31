@@ -1,4 +1,4 @@
-import { DEFAULT_SIZE } from './constants';
+import { DEFAULT_SIZE } from '../../helpers/constants';
 
 export const getRowsInfo = (data) => {
   const { next, react, size, keys } = data;

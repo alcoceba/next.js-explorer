@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import ControlBar from './ControlBar';
 import { Context } from '../context/context';
 
-jest.mock('../../helpers/config', () => ({
+jest.mock('../utils/config', () => ({
   getShowSizes: jest.fn().mockResolvedValue({ sizes: true }),
   setShowSizes: jest.fn(),
 }));

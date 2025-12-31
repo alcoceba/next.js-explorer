@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { getShowSizes, setShowSizes } from '../../helpers/config';
+import { getShowSizes, setShowSizes } from '../utils/config';
 import { SetIsCollapsed, SetShowSizes } from '../context/actions';
 import { Context } from '../context/context';
 

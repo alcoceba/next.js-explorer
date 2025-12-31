@@ -19,21 +19,6 @@ export const exportJson = (obj, space) => {
   element.click();
 };
 
-export const traverse = (obj, path = '', result = []) => {
-  if (typeof obj === 'object' && !Array.isArray(obj)) {
-    for (const key in obj) {
-      traverse(obj[key], path + key + ' > ', result);
-    }
-  } else if (Array.isArray(obj)) {
-    obj.forEach((item) => {
-      traverse(item, path + ' > ', result);
-    });
-  } else {
-    result.push(path.slice(0, -3) + obj);
-  }
-  return result;
-};
-
 export const filterJson = (json, searchString, found) => {
   for (var key in json) {
     if (typeof json[key] === 'object' && json[key] !== null) {

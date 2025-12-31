@@ -2,17 +2,17 @@ import React from 'react';
 import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
-import * as helpers from '../../helpers/context';
-import * as objectHelpers from '../../helpers/object';
-import * as copyHelper from '../../helpers/copy';
+import * as helpers from '../utils/context';
+import * as objectHelpers from '../utils/object';
+import * as copyHelper from '../utils/copy';
 
-jest.mock('../../helpers/context');
-jest.mock('../../helpers/object');
-jest.mock('../../helpers/copy', () => jest.fn().mockResolvedValue(true));
-jest.mock('../../helpers/rows', () => ({
+jest.mock('../utils/context');
+jest.mock('../utils/object');
+jest.mock('../utils/copy', () => jest.fn().mockResolvedValue(true));
+jest.mock('../utils/rows', () => ({
   getRowsInfo: jest.fn(() => []),
 }));
-jest.mock('../../helpers/config', () => ({
+jest.mock('../utils/config', () => ({
   getShowSizes: jest.fn().mockResolvedValue({ sizes: false }),
   setShowSizes: jest.fn(),
   getTheme: jest.fn().mockResolvedValue({ theme: 'dark' }),
@@ -265,11 +265,9 @@ describe('App Component', () => {
       { timeout: 3000 }
     );
 
-    // Open export menu
     const exportMenu = screen.getByText('+++');
     await user.click(exportMenu);
 
-    // Click export formatted
     await waitFor(
       () => {
         expect(screen.getByText('export formatted')).toBeInTheDocument();

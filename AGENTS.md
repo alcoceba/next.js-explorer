@@ -73,6 +73,7 @@ No formal test suite exists currently. Manual testing is required:
 ### Key Directories
 
 - **`src/background/`** - Service worker entry point (`index.js`)
+  - `utils/` - Background-specific utilities (e.g. decode.js, getObjSize.js, parseFlightPushData.js, tabs.js)
 - **`src/app/`** - Full explorer UI (React components and state management)
   - `components/` - React components using atomic design pattern
     - `core/` - Reusable atomic components
@@ -93,9 +94,10 @@ No formal test suite exists currently. Manual testing is required:
     - `Theme.js` - Theme provider wrapper
   - `context/` - State management with Context API
   - `hooks/` - Custom React hooks
+  - `utils/` - App-specific utilities (e.g. object.js, rows.js, sanitize.js, context.js, config.js, copy.js)
   - `index.css` - Global and theme styles (unified)
 - **`src/popup/`** - Quick access popup UI
-- **`src/helpers/`** - Shared utility functions
+- **`src/helpers/`** - Shared constants and classNames utility (only `constants.js` and `classNames.js` remain)
 
 ### Configuration Files
 
@@ -163,12 +165,11 @@ Quick-access UI shown when extension icon is clicked:
 
 ### Helper Modules (`src/helpers/`)
 
-Shared utilities for all parts:
-- Data parsing and decoding
-- Message passing helpers
-- Object utilities (size calculation, etc.)
-- DOM utilities
-- Configuration management
+### Helper Modules
+
+- **`src/app/utils/`** - App-specific utilities (object manipulation, context, config, rows, sanitize, copy)
+- **`src/background/utils/`** - Background-specific utilities (decode, getObjSize, parseFlightPushData, tabs)
+- **`src/helpers/`** - Shared constants and classNames utility only
 
 ---
 

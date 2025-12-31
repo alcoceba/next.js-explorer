@@ -1,9 +1,9 @@
 import React from 'react';
 import { ROUTER } from '../../helpers/constants';
-import { getContext } from '../../helpers/context';
-import copy from '../../helpers/copy';
-import { exportJson, filterJson, getObjKeysCount, getObjSize } from '../../helpers/object';
-import { getRowsInfo } from '../../helpers/rows';
+import { getContext } from '../utils/context';
+import copy from '../utils/copy';
+import { exportJson, filterJson, getObjKeysCount, getObjSize } from '../utils/object';
+import { getRowsInfo } from '../utils/rows';
 import ContextProvider from '../context/context';
 import ControlBar from './ControlBar';
 import Footer from './Footer';

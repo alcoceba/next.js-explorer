@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { classNames } from '../../../../../helpers/classNames';
-import { isObjectAndNotEmpty } from '../../../../../helpers/object';
+import { classNames } from '../../../../utils/classNames';
+import { isObjectAndNotEmpty } from '../../../../utils/object';
 import Key from '../key/Key';
 import Value from '../value/Value';
 

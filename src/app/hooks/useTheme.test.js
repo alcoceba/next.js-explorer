@@ -3,8 +3,9 @@ import { renderHook, waitFor } from '@testing-library/react';
 import useTheme from './useTheme';
 import { Context } from '../context/context';
 import { THEME } from '../../helpers/constants';
+import * as configModule from '../utils/config';
 
-jest.mock('../../helpers/config', () => ({
+jest.mock('../utils/config', () => ({
   getTheme: jest.fn().mockResolvedValue({ theme: 'dark' }),
   setTheme: jest.fn(),
 }));
@@ -85,9 +86,7 @@ describe('useTheme Hook', () => {
 
   it('should set document body theme attribute', async () => {
     renderHookWithContext(() => useTheme());
-
-    const { getTheme } = require('../../helpers/config');
-    getTheme.mockResolvedValueOnce({ theme: THEME.Dark });
+    configModule.getTheme.mockResolvedValueOnce({ theme: THEME.Dark });
 
     await waitFor(
       () => {
@@ -120,8 +119,7 @@ describe('useTheme Hook', () => {
   });
 
   it('should fallback to dark theme when config is not available', async () => {
-    const { getTheme } = require('../../helpers/config');
-    getTheme.mockResolvedValueOnce(null);
+    configModule.getTheme.mockResolvedValueOnce(null);
 
     renderHookWithContext(() => useTheme());
 
@@ -134,18 +132,13 @@ describe('useTheme Hook', () => {
   });
 
   it('should save theme to config when theme changes', async () => {
-    require('../../helpers/config');
     renderHookWithContext(() => useTheme());
 
     await waitFor(() => {
       expect(mockDispatch).toHaveBeenCalled();
     });
 
-    await waitFor(
-      () => {
-      },
-      { timeout: 2000 }
-    );
+    await waitFor(() => {}, { timeout: 2000 });
   });
 
   it('should handle missing browser matchMedia', async () => {
@@ -162,11 +155,10 @@ describe('useTheme Hook', () => {
   });
 
   it('should not save theme before initialization completes', async () => {
-    const { setTheme } = require('../../helpers/config');
-    setTheme.mockClear();
+    configModule.setTheme.mockClear();
 
     renderHookWithContext(() => useTheme());
 
-    expect(setTheme).not.toHaveBeenCalled();
+    expect(configModule.setTheme).not.toHaveBeenCalled();
   });
 });

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Value from './Value';
 
-jest.mock('../../../../../helpers/utils', () => ({
+jest.mock('../../../../utils/sanitize', () => ({
   sanitize: jest.fn((val) => val),
 }));
 
