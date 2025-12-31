@@ -58,7 +58,6 @@ describe('Switch Component', () => {
 
     const checkbox = screen.getByRole('checkbox');
     await user.click(checkbox);
-    // Should not throw error
     expect(checkbox).toBeInTheDocument();
   });
 
@@ -68,7 +67,6 @@ describe('Switch Component', () => {
     let checkbox = screen.getByRole('checkbox');
     expect(checkbox).not.toBeChecked();
 
-    // Simulate parent updating the isActive prop
     rerender(<Switch id="test-switch" isActive={true} />);
     checkbox = screen.getByRole('checkbox');
     expect(checkbox).toBeChecked();

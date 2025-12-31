@@ -157,7 +157,6 @@ describe('Context Provider', () => {
 
   it('should create unique Context instances', () => {
     const Context1 = Context;
-    // Context should be the same reference
     expect(Context1).toBeDefined();
   });
 });

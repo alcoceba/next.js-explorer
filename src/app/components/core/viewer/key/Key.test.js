@@ -142,7 +142,6 @@ describe('Key Component', () => {
 
     const li = container.querySelector('li');
     await user.click(li);
-    // Check that the element was interacted with
     expect(li).toBeInTheDocument();
   });
 

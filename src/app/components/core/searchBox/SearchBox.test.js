@@ -36,7 +36,6 @@ describe('SearchBox Component', () => {
     const input = screen.getByRole('textbox');
     await user.type(input, 'search');
 
-    // Should be called for each character
     expect(handleChange).toHaveBeenCalledWith('s');
     expect(handleChange).toHaveBeenCalledWith('se');
     expect(handleChange).toHaveBeenCalledWith('sea');
@@ -62,7 +61,6 @@ describe('SearchBox Component', () => {
 
     const input = screen.getByRole('textbox');
     await user.type(input, 'text');
-    // Should not throw error
     expect(input).toBeInTheDocument();
   });
 

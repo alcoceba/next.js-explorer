@@ -4,7 +4,6 @@ import useTheme from './useTheme';
 import { Context } from '../context/context';
 import { THEME } from '../../helpers/const';
 
-// Mock helpers
 jest.mock('../../helpers/config', () => ({
   getTheme: jest.fn().mockResolvedValue({ theme: 'dark' }),
   setTheme: jest.fn(),
@@ -87,8 +86,6 @@ describe('useTheme Hook', () => {
   it('should set document body theme attribute', async () => {
     renderHookWithContext(() => useTheme());
 
-    // Mock localStorage to ensure theme is loaded
-    // eslint-disable-next-line no-undef
     const { getTheme } = require('../../helpers/config');
     getTheme.mockResolvedValueOnce({ theme: THEME.Dark });
 
@@ -101,7 +98,6 @@ describe('useTheme Hook', () => {
   });
 
   it('should detect browser theme preference', async () => {
-    // Mock matchMedia for dark mode preference
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: query === '(prefers-color-scheme: dark)',
       media: query,
@@ -124,7 +120,6 @@ describe('useTheme Hook', () => {
   });
 
   it('should fallback to dark theme when config is not available', async () => {
-    // eslint-disable-next-line no-undef
     const { getTheme } = require('../../helpers/config');
     getTheme.mockResolvedValueOnce(null);
 
@@ -139,7 +134,6 @@ describe('useTheme Hook', () => {
   });
 
   it('should save theme to config when theme changes', async () => {
-    // eslint-disable-next-line no-undef
     require('../../helpers/config');
     renderHookWithContext(() => useTheme());
 
@@ -147,10 +141,8 @@ describe('useTheme Hook', () => {
       expect(mockDispatch).toHaveBeenCalled();
     });
 
-    // Theme was set and should be persisted
     await waitFor(
       () => {
-        // After initialization, setTheme should eventually be called
       },
       { timeout: 2000 }
     );
@@ -170,13 +162,11 @@ describe('useTheme Hook', () => {
   });
 
   it('should not save theme before initialization completes', async () => {
-    // eslint-disable-next-line no-undef
     const { setTheme } = require('../../helpers/config');
     setTheme.mockClear();
 
     renderHookWithContext(() => useTheme());
 
-    // setTheme should not be called until after getTheme resolves
     expect(setTheme).not.toHaveBeenCalled();
   });
 });

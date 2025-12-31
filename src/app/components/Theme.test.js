@@ -3,7 +3,6 @@ import { render } from '@testing-library/react';
 import Theme from './Theme';
 import { Context } from '../context/context';
 
-// Mock the useTheme hook to prevent issues
 jest.mock('../hooks/useTheme', () => {
   return jest.fn();
 });

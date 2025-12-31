@@ -6,7 +6,6 @@ import * as helpers from '../../helpers/context';
 import * as objectHelpers from '../../helpers/object';
 import * as copyHelper from '../../helpers/copy';
 
-// Mock dependencies
 jest.mock('../../helpers/context');
 jest.mock('../../helpers/object');
 jest.mock('../../helpers/copy', () => jest.fn().mockResolvedValue(true));
@@ -47,7 +46,6 @@ describe('App Component', () => {
     objectHelpers.filterJson.mockImplementation((data) => data);
     objectHelpers.exportJson.mockImplementation(() => JSON.stringify(mockContextData.next));
 
-    // Mock window.location.search
     delete window.location;
     window.location = { search: '' };
   });
@@ -130,7 +128,6 @@ describe('App Component', () => {
 
     await waitFor(
       () => {
-        // Header should display the version
         expect(screen.getByText(/Next.js v14.0.0/)).toBeInTheDocument();
       },
       { timeout: 3000 }
@@ -170,7 +167,6 @@ describe('App Component', () => {
 
     await user.click(screen.getByText(/copy JSON/));
 
-    // Message appears in portal
     await waitFor(
       () => {
         expect(screen.getByText(/copied to clipboard/i)).toBeInTheDocument();
@@ -221,7 +217,6 @@ describe('App Component', () => {
 
     await waitFor(
       () => {
-        // Just verify the app rendered something
         expect(container).toBeInTheDocument();
       },
       { timeout: 2000 }
@@ -252,7 +247,6 @@ describe('App Component', () => {
       { timeout: 2000 }
     );
 
-    // Fast-forward time for timeout wrapped in act
     await act(async () => {
       jest.advanceTimersByTime(2100);
     });

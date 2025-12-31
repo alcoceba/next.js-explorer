@@ -87,7 +87,7 @@ describe('Table Component', () => {
   it('should render table rows correctly', () => {
     render(<Table rows={mockRows} />);
     const rows = screen.getAllByRole('row');
-    expect(rows).toHaveLength(2); // Only 2 visible rows
+    expect(rows).toHaveLength(2);
   });
 
   it('should have correct structure for table cells', () => {

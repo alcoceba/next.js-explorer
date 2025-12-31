@@ -35,17 +35,14 @@ describe('Footer Component', () => {
 
     const footer = screen.getByText(/made with/i).closest('div');
 
-    // Click multiple times and verify emoji changes
     const initialEmoji = screen.getByText(Hearts[0]);
     expect(initialEmoji).toBeInTheDocument();
 
-    // Mock Math.random to control the emoji selection
     const originalRandom = Math.random;
     Math.random = jest.fn().mockReturnValue(0.5);
 
     await user.click(footer);
 
-    // Emoji should have changed (controlled by mock)
     expect(Math.random).toHaveBeenCalled();
 
     Math.random = originalRandom;
@@ -63,7 +60,6 @@ describe('Footer Component', () => {
 
     const footer = screen.getByText(/made with/i).closest('div');
 
-    // Clicking should not throw error
     await user.click(footer);
     expect(footer).toBeInTheDocument();
   });
@@ -74,7 +70,6 @@ describe('Footer Component', () => {
 
     const footer = screen.getByText(/made with/i).closest('div');
 
-    // Multiple rapid clicks should not break
     await user.click(footer);
     await user.click(footer);
     await user.click(footer);

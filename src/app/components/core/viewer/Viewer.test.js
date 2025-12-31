@@ -60,7 +60,6 @@ describe('Viewer Component', () => {
     render(<Viewer json={mockJson} onCopy={handleCopy} />);
 
     const valueElement = screen.getByText('"value"');
-    // Note: Full double-click test would require more complex setup
     expect(valueElement).toBeInTheDocument();
   });
 });

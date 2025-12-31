@@ -79,9 +79,8 @@ describe('Header Component', () => {
     const user = userEvent.setup();
     renderWithContext(<Header router={ROUTER.App} />);
 
-    // Find all spans and get the last one (theme toggle)
     const spans = screen.getAllByRole('generic', { hidden: true });
-    const themeToggle = spans[spans.length - 1]; // Last span is the theme toggle
+    const themeToggle = spans[spans.length - 1];
 
     await user.click(themeToggle);
 

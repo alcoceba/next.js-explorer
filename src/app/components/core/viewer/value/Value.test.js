@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Value from './Value';
 
-// Mock helpers
 jest.mock('../../../../../helpers/utils', () => ({
   sanitize: jest.fn((val) => val),
 }));
@@ -120,7 +119,6 @@ describe('Value Component', () => {
     const li = container.querySelector('li');
     await user.dblClick(li);
 
-    // Should not throw error
     expect(container).toBeInTheDocument();
   });
 
