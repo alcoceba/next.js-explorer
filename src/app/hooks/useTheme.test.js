@@ -2,7 +2,7 @@ import React from 'react';
 import { renderHook, waitFor } from '@testing-library/react';
 import useTheme from './useTheme';
 import { Context } from '../context/context';
-import { THEME } from '../../helpers/const';
+import { THEME } from '../../helpers/constants';
 
 jest.mock('../../helpers/config', () => ({
   getTheme: jest.fn().mockResolvedValue({ theme: 'dark' }),

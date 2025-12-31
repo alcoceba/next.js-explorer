@@ -1,6 +1,6 @@
 import reducer from './reducer';
 import { SetTheme, SetShowSizes, SetIsCollapsed } from './actions';
-import { THEME } from '../../helpers/const';
+import { THEME } from '../../helpers/constants';
 
 describe('Context Reducer', () => {
   const initialState = {

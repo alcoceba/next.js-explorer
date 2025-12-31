@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import ContextProvider, { Context } from './context';
-import { THEME } from '../../helpers/const';
+import { THEME } from '../../helpers/constants';
 
 describe('Context Provider', () => {
   it('should render children', () => {

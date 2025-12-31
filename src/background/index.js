@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import { DEFAULT_SIZE, ROUTER } from '../helpers/const';
+import { DEFAULT_SIZE, ROUTER } from '../helpers/constants';
 import { setContext } from '../helpers/context';
 import { getObjSize } from '../helpers/object';
 import { getCurrentTab } from '../helpers/tabs';

@@ -6,7 +6,7 @@ import {
   SetShowSizes,
   SetIsCollapsed,
 } from './actions';
-import { THEME } from '../../helpers/const';
+import { THEME } from '../../helpers/constants';
 
 describe('Context Actions', () => {
   describe('Action type constants', () => {

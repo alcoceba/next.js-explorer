@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Header from './Header';
 import { Context } from '../context/context';
-import { ROUTER, THEME } from '../../helpers/const';
+import { ROUTER, THEME } from '../../helpers/constants';
 
 describe('Header Component', () => {
   const mockDispatch = jest.fn();

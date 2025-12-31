@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from '../../helpers/const';
+import { THEME } from '../../helpers/constants';
 import reducer from './reducer';
 
 const InitialState = {

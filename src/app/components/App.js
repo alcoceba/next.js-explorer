@@ -1,5 +1,5 @@
 import React from 'react';
-import { ROUTER } from '../../helpers/const';
+import { ROUTER } from '../../helpers/constants';
 import { getContext } from '../../helpers/context';
 import copy from '../../helpers/copy';
 import { exportJson, filterJson, getObjKeysCount, getObjSize } from '../../helpers/object';

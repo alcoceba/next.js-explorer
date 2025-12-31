@@ -1,5 +1,5 @@
 import React from 'react';
-import { THEME } from '../../helpers/const';
+import { THEME } from '../../helpers/constants';
 import { getTheme, setTheme } from '../../helpers/config';
 import { SetTheme } from '../context/actions';
 import { Context } from '../context/context';
