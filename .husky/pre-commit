@@ -1,0 +1,6 @@
+npm run lint && npm run format:check && npm test
+#!/bin/sh
+
+/home/manel/.nvm/versions/node/v22.17.0/bin/npm run lint && \
+/home/manel/.nvm/versions/node/v22.17.0/bin/npm run format:check && \
+/home/manel/.nvm/versions/node/v22.17.0/bin/npm test

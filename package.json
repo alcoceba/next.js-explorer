@@ -23,7 +23,8 @@
     "stylelint:fix": "stylelint --fix '**/*.css'",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "prepare": "husky"
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +60,7 @@
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.5.0",
     "html-webpack-plugin": "^5.6.5",
+    "husky": "^9.1.7",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
