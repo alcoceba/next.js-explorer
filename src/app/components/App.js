@@ -1,7 +1,7 @@
 import React from 'react';
 import { ROUTER } from '../../helpers/constants';
 import { getContext } from '../utils/context';
-import copy from '../utils/copy';
+import { copyToClipboard } from '../utils/copy';
 import { exportJson, filterJson, getObjKeysCount, getObjSize } from '../utils/object';
 import { getRowsInfo } from '../utils/rows';
 import ContextProvider from '../context/context';
@@ -29,7 +29,7 @@ function App() {
   const handleOnExport = (space) => exportJson(context?.next, space);
 
   const handleOnCopy = async ({ value }) => {
-    const result = await copy(value);
+    const result = await copyToClipboard(value);
     setShowMessage({
       id: result * Math.random(),
       text: 'Value copied to clipboard!',
@@ -39,7 +39,7 @@ function App() {
   };
 
   const handleOnCopyJson = async () => {
-    const result = await copy(JSON.stringify(json));
+    const result = await copyToClipboard(JSON.stringify(json));
     setShowMessage({
       id: result * Math.random(),
       text: 'JSON copied to clipboard!',

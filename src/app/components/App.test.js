@@ -8,7 +8,9 @@ import * as copyHelper from '../utils/copy';
 
 jest.mock('../utils/context');
 jest.mock('../utils/object');
-jest.mock('../utils/copy', () => jest.fn().mockResolvedValue(true));
+jest.mock('../utils/copy', () =>( {
+  copyToClipboard: jest.fn().mockResolvedValue(true),
+}));
 jest.mock('../utils/rows', () => ({
   getRowsInfo: jest.fn(() => []),
 }));
@@ -149,7 +151,7 @@ describe('App Component', () => {
 
     await waitFor(
       () => {
-        expect(copyHelper.default).toHaveBeenCalled();
+        expect(copyHelper.copyToClipboard).toHaveBeenCalled();
       },
       { timeout: 3000 }
     );
@@ -157,7 +159,7 @@ describe('App Component', () => {
 
   it('should show message when copy succeeds', async () => {
     const user = userEvent.setup();
-    copyHelper.default.mockResolvedValueOnce(true);
+    copyHelper.copyToClipboard.mockResolvedValueOnce(true);
 
     render(<App />);
 
@@ -226,7 +228,7 @@ describe('App Component', () => {
   it('should clear message after timeout', async () => {
     jest.useFakeTimers();
     const user = userEvent.setup({ delay: null });
-    copyHelper.default.mockResolvedValueOnce(true);
+    copyHelper.copyToClipboard.mockResolvedValueOnce(true);
 
     render(<App />);
 
