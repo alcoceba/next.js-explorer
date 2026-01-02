@@ -57,4 +57,7 @@ module.exports = {
     path: path.join(__dirname, `dist/${Browser}`),
     filename: "[name].js",
   },
+  performance: {
+    hints: false
+  }
 };
