@@ -8,7 +8,7 @@ import * as copyHelper from '../utils/copy';
 
 jest.mock('../utils/context');
 jest.mock('../utils/object');
-jest.mock('../utils/copy', () =>( {
+jest.mock('../utils/copy', () => ({
   copyToClipboard: jest.fn().mockResolvedValue(true),
 }));
 jest.mock('../utils/rows', () => ({
