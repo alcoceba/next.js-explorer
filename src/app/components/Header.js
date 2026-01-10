@@ -53,10 +53,10 @@ function Header({ router, version, react, onSearch }) {
 }
 
 Header.propTypes = {
-  router: PropTypes.oneOf([ROUTER.App, ROUTER.Pages]),
-  version: PropTypes.string,
-  react: PropTypes.string,
-  onSearch: PropTypes.func,
+  router: PropTypes.oneOf([ROUTER.App, ROUTER.Pages]).isRequired,
+  version: PropTypes.string.isRequired,
+  react: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default Header;

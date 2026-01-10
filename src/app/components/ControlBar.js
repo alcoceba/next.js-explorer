@@ -53,8 +53,8 @@ function ControlBar({ onExport, onCopy }) {
 }
 
 ControlBar.propTypes = {
-  onCopy: PropTypes.func,
-  onExport: PropTypes.func,
+  onCopy: PropTypes.func.isRequired,
+  onExport: PropTypes.func.isRequired,
 };
 
 export default ControlBar;

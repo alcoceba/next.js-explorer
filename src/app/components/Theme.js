@@ -8,7 +8,7 @@ function Theme({ children }) {
 }
 
 Theme.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.node.isRequired,
 };
 
 export default Theme;
