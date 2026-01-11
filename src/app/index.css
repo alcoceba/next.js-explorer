@@ -4,6 +4,7 @@
   --color-bg-primary: #222;
   --color-bg-secondary: #555;
   --color-text: #fff;
+  --color-accent: #ff9800;
   --color-pre-key: #fff;
   --color-pre-str: #01df74;
   --color-pre-num: #6cf;
@@ -19,6 +20,7 @@
   --color-bg-primary: #fff;
   --color-bg-secondary: #ddd;
   --color-text: #222;
+  --color-accent: #ff9800;
   --color-pre-key: #222;
   --color-pre-str: #12b300;
   --color-pre-num: #0060d8;
