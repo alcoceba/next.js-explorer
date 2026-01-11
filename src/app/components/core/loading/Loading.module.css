@@ -1,21 +1,51 @@
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-secondary);
+  z-index: 20;
+}
+
 .loading::after {
   background-color: var(--color-bg-secondary);
   opacity: 1;
   visibility: visible;
 }
 
+.rocket {
+  transform: translate(0%, -50%);
+  font-size: 32px;
+  z-index: 21;
+  animation: rocket-fly 1.2s linear infinite;
+}
+
 .text {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
   font-size: 14px;
   color: #fff;
-  background-color: var(--color-bg-secondary);
-  box-sizing: border-box;
-  z-index: 20;
+}
+
+@keyframes rocket-fly {
+  0% {
+    transform: translate(0, -50%) rotate(0deg) translateX(0.8em) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translate(0, -50%) rotate(90deg) translateX(0.8em) rotate(-90deg) scale(0.85);
+  }
+  50% {
+    transform: translate(0, -50%) rotate(180deg) translateX(0.8em) rotate(-180deg) scale(0.9);
+  }
+  75% {
+    transform: translate(0, -50%) rotate(270deg) translateX(0.8em) rotate(-270deg) scale(1.05);
+  }
+  100% {
+    transform: translate(0, -50%) rotate(360deg) translateX(0.8em) rotate(-360deg) scale(1);
+  }
 }

@@ -86,4 +86,27 @@ describe('Loading Component', () => {
     expect(textElement).toBeInTheDocument();
     expect(textElement).toHaveTextContent('loading');
   });
+
+  it('should render rocket emoji when loading', () => {
+    render(
+      <Loading isLoading={true}>
+        <div data-testid="child-content">Content</div>
+      </Loading>
+    );
+
+    const rocket = screen.getByLabelText('Rocket');
+    expect(rocket).toBeInTheDocument();
+    expect(rocket).toHaveTextContent('🚀');
+  });
+
+  it('should not render rocket emoji when not loading', () => {
+    render(
+      <Loading isLoading={false}>
+        <div data-testid="child-content">Content</div>
+      </Loading>
+    );
+
+    const rocket = screen.queryByLabelText('Rocket');
+    expect(rocket).not.toBeInTheDocument();
+  });
 });

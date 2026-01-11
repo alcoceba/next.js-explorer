@@ -8,6 +8,9 @@ function Loading({ isLoading, children }) {
     <>
       {isLoading && (
         <div className={styles.loading}>
+          <div className={styles.rocket} role="img" aria-label="Rocket">
+            🚀
+          </div>
           <div className={styles.text}>loading ...</div>
         </div>
       )}
