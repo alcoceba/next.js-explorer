@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Next.js Explorer - NextJS App & Pages Router",
   "description": "Quickly check if a webpage is built with Next.js and explore static properties and other related NextJS useful metrics.",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "icons": {
     "16": "public/images/icon-16.png",
     "32": "public/images/icon-32.png",
