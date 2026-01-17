@@ -57,14 +57,10 @@ Always run `npm run lint:fix` and `npm run format` before pushing changes.
 
 ## Testing and Verification
 
-No formal test suite exists currently. Manual testing is required:
+A comprehensive Jest test suite exists for all major components:
 
-1. Build the extension with watch mode
-2. Load it in Chrome or Firefox
-3. Navigate to any Next.js application
-4. Verify data is correctly extracted
-5. Check popup displays detected version information
-6. Test the full explorer view loads without errors
+1. **Run tests:** `npm test` (if configured) or unit test files found in `**/*.test.js`
+2. **Manual testing:** Navigate to any Next.js application to verify data extraction
 
 ---
 
@@ -78,18 +74,19 @@ No formal test suite exists currently. Manual testing is required:
   - `components/` - React components using atomic design pattern
     - `core/` - Reusable atomic components
       - `switch/` - Toggle checkbox component
-      - `searchBox/` - Search input component
-      - `loading/` - Loading spinner overlay
+      - `loading/` - Loading spinner overlay with rocket emoji animation
       - `message/` - Notification/toast messages
       - `portal/` - React portal wrapper
-      - `table/` - Data table display component
-      - `viewer/` - Agnostic JSON tree visualizer
-        - `tree/` - Recursive tree renderer
-        - `key/` - Object/array key renderer
-        - `value/` - Leaf value renderer
+      - `truncated-text/` - Text truncation component with show more/less button (default 35 chars)
+      - `viewer/` - Agnostic JSON tree visualizer with search integration
+        - `tree/` - Recursive tree renderer with search filtering
+        - `key/` - Object/array key renderer with auto-expand on match
+        - `value/` - Leaf value renderer with highlighting
+        - `search/` - Search input component with focus animation and result counter
     - `Header.js` - Navigation header
     - `Footer.js` - Footer section
     - `ControlBar.js` - Toolbar controls
+    - `PageInfo.js` - Pages Router information display (page, query, assets prefix)
     - `App.js` - Root application component
     - `Theme.js` - Theme provider wrapper
   - `context/` - State management with Context API
@@ -121,23 +118,24 @@ The component structure follows **atomic design principles** with components org
 Simple, reusable, self-contained components with no dependencies on other custom components:
 
 - **switch/** - Toggle checkbox for boolean inputs
-- **searchBox/** - Controlled search input field
-- **loading/** - Loading spinner and overlay display
+- **loading/** - Loading spinner and overlay display with animated 🚀 emoji
 - **message/** - Notification/toast message component
 - **portal/** - React portal wrapper for rendering outside DOM hierarchy
-- **viewer/** - Agnostic JSON tree visualizer (self-contained, reusable)
-  - **tree/** - Recursive tree structure renderer
-  - **key/** - Object/array key with collapsible functionality and size display
+- **truncated-text/** - Text truncation component that shows first 35 characters with "show more/show less" button for long text
+- **viewer/** - Agnostic JSON tree visualizer with integrated search (self-contained, reusable)
+  - **tree/** - Recursive tree structure renderer with search filtering (displays all children when parent key matches)
+  - **key/** - Object/array key with collapsible functionality, auto-expand on match, size display
   - **value/** - Leaf value renderer with syntax highlighting
+  - **search/** - Search input with focus animation, clear button, result counter
 
 #### Composite Components
 
 Components combining atoms and providing feature-specific functionality:
 
-- **Header** - Navigation with title, version info, theme toggle, search integration
-- **Footer** - Footer section with version display
-- **Actions** - Toolbar controls (collapse, export, copy, show sizes)
-- **Table** - Tabular data display with expandable rows
+- **Header** - Navigation with title, version info, theme toggle, badge display for router/version info
+- **Footer** - Footer section with version display and interactive emoji
+- **ControlBar** - Toolbar controls (show/hide sizes, collapse, expand, copy JSON, export options)
+- **PageInfo** - Displays Next.js Pages Router information (page path, query parameters, assets prefix) using TruncatedText for long values
 
 #### Root/Layout Components
 
@@ -178,7 +176,7 @@ Quick-access UI shown when extension icon is clicked:
 1. **Detection:** Background script scans page for `window.__next_f` (App Router) or `__NEXT_DATA__` (Pages Router)
 2. **Parsing:** Flight data is decoded and parsed into structured format
 3. **Storage:** Data is processed and made available to app/popup
-4. **Display:** React components render data in tree, table, or other views
+4. **Display:** React components render data in tree or other views
 
 ---
 

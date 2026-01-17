@@ -46,13 +46,23 @@ The background script is the core service worker that runs continuously and hand
 
 **Location:** [src/app/](src/app/)
 
-Main interface for exploring Next.js data.  
-Components are organized by atomic design principles:
-- **Core atomic components:** switch, searchBox, loading, message, portal, table, viewer (tree, key, value)
-- **Composite components:** Header, Footer, ControlBar
-- **Root/layout:** App, Theme
+Main interface for exploring Next.js data.
 
-See the source tree for details on each component's responsibilities.
+### Component Organization
+
+Components are organized by atomic design principles with three layers:
+
+**Core Atomic Components** (`src/app/components/core/`):
+- Self-contained, reusable components
+- Examples: switch, loading, message, portal, truncated-text, viewer (with tree, key, value, search)
+
+**Composite Components** (`src/app/components/`):
+- Combine atomic components with feature-specific functionality
+- Examples: Header, Footer, ControlBar, PageInfo
+
+**Root/Layout Components**:
+- App (root, manages global state)
+- Theme (provides CSS theme variables)
 
 ---
 
