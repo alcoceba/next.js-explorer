@@ -1,0 +1,55 @@
+.badge {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  line-height: 18px;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  border-radius: 2px;
+}
+
+.badge_default {
+  border-color: var(--color-text);
+}
+
+.badge_primary {
+  border-color: var(--color-primary);
+}
+
+.badge_accent {
+  border-color: var(--color-accent);
+}
+
+.badge[href],
+.badge:hover {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.label {
+  border-right: none;
+  padding: 0 1rem;
+}
+
+.children {
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-bg-primary);
+  opacity: 0.8;
+}
+
+.badge_default .children {
+  background-color: var(--color-text);
+}
+
+.badge_primary .children {
+  background-color: var(--color-primary);
+}
+
+.badge_accent .children {
+  background-color: var(--color-accent);
+}
