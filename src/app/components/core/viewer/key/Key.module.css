@@ -55,6 +55,10 @@
   margin-left: 5px;
 }
 
+.close {
+  margin-left: 0;
+}
+
 .critical {
   border-radius: 2px;
   padding: 0 4px;
@@ -71,4 +75,12 @@
   border-radius: 2px;
   padding: 0 4px;
   background-color: var(--color-warn);
+}
+
+mark {
+  background-color: rgba(255, 235, 59, 0.6);
+  color: inherit;
+  font-weight: 600;
+  padding: 0 2px;
+  border-radius: 2px;
 }

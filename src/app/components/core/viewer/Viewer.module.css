@@ -1,6 +1,12 @@
-.viewer pre {
-  margin-top: 0;
+.viewer {
+  display: flex;
+  flex-direction: column;
   height: 100%;
+}
+
+.viewer pre {
+  margin: 0;
+  flex: 1;
   padding: 12px;
   background: var(--color-bg-secondary);
   color: var(--color-text);

@@ -1,57 +1,86 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useMemo, memo, useCallback } from 'react';
 import { sanitize } from '../../../../utils/sanitize';
 
 import * as styles from './Value.module.css';
 
-const highlight = ({ value }) => {
-  switch (typeof value) {
-    case 'number':
+const getValueType = (value) => {
+  const type = typeof value;
+  if (type === 'number' || type === 'bigint') return 'num';
+  if (type === 'string' || type === 'symbol') return 'str';
+  if (type === 'boolean') return 'bool';
+  if (value === null) return 'null';
+  if (Array.isArray(value)) return 'array';
+  if (type === 'object') return 'object';
+  return 'unknown';
+};
+
+const formatValue = (value, type) => {
+  switch (type) {
+    case 'num':
     case 'bigint':
-      return [value, styles.num];
-    case 'string':
+      return String(value);
+    case 'str':
     case 'symbol':
-      return [`&quot;${value.length ? value : ''}&quot;`, styles.str];
-    case 'boolean':
-      return [value ? 'true' : 'false', styles.bool];
+      return `"${value.length ? value : ''}"`;
+    case 'bool':
+      return value ? 'true' : 'false';
+    case 'null':
+      return 'null';
+    case 'array':
+      return '[]';
     case 'object':
+      return '{}';
     default:
-      if (value === null) return ['null', styles.null];
-      else if (Array.isArray(value)) return ['[]', undefined];
-      return ['{}', undefined];
+      return '';
   }
 };
 
-function Value({ index, value, onCopy }) {
-  const refValue = React.useRef(null);
+const styleMap = {
+  num: styles.num,
+  str: styles.str,
+  bool: styles.bool,
+  null: styles.null,
+};
 
-  const [formattedValue, valueStyle] = highlight({ value: sanitize(value) });
+const HighlightedText = memo(({ text, search }) => {
+  if (!search) return text;
+  const parts = text.split(new RegExp(`(${search})`, 'gi'));
+  return parts.map((part, i) =>
+    part.toLowerCase() === search.toLowerCase() ? <mark key={i}>{part}</mark> : part
+  );
+});
 
-  const selectText = () => {
-    const range = document.createRange();
-    range.selectNodeContents(refValue?.current);
+HighlightedText.displayName = 'HighlightedText';
 
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-  };
+HighlightedText.propTypes = {
+  search: PropTypes.string,
+  text: PropTypes.string,
+};
 
-  const handleOnClickValue = (e) => {
-    if (e?.detail === 2) {
+function Value({ index, value, onCopy, highlight = '' }) {
+  const sanitized = useMemo(() => sanitize(value), [value]);
+  const type = useMemo(() => getValueType(sanitized), [sanitized]);
+  const formatted = useMemo(() => formatValue(sanitized, type), [sanitized, type]);
+  const className = useMemo(() => styleMap[type] || '', [type]);
+
+  const handleDoubleClick = useCallback(
+    (e) => {
       e.preventDefault();
+      e.stopPropagation();
       onCopy?.({ value });
-      selectText();
-    }
-  };
+    },
+    [value, onCopy]
+  );
 
   return (
-    <li onClick={handleOnClickValue}>
-      <span className={styles.key}>{index}:</span>{' '}
-      <span
-        ref={refValue}
-        className={valueStyle}
-        dangerouslySetInnerHTML={{ __html: formattedValue }}
-      />
+    <li onDoubleClick={handleDoubleClick}>
+      <span className={styles.key}>
+        <HighlightedText text={index} search={highlight} />:
+      </span>
+      <span className={className}>
+        <HighlightedText text={formatted} search={highlight} />
+      </span>
     </li>
   );
 }
@@ -60,6 +89,7 @@ Value.propTypes = {
   index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   value: PropTypes.any,
   onCopy: PropTypes.func,
+  highlight: PropTypes.string,
 };
 
-export default Value;
+export default memo(Value);
