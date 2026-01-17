@@ -29,50 +29,38 @@ describe('Header Component', () => {
   });
 
   it('should render App Router link when router is APP', () => {
-    renderWithContext(<Header router={ROUTER.App} />);
+    renderWithContext(<Header router={ROUTER.App} version="14.0.0" react="19.0.0" />);
     const routerLink = screen.getByText('APP Router');
     expect(routerLink).toBeInTheDocument();
-    expect(routerLink).toHaveAttribute('href', expect.stringContaining('app'));
+    const linkElement = routerLink.closest('a');
+    expect(linkElement).toHaveAttribute('href', expect.stringContaining('app'));
   });
 
   it('should render Pages Router link when router is PAGES', () => {
-    renderWithContext(<Header router={ROUTER.Pages} />);
+    renderWithContext(<Header router={ROUTER.Pages} version="14.0.0" react="19.0.0" />);
     const routerLink = screen.getByText('Pages Router');
     expect(routerLink).toBeInTheDocument();
-    expect(routerLink).toHaveAttribute('href', expect.stringContaining('pages'));
+    const linkElement = routerLink.closest('a');
+    expect(linkElement).toHaveAttribute('href', expect.stringContaining('pages'));
   });
 
   it('should render Next.js version when provided', () => {
-    renderWithContext(<Header router={ROUTER.App} version="14.0.0" />);
-    expect(screen.getByText('Next.js v14.0.0')).toBeInTheDocument();
+    renderWithContext(<Header router={ROUTER.App} version="14.0.0" react="19.0.0" />);
+    expect(screen.getByText('v14.0.0')).toBeInTheDocument();
   });
 
   it('should not render version when not provided', () => {
-    renderWithContext(<Header router={ROUTER.App} />);
-    expect(screen.queryByText(/Next.js v/)).not.toBeInTheDocument();
+    renderWithContext(<Header router={ROUTER.App} react="19.0.0" />);
+    // Check that Next.js version badge is not rendered (there should be exactly 2 badges: router and react)
+    const badges = screen.getAllByRole('link');
+    // badges[0] = APP/Pages Router, badges[1] = React (no Next.js version)
+    expect(badges.length).toBe(2);
+    expect(badges[1]).toHaveAttribute('href', expect.stringContaining('react.dev'));
   });
 
   it('should render React version when provided', () => {
-    renderWithContext(<Header router={ROUTER.App} react="19.0.0" />);
-    expect(screen.getByText('React 19.0.0')).toBeInTheDocument();
-  });
-
-  it('should render SearchBox component', () => {
-    renderWithContext(<Header router={ROUTER.App} />);
-    const searchInput = screen.getByPlaceholderText('Type to search...');
-    expect(searchInput).toBeInTheDocument();
-  });
-
-  it('should call onSearch callback when SearchBox value changes', async () => {
-    const handleSearch = jest.fn();
-    const user = userEvent.setup();
-
-    renderWithContext(<Header router={ROUTER.App} onSearch={handleSearch} />);
-
-    const searchInput = screen.getByPlaceholderText('Type to search...');
-    await user.type(searchInput, 'test');
-
-    expect(handleSearch).toHaveBeenCalled();
+    renderWithContext(<Header router={ROUTER.App} version="14.0.0" react="19.0.0" />);
+    expect(screen.getByText('v19.0.0')).toBeInTheDocument();
   });
 
   it('should toggle theme when theme button is clicked', async () => {
@@ -100,8 +88,8 @@ describe('Header Component', () => {
   it('should render both version links when provided', () => {
     renderWithContext(<Header router={ROUTER.App} version="14.0.0" react="19.0.0" />);
 
-    const versionLink = screen.getByText('Next.js v14.0.0');
-    const reactLink = screen.getByText('React 19.0.0');
+    const versionLink = screen.getByText('v14.0.0');
+    const reactLink = screen.getByText('v19.0.0');
 
     expect(versionLink).toBeInTheDocument();
     expect(reactLink).toBeInTheDocument();

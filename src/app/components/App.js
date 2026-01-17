@@ -2,8 +2,7 @@ import React from 'react';
 import { ROUTER } from '../../helpers/constants';
 import { getContext } from '../utils/context';
 import { copyToClipboard } from '../utils/copy';
-import { exportJson, filterJson, getObjKeysCount, getObjSize } from '../utils/object';
-import { getRowsInfo } from '../utils/rows';
+import { exportJson, getObjKeysCount, getObjSize } from '../utils/object';
 import ContextProvider from '../context/context';
 import ControlBar from './ControlBar';
 import Footer from './Footer';
@@ -11,20 +10,19 @@ import Header from './Header';
 import Loading from './core/loading/Loading';
 import Message from './core/message/Message';
 import Portal from './core/portal/Portal';
-import Table from './core/table/Table';
 import Theme from './Theme';
 import Viewer from './core/viewer/Viewer';
+import PageInfo from './PageInfo';
 
 import * as styles from './App.module.css';
 
 function App() {
   const timeout = React.useRef(null);
-
-  const [json, setJson] = React.useState(null);
   const [isInit, setIsInit] = React.useState(false);
   const [context, setContext] = React.useState(null);
-  const [rowsInfo, setRowsInfo] = React.useState(getRowsInfo({}));
   const [showMessage, setShowMessage] = React.useState({});
+
+  const json = context?.next?.data?.props || context?.next?.data;
 
   const handleOnExport = (space) => exportJson(context?.next, space);
 
@@ -48,17 +46,6 @@ function App() {
     timeout.current = setTimeout(() => setShowMessage(false), 2000);
   };
 
-  const handleOnSearch = (value) => {
-    const data = context?.next?.data?.props || context?.next?.data;
-    const clone = JSON.parse(JSON.stringify(data));
-    const json = filterJson(clone, value.toLowerCase());
-    setJson(json);
-  };
-
-  React.useEffect(() => {
-    if (context) setRowsInfo(getRowsInfo(context));
-  }, [context]);
-
   React.useEffect(() => {
     const load = async () => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -70,9 +57,9 @@ function App() {
         size: getObjSize(context?.next?.data?.props),
       });
 
-      setJson(context?.next?.data?.props || context?.next?.data);
       setIsInit(true);
     };
+
     load();
   }, []);
 
@@ -85,21 +72,24 @@ function App() {
               version={context?.next?.v}
               react={context?.react?.v}
               router={context?.next?.router}
-              onSearch={handleOnSearch}
+              keys={context?.keys}
+              size={context?.size}
             />
+
             {context?.next?.router === ROUTER.Pages && (
-              <div className={styles.table}>
-                <Table rows={rowsInfo} />
-              </div>
+              <PageInfo
+                page={context?.next?.data?.page}
+                query={context?.next?.data?.query}
+                assetPrefix={context?.next?.data?.assetPrefix}
+              />
             )}
+
             <ControlBar onExport={handleOnExport} onCopy={(value) => handleOnCopyJson(value)} />
           </div>
 
-          {context?.next?.router === ROUTER.App && (
+          {context?.next?.router === ROUTER.App && !json && (
             <div className={styles.notice}>
-              {json
-                ? 'This is the data included in the bundle and sent to the client'
-                : "🔴 Sorry, but we haven't been able to unpack the bundles sent to the client"}
+              🔴 Sorry, but we have not been able to unpack the bundles sent to the client
             </div>
           )}
 

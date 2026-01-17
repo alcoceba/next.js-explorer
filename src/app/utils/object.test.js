@@ -1,4 +1,4 @@
-import { getObjSize, getObjKeysCount, isObjectAndNotEmpty, exportJson, filterJson } from './object';
+import { getObjSize, getObjKeysCount, isObjectAndNotEmpty, exportJson } from './object';
 
 describe('object utils', () => {
   beforeAll(() => {
@@ -15,9 +15,5 @@ describe('object utils', () => {
   });
   it('exportJson does not throw', () => {
     expect(() => exportJson({ a: 1 })).not.toThrow();
-  });
-  it('filterJson returns an object or array', () => {
-    const result = filterJson({ a: 1 }, 'a', []);
-    expect(typeof result === 'object').toBe(true);
   });
 });

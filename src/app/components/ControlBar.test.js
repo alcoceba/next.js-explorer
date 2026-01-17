@@ -61,8 +61,9 @@ describe('ControlBar Component', () => {
   });
 
   it('should render export menu', () => {
-    renderWithContext(<ControlBar />);
-    expect(screen.getByText('+++')).toBeInTheDocument();
+    renderWithContext(<ControlBar onExport={jest.fn()} />);
+    expect(screen.getByText('export raw')).toBeInTheDocument();
+    expect(screen.getByText('export formatted')).toBeInTheDocument();
   });
 
   it('should render export raw option', () => {

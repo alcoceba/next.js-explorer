@@ -32,21 +32,14 @@ function ControlBar({ onExport, onCopy }) {
 
   return (
     <div className={styles.actions}>
-      <span className={styles.highlight} onClick={handleOnShowSizesClick}>
-        {showSizes ? 'hide sizes' : 'show sizes'}
-      </span>
+      <span onClick={handleOnShowSizesClick}>{showSizes ? 'hide sizes' : 'show sizes'}</span>
+      &nbsp;|&nbsp;
       <span onClick={handleOnCollapseClick}>collapse</span>
-      <span onClick={handleOnExpandClick}>expand</span>
-      <span onClick={handleOnCopy}>copy JSON</span>
-
+      &nbsp;|&nbsp; <span onClick={handleOnExpandClick}>expand</span>
+      &nbsp;|&nbsp;<span onClick={handleOnCopy}>copy JSON</span>
       <div className={styles.right}>
-        <span className={styles.selector}>
-          +++
-          <ul>
-            <li onClick={handleOnExportRawClick}>export raw</li>
-            <li onClick={handleOnExportFormattedClick}>export formatted</li>
-          </ul>
-        </span>
+        <span onClick={handleOnExportRawClick}>export raw</span>
+        &nbsp;|&nbsp;<span onClick={handleOnExportFormattedClick}>export formatted</span>
       </div>
     </div>
   );

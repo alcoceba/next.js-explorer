@@ -20,7 +20,7 @@ describe('Footer Component', () => {
 
   it('should render version information', () => {
     render(<Footer />);
-    expect(screen.getByText(/v1.7.1 \/ 1.1.1/)).toBeInTheDocument();
+    expect(screen.getByText(/v1.8.0 \/ 1.2.0/)).toBeInTheDocument();
   });
 
   it('should initialize with first heart emoji', () => {

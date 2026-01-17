@@ -11,9 +11,6 @@ jest.mock('../utils/object');
 jest.mock('../utils/copy', () => ({
   copyToClipboard: jest.fn().mockResolvedValue(true),
 }));
-jest.mock('../utils/rows', () => ({
-  getRowsInfo: jest.fn(() => []),
-}));
 jest.mock('../utils/config', () => ({
   getShowSizes: jest.fn().mockResolvedValue({ sizes: false }),
   setShowSizes: jest.fn(),
@@ -45,7 +42,6 @@ describe('App Component', () => {
     helpers.getContext.mockResolvedValue(mockContextData);
     objectHelpers.getObjKeysCount.mockReturnValue(2);
     objectHelpers.getObjSize.mockReturnValue(1000);
-    objectHelpers.filterJson.mockImplementation((data) => data);
     objectHelpers.exportJson.mockImplementation(() => JSON.stringify(mockContextData.next));
 
     delete window.location;
@@ -130,7 +126,7 @@ describe('App Component', () => {
 
     await waitFor(
       () => {
-        expect(screen.getByText(/Next.js v14.0.0/)).toBeInTheDocument();
+        expect(screen.getByText(/v14.0.0/)).toBeInTheDocument();
       },
       { timeout: 3000 }
     );
@@ -183,18 +179,18 @@ describe('App Component', () => {
 
     await waitFor(
       () => {
-        const searchInput = screen.getByPlaceholderText('Type to search...');
+        const searchInput = screen.getByPlaceholderText('Search keys and values...');
         expect(searchInput).toBeInTheDocument();
       },
       { timeout: 3000 }
     );
 
-    const searchInput = screen.getByPlaceholderText('Type to search...');
+    const searchInput = screen.getByPlaceholderText('Search keys and values...');
     await user.type(searchInput, 'test');
 
     await waitFor(
       () => {
-        expect(objectHelpers.filterJson).toHaveBeenCalled();
+        expect(searchInput).toHaveValue('test');
       },
       { timeout: 3000 }
     );
@@ -262,13 +258,13 @@ describe('App Component', () => {
 
     await waitFor(
       () => {
-        expect(screen.getByText('+++')).toBeInTheDocument();
+        expect(screen.getByText('export raw')).toBeInTheDocument();
       },
       { timeout: 3000 }
     );
 
-    const exportMenu = screen.getByText('+++');
-    await user.click(exportMenu);
+    const exportRaw = screen.getByText('export raw');
+    await user.click(exportRaw);
 
     await waitFor(
       () => {
@@ -292,7 +288,8 @@ describe('App Component', () => {
 
     await waitFor(
       () => {
-        expect(screen.getByText(/This is the data included in the bundle/)).toBeInTheDocument();
+        // Check that the app rendered by looking for the search input
+        expect(screen.getByPlaceholderText('Search keys and values...')).toBeInTheDocument();
       },
       { timeout: 3000 }
     );

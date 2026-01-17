@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { classNames } from '../utils/classNames';
-import { ROUTER, THEME } from '../../helpers/constants';
+import { DEFAULT_SIZE, ROUTER, THEME } from '../../helpers/constants';
 import { SetTheme } from '../context/actions';
 import { Context } from '../context/context';
-import SearchBox from './core/searchBox/SearchBox';
 
 import * as styles from './Header.module.css';
+import Badge, { Variant as BadgeVariant } from './core/badge/Badge';
 
-function Header({ router, version, react, onSearch }) {
+function Header({ router, version, react, keys, size }) {
   const [{ theme }, dispatch] = React.useContext(Context);
 
   const handleOnThemeToggle = () => {
@@ -18,31 +18,50 @@ function Header({ router, version, react, onSearch }) {
   return (
     <div className={styles.header}>
       <h1>Next.js 🚀 Explorer</h1>
-      <div className={styles.section}>
-        <a
+
+      <div className={styles.labels}>
+        <Badge
+          label="Using"
+          variant={BadgeVariant.ACCENT}
+          component="a"
           target="_blank"
           rel="noreferrer"
           href={`https://nextjs.org/docs/${router === ROUTER.App ? 'app' : 'pages'}`}
-          className={styles.router}
         >
           {router === ROUTER.App ? 'APP' : 'Pages'} Router
-        </a>
-        <div className={styles.versions}>
-          {version && (
-            <a target="_blank" rel="noreferrer" href={'https://nextjs.org/blog'}>
-              Next.js v{version}
-            </a>
-          )}
-          {react && (
-            <a target="_blank" rel="noreferrer" href={'https://react.dev/'}>
-              React {react}
-            </a>
-          )}
-        </div>
-      </div>
-
-      <div className={styles.box}>
-        <SearchBox onChange={(v) => onSearch?.(v)} />
+        </Badge>
+        {version && (
+          <Badge
+            label="Next.js"
+            component="a"
+            target="_blank"
+            rel="noreferrer"
+            href={'https://nextjs.org/blog'}
+          >
+            v{version}
+          </Badge>
+        )}
+        {react && (
+          <Badge
+            label="React"
+            component="a"
+            target="_blank"
+            rel="noreferrer"
+            href={'https://react.dev/'}
+          >
+            v{react}
+          </Badge>
+        )}
+        {keys && size && (
+          <Badge
+            label="Size"
+            variant={BadgeVariant.PRIMARY}
+            title={`${size > DEFAULT_SIZE ? 'Large size' : 'Normal size'}`}
+          >
+            {size && `${size > DEFAULT_SIZE ? '🔴' : '🟢'} ${size / 1000} Kb`} /
+            {keys && `${keys} keys`}
+          </Badge>
+        )}
       </div>
 
       <div className={classNames(styles.box, styles.theme, theme === THEME.Light && styles.light)}>
@@ -54,9 +73,10 @@ function Header({ router, version, react, onSearch }) {
 
 Header.propTypes = {
   router: PropTypes.oneOf([ROUTER.App, ROUTER.Pages]).isRequired,
-  version: PropTypes.string.isRequired,
-  react: PropTypes.string.isRequired,
-  onSearch: PropTypes.func.isRequired,
+  version: PropTypes.string,
+  react: PropTypes.string,
+  keys: PropTypes.number,
+  size: PropTypes.number,
 };
 
 export default Header;
