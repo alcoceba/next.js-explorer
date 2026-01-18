@@ -7,6 +7,7 @@ const InitialState = {
   theme: THEME.Dark,
   showSizes: false,
   isCollapsed: false,
+  showPageInfo: false,
 };
 
 export const Context = React.createContext();

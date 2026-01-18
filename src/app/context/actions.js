@@ -1,3 +1,13 @@
+export const SET_SHOW_PAGE_INFO = 'SET_SHOW_PAGE_INFO';
+
+export const SetShowPageInfo = (payload) => {
+  return {
+    type: SET_SHOW_PAGE_INFO,
+    data: {
+      showPageInfo: payload,
+    },
+  };
+};
 export const SET_THEME = 'SET_THEME';
 export const SET_SHOW_SIZES = 'SET_SHOW_SIZES';
 export const SET_IS_COLLAPSED = 'SET_IS_COLLAPSED';
