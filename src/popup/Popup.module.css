@@ -8,9 +8,9 @@
   background: #295;
   color: #dfe;
   padding: 0.5rem 1rem;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.2;
-  border-radius: 1px;
+  border-radius: 2px;
   transition: all 0.2s ease-out;
   opacity: 0;
   z-index: 999999;

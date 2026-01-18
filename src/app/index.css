@@ -31,6 +31,10 @@
   --color-warn: #c0a901;
 }
 
+:root {
+  --border-radius: 2px;
+}
+
 html,
 body {
   font:
@@ -38,7 +42,7 @@ body {
     'Courier New',
     Courier,
     monospace;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 body {
