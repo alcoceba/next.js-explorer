@@ -20,10 +20,6 @@ export default [
         ...globals.jest,
       }
     },
-    rules: {
-      "react/prop-types": "off",
-      "react/react-in-jsx-scope": "off",
-    }
   },
   pluginJs.configs.recommended,
   pluginReact.configs.flat.recommended,
