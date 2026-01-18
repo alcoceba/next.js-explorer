@@ -7,22 +7,29 @@ import Value from '../value/Value';
 
 import * as styles from './Tree.module.css';
 
-const matchesSearch = (key, value, search) => {
+const matchesSearch = (key, value, search, searchType = 'both') => {
   if (!search) return true;
   const keyStr = String(key).toLowerCase();
   const valueStr = String(value).toLowerCase();
-  return keyStr.includes(search) || valueStr.includes(search);
+
+  if (searchType === 'keys') {
+    return keyStr.includes(search);
+  } else if (searchType === 'values') {
+    return valueStr.includes(search);
+  } else {
+    return keyStr.includes(search) || valueStr.includes(search);
+  }
 };
 
-const hasMatchingDescendants = (value, search) => {
+const hasMatchingDescendants = (value, search, searchType = 'both') => {
   if (!search || !isObjectAndNotEmpty(value)) return false;
   return Object.entries(value).some(([k, v]) => {
-    if (matchesSearch(k, v, search)) return true;
-    return hasMatchingDescendants(v, search);
+    if (matchesSearch(k, v, search, searchType)) return true;
+    return hasMatchingDescendants(v, search, searchType);
   });
 };
 
-function Tree({ data, isRoot, onCopy, search = '' }) {
+function Tree({ data, isRoot, onCopy, search = '', searchType = 'both', keepExpanded = false }) {
   const entries = useMemo(() => Object.keys(data), [data]);
   const className = useMemo(() => classNames(styles.wrapper, isRoot && styles.root), [isRoot]);
 
@@ -31,25 +38,47 @@ function Tree({ data, isRoot, onCopy, search = '' }) {
       entries
         .map((key) => {
           const value = data[key];
-          const directMatch = matchesSearch(key, value, search);
+          const directMatch = matchesSearch(key, value, search, searchType);
           const hasChildren = isObjectAndNotEmpty(value);
-          const descendantMatch = hasChildren && hasMatchingDescendants(value, search);
+          const descendantMatch = hasChildren && hasMatchingDescendants(value, search, searchType);
           const matches = directMatch || descendantMatch;
+          const shouldShow = keepExpanded && search ? true : matches;
 
           if (!hasChildren) {
-            return matches ? (
-              <Value key={key} index={key} value={value} onCopy={onCopy} highlight={search} />
+            return shouldShow ? (
+              <Value
+                key={key}
+                index={key}
+                value={value}
+                onCopy={onCopy}
+                highlight={search}
+                searchType={searchType}
+              />
             ) : null;
           }
 
-          return matches ? (
-            <Key key={key} index={key} tree={value} highlight={search} matches={directMatch}>
-              <Tree data={value} onCopy={onCopy} search={directMatch ? '' : search} />
+          return shouldShow ? (
+            <Key
+              key={key}
+              index={key}
+              tree={value}
+              highlight={search}
+              matches={directMatch}
+              searchType={searchType}
+              keepExpanded={keepExpanded && search ? true : false}
+            >
+              <Tree
+                data={value}
+                onCopy={onCopy}
+                search={keepExpanded && search ? '' : directMatch ? '' : search}
+                searchType={searchType}
+                keepExpanded={keepExpanded}
+              />
             </Key>
           ) : null;
         })
         .filter(Boolean),
-    [entries, data, onCopy, search]
+    [entries, data, onCopy, search, searchType, keepExpanded]
   );
 
   return (
@@ -64,6 +93,8 @@ Tree.propTypes = {
   isRoot: PropTypes.bool,
   onCopy: PropTypes.func,
   search: PropTypes.string,
+  searchType: PropTypes.oneOf(['keys', 'values', 'both']),
+  keepExpanded: PropTypes.bool,
 };
 
 export default memo(Tree);

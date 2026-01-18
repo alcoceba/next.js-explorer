@@ -29,8 +29,8 @@
 }
 
 mark {
-  background-color: rgba(255, 235, 59, 0.6);
-  color: inherit;
+  background-color: var(--color-accent);
+  color: var(--color-bg-primary);
   font-weight: 600;
   padding: 0 2px;
   border-radius: 2px;

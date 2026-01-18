@@ -46,10 +46,22 @@ SizeInfo.propTypes = {
   length: PropTypes.number,
 };
 
-function Key({ index, tree, children, highlight = '', matches = true }) {
+function Key({
+  index,
+  tree,
+  children,
+  highlight = '',
+  matches = true,
+  searchType = 'both',
+  keepExpanded = false,
+}) {
   const [isHidden, setIsHidden] = useState(false);
   const contextValue = useContext(Context);
   const { showSizes, isCollapsed } = useMemo(() => contextValue?.[0] || {}, [contextValue]);
+  const shouldHighlight = useMemo(
+    () => highlight && (searchType === 'both' || searchType === 'keys'),
+    [highlight, searchType]
+  );
 
   const { size, length, isArray } = useMemo(
     () => ({
@@ -80,14 +92,16 @@ function Key({ index, tree, children, highlight = '', matches = true }) {
   useEffect(() => {
     if (highlight && matches) {
       setIsHidden(false);
+    } else if (isCollapsed && !keepExpanded) {
+      setIsHidden(true);
     }
-  }, [highlight, matches]);
+  }, [highlight, matches, isCollapsed, keepExpanded]);
 
   return (
     <li onClick={handleToggle} className={className} role="treeitem" aria-expanded={!isHidden}>
       <span className={styles.collapsible} />
       <span>
-        <HighlightedText text={index} search={highlight} />
+        <HighlightedText text={index} search={shouldHighlight ? highlight : ''} />
       </span>
       <span className={styles.open}>{bracket}</span>
       {showSizes && <SizeInfo size={size} length={length} />}
@@ -106,6 +120,8 @@ Key.propTypes = {
   children: PropTypes.element,
   highlight: PropTypes.string,
   matches: PropTypes.bool,
+  searchType: PropTypes.oneOf(['keys', 'values', 'both']),
+  keepExpanded: PropTypes.bool,
 };
 
 export default memo(Key);

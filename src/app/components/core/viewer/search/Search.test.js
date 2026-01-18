@@ -29,13 +29,13 @@ describe('Search Component', () => {
 
   it('should show clear button when search term exists', () => {
     render(<Search searchTerm="test" onSearchChange={jest.fn()} totalResults={0} />);
-    const clearButton = screen.getByTitle('Clear search');
+    const clearButton = screen.getByRole('button', { name: /clear search/i });
     expect(clearButton).toBeInTheDocument();
   });
 
   it('should not show clear button when search term is empty', () => {
     render(<Search searchTerm="" onSearchChange={jest.fn()} totalResults={0} />);
-    const clearButton = screen.queryByTitle('Clear search');
+    const clearButton = screen.queryByRole('button', { name: /clear search/i });
     expect(clearButton).not.toBeInTheDocument();
   });
 
@@ -44,7 +44,7 @@ describe('Search Component', () => {
     const handleChange = jest.fn();
     render(<Search searchTerm="test" onSearchChange={handleChange} totalResults={0} />);
 
-    const clearButton = screen.getByTitle('Clear search');
+    const clearButton = screen.getByRole('button', { name: /clear search/i });
     await user.click(clearButton);
 
     expect(handleChange).toHaveBeenCalledWith('');
@@ -113,7 +113,7 @@ describe('Search Component', () => {
     render(<Search searchTerm="test" onSearchChange={jest.fn()} totalResults={5} />);
 
     expect(screen.getByPlaceholderText('Search keys and values...')).toBeInTheDocument();
-    expect(screen.getByTitle('Clear search')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /clear search/i })).toBeInTheDocument();
     expect(screen.getByText(/5 results found/)).toBeInTheDocument();
   });
 

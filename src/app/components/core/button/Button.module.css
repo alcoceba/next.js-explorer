@@ -1,0 +1,73 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  min-width: 42px;
+  line-height: 18px;
+  padding: 0 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  white-space: nowrap;
+  user-select: none;
+  font-family: inherit;
+  border-radius: 2px;
+}
+
+.button_default {
+  color: var(--color-text);
+  border: 1px solid var(--color-bg-secondary);
+  background-color: var(--color-bg-secondary);
+}
+
+.button_default:hover {
+  color: var(--color-bg-secondary);
+  background-color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.button_critical {
+  color: var(--color-critical);
+  border: 1px solid var(--color-critical);
+  background-color: transparent;
+}
+
+.button_critical:hover {
+  color: var(--color-bg-primary);
+  background-color: var(--color-critical);
+  border-color: var(--color-critical);
+}
+
+.button_secondary {
+  color: var(--color-bg-secondary);
+  border: 1px solid var(--color-bg-secondary);
+  background-color: transparent;
+}
+
+.button_secondary:hover {
+  color: var(--color-text);
+  background-color: var(--color-bg-secondary);
+}
+
+.button_accent {
+  color: var(--color-accent);
+  background-color: transparent;
+  border: 1px solid var(--color-accent);
+}
+
+.button_accent:hover {
+  color: var(--color-bg-primary);
+  background-color: var(--color-accent);
+}
+
+.button_small {
+  height: 30px;
+  min-width: 30px;
+  font-size: 0.95em;
+  padding: 0 0.5rem;
+}
+
+.button:focus {
+  outline: none;
+  border-width: 2px;
+}

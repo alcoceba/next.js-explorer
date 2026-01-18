@@ -58,11 +58,15 @@ HighlightedText.propTypes = {
   text: PropTypes.string,
 };
 
-function Value({ index, value, onCopy, highlight = '' }) {
+function Value({ index, value, onCopy, highlight = '', searchType = 'both' }) {
   const sanitized = useMemo(() => sanitize(value), [value]);
   const type = useMemo(() => getValueType(sanitized), [sanitized]);
   const formatted = useMemo(() => formatValue(sanitized, type), [sanitized, type]);
   const className = useMemo(() => styleMap[type] || '', [type]);
+  const shouldHighlight = useMemo(
+    () => highlight && (searchType === 'both' || searchType === 'values'),
+    [highlight, searchType]
+  );
 
   const handleDoubleClick = useCallback(
     (e) => {
@@ -76,10 +80,10 @@ function Value({ index, value, onCopy, highlight = '' }) {
   return (
     <li onDoubleClick={handleDoubleClick}>
       <span className={styles.key}>
-        <HighlightedText text={index} search={highlight} />:
+        <HighlightedText text={index} search={shouldHighlight ? highlight : ''} />:
       </span>
       <span className={className}>
-        <HighlightedText text={formatted} search={highlight} />
+        <HighlightedText text={formatted} search={shouldHighlight ? highlight : ''} />
       </span>
     </li>
   );
@@ -90,6 +94,7 @@ Value.propTypes = {
   value: PropTypes.any,
   onCopy: PropTypes.func,
   highlight: PropTypes.string,
+  searchType: PropTypes.oneOf(['keys', 'values', 'both']),
 };
 
 export default memo(Value);
