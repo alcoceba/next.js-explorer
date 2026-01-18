@@ -16,7 +16,7 @@
   position: relative;
   top: 1px;
   display: inline-block;
-  font-size: 1rem;
+  font-size: 16px;
   color: #f00;
   animation: animateHeart 5s infinite;
   animation-delay: 2s;

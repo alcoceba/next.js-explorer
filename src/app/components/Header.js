@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { classNames } from '../utils/classNames';
-import { DEFAULT_SIZE, ROUTER, THEME } from '../../helpers/constants';
+import { ROUTER, THEME } from '../../helpers/constants';
 import { SetTheme } from '../context/actions';
 import { Context } from '../context/context';
 
 import * as styles from './Header.module.css';
 import Badge, { Variant as BadgeVariant } from './core/badge/Badge';
+import SunIcon from '../icons/SunIcon';
+import MoonIcon from '../icons/MoonIcon';
 
-function Header({ router, version, react, keys, size }) {
+function Header({ router, version, react }) {
   const [{ theme }, dispatch] = React.useContext(Context);
 
   const handleOnThemeToggle = () => {
@@ -17,7 +19,9 @@ function Header({ router, version, react, keys, size }) {
 
   return (
     <div className={styles.header}>
-      <h1>Next.js 🚀 Explorer</h1>
+      <div className={styles.h1}>
+        <h1>Next.js 🚀 Explorer</h1>
+      </div>
 
       <div className={styles.labels}>
         <Badge
@@ -52,20 +56,16 @@ function Header({ router, version, react, keys, size }) {
             v{react}
           </Badge>
         )}
-        {keys && size && (
-          <Badge
-            label="Size"
-            variant={BadgeVariant.PRIMARY}
-            title={`${size > DEFAULT_SIZE ? 'Large size' : 'Normal size'}`}
-          >
-            {size && `${size > DEFAULT_SIZE ? '🔴' : '🟢'} ${size / 1000} Kb`} /
-            {keys && `${keys} keys`}
-          </Badge>
-        )}
       </div>
 
-      <div className={classNames(styles.box, styles.theme, theme === THEME.Light && styles.light)}>
-        <span onClick={handleOnThemeToggle}>&nbsp;</span>
+      <div
+        className={classNames(styles.box, styles.theme)}
+        onClick={handleOnThemeToggle}
+        role="button"
+        tabIndex={0}
+        aria-label="Toggle theme"
+      >
+        {theme === THEME.Light ? <SunIcon /> : <MoonIcon />}
       </div>
     </div>
   );
@@ -75,8 +75,6 @@ Header.propTypes = {
   router: PropTypes.oneOf([ROUTER.App, ROUTER.Pages]).isRequired,
   version: PropTypes.string,
   react: PropTypes.string,
-  keys: PropTypes.number,
-  size: PropTypes.number,
 };
 
 export default Header;

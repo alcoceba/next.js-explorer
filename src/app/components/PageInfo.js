@@ -1,22 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TruncatedText from './core/truncated-text/TruncatedText';
 
 import * as styles from './PageInfo.module.css';
+import { DEFAULT_SIZE } from '../../helpers/constants';
 
-function PageInfo({ page, query, assetPrefix }) {
+function PageInfo({ size, keys, page, query, assetPrefix }) {
   return (
-    <div className={styles.info}>
-      <strong>Page</strong>: <TruncatedText text={page} />
-      &nbsp;|&nbsp;
-      <strong>Query</strong>: <TruncatedText text={query && JSON.stringify(query)} />
-      &nbsp;|&nbsp;
-      <strong>Assets prefix</strong>: <TruncatedText text={assetPrefix} />
-    </div>
+    <table className={styles.info}>
+      <tbody>
+        <tr>
+          <th align="left">Size</th>
+          <td>
+            {size && size > DEFAULT_SIZE ? '🔴' : '🟢'} {size / 1000} Kb / {keys} keys
+          </td>
+        </tr>
+        <tr>
+          <th align="left">Page</th>
+          <td>{page}</td>
+        </tr>
+        <tr>
+          <th align="left">Query</th>
+          <td>{query && JSON.stringify(query)}</td>
+        </tr>
+        <tr>
+          <th align="left">Assets</th>
+          <td>{assetPrefix}</td>
+        </tr>
+      </tbody>
+    </table>
   );
 }
 
 PageInfo.propTypes = {
+  size: PropTypes.number,
+  keys: PropTypes.number,
   page: PropTypes.string,
   query: PropTypes.object,
   assetPrefix: PropTypes.string,

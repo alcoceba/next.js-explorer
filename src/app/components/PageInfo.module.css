@@ -1,13 +1,20 @@
 .info {
-  padding: 0.5rem 0;
   border: none;
   border-bottom: 1px solid var(--color-bg-secondary);
+  max-width: 400px;
 }
 
-.info strong {
-  font-weight: normal;
+.info th,
+.info td {
+  padding: 0.25rem 0.5rem;
+  vertical-align: top;
 }
 
-.info span {
-  opacity: 0.6;
+.info th {
+  text-align: right;
+  color: var(--color-accent);
+}
+
+.info td {
+  text-align: left;
 }

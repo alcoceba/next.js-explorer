@@ -21,7 +21,7 @@ describe('PageInfo Component', () => {
 
   it('should render assets prefix label and value', () => {
     render(<PageInfo page="/home" query={{}} assetPrefix="/_next/" />);
-    expect(screen.getByText('Assets prefix')).toBeInTheDocument();
+    expect(screen.getByText('Assets')).toBeInTheDocument();
   });
 
   it('should handle null page prop', () => {
@@ -36,7 +36,7 @@ describe('PageInfo Component', () => {
 
   it('should handle null asset prefix prop', () => {
     render(<PageInfo page="/home" query={{}} assetPrefix={null} />);
-    expect(screen.getByText('Assets prefix')).toBeInTheDocument();
+    expect(screen.getByText('Assets')).toBeInTheDocument();
   });
 
   it('should display all three sections with pipe separators', () => {
@@ -44,7 +44,10 @@ describe('PageInfo Component', () => {
       <PageInfo page="/home" query={{ id: '123' }} assetPrefix="/_next/" />
     );
     const text = container.textContent;
-    expect(text).toContain('|');
+    // The component renders in a table format, check for the table rows content
+    expect(text).toContain('Page');
+    expect(text).toContain('Query');
+    expect(text).toContain('Assets');
   });
 
   it('should stringify query object', () => {
@@ -56,15 +59,19 @@ describe('PageInfo Component', () => {
     render(<PageInfo page="" query={{}} assetPrefix="" />);
     expect(screen.getByText('Page')).toBeInTheDocument();
     expect(screen.getByText('Query')).toBeInTheDocument();
-    expect(screen.getByText('Assets prefix')).toBeInTheDocument();
+    expect(screen.getByText('Assets')).toBeInTheDocument();
   });
 
   it('should render TruncatedText components for each field', () => {
     const { container } = render(
       <PageInfo page="/very/long/page/path" query={{}} assetPrefix="/" />
     );
-    // Check that TruncatedText components are rendered (they create spans)
-    const spans = container.querySelectorAll('span');
-    expect(spans.length).toBeGreaterThan(0);
+    // Check that a table is rendered with the page info
+    const table = container.querySelector('table');
+    expect(table).toBeInTheDocument();
+
+    // Check that table rows are rendered
+    const rows = container.querySelectorAll('tr');
+    expect(rows.length).toBeGreaterThan(0);
   });
 });

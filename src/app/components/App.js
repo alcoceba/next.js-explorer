@@ -4,15 +4,13 @@ import { getContext } from '../utils/context';
 import { copyToClipboard } from '../utils/copy';
 import { exportJson, getObjKeysCount, getObjSize } from '../utils/object';
 import ContextProvider from '../context/context';
-import ControlBar from './ControlBar';
 import Footer from './Footer';
 import Header from './Header';
 import Loading from './core/loading/Loading';
 import Message from './core/message/Message';
 import Portal from './core/portal/Portal';
 import Theme from './Theme';
-import Viewer from './core/viewer/Viewer';
-import PageInfo from './PageInfo';
+import Viewer from './Viewer';
 
 import * as styles from './App.module.css';
 
@@ -67,38 +65,44 @@ function App() {
     <ContextProvider>
       <Theme>
         <Loading isLoading={!isInit}>
-          <div className={styles.sticky}>
+          <div className={styles.header}>
             <Header
               version={context?.next?.v}
               react={context?.react?.v}
               router={context?.next?.router}
-              keys={context?.keys}
-              size={context?.size}
             />
-
-            {context?.next?.router === ROUTER.Pages && (
-              <PageInfo
-                page={context?.next?.data?.page}
-                query={context?.next?.data?.query}
-                assetPrefix={context?.next?.data?.assetPrefix}
-              />
-            )}
-
-            <ControlBar onExport={handleOnExport} onCopy={(value) => handleOnCopyJson(value)} />
           </div>
 
-          {context?.next?.router === ROUTER.App && !json && (
+          {context?.next?.router === ROUTER.App && !json ? (
             <div className={styles.notice}>
               🔴 Sorry, but we have not been able to unpack the bundles sent to the client
             </div>
-          )}
+          ) : (
+            <>
+              <Viewer
+                json={json}
+                onCopy={handleOnCopy}
+                onCopyJson={handleOnCopyJson}
+                onExport={handleOnExport}
+                pageInfoProps={
+                  context?.next?.router === ROUTER.Pages
+                    ? {
+                        keys: context?.keys,
+                        size: context?.size,
+                        page: context?.next?.data?.page,
+                        query: context?.next?.data?.query,
+                        assetPrefix: context?.next?.data?.assetPrefix,
+                      }
+                    : undefined
+                }
+              />
 
-          <Viewer json={json} onCopy={handleOnCopy} />
-
-          {!!showMessage?.id && (
-            <Portal key={showMessage.id}>
-              <Message>{showMessage.text}</Message>
-            </Portal>
+              {!!showMessage?.id && (
+                <Portal key={showMessage.id}>
+                  <Message>{showMessage.text}</Message>
+                </Portal>
+              )}
+            </>
           )}
 
           <Footer />

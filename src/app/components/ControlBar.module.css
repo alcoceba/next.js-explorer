@@ -1,8 +1,11 @@
 .actions {
   display: flex;
   align-items: center;
-  justify-content: left;
-  padding: 0.4rem 0;
+  justify-content: flex-start;
+  padding: 0;
+  gap: 0.5rem;
+  height: 42px;
+  border-bottom: 1px solid var(--color-bg-primary);
 }
 
 .actions ul {
@@ -13,27 +16,10 @@
   list-style: none;
 }
 
-.actions span {
-  position: relative;
-  margin: 0.1rem 0.5rem;
-  transition: all 0.2s ease-out;
-  cursor: pointer;
-  color: var(--color-primary);
+.actions :global(button) {
+  margin: 0.1rem 0;
 }
 
-.actions span:first-child {
+.actions :global(button:first-child) {
   margin-left: 0;
-}
-
-.actions span:last-child {
-  margin-right: 0;
-}
-
-.actions .right {
-  text-align: right;
-  flex-grow: 1;
-}
-
-.actions span:hover {
-  text-decoration: underline;
 }

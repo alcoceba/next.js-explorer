@@ -67,10 +67,8 @@ describe('Header Component', () => {
     const user = userEvent.setup();
     renderWithContext(<Header router={ROUTER.App} />);
 
-    const spans = screen.getAllByRole('generic', { hidden: true });
-    const themeToggle = spans[spans.length - 1];
-
-    await user.click(themeToggle);
+    const themeButton = screen.getByRole('button', { name: /toggle theme/i });
+    await user.click(themeButton);
 
     expect(mockDispatch).toHaveBeenCalled();
   });

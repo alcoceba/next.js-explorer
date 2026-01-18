@@ -30,34 +30,34 @@ describe('ControlBar Component', () => {
 
   it('should render actions container', () => {
     renderWithContext(<ControlBar />);
-    const showSizesButton = screen.getByText(/show sizes|hide sizes/);
+    const showSizesButton = screen.getByRole('button', { name: /show sizes|hide sizes/i });
     expect(showSizesButton).toBeInTheDocument();
   });
 
   it('should render show sizes button', () => {
     renderWithContext(<ControlBar />);
-    expect(screen.getByText('show sizes')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /show sizes/i })).toBeInTheDocument();
   });
 
   it('should render hide sizes button when showSizes is true', () => {
     const contextValue = { ...mockContextValue, showSizes: true };
     renderWithContext(<ControlBar />, contextValue);
-    expect(screen.getByText('hide sizes')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /hide sizes/i })).toBeInTheDocument();
   });
 
   it('should render collapse button', () => {
     renderWithContext(<ControlBar />);
-    expect(screen.getByText('collapse')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /collapse all/i })).toBeInTheDocument();
   });
 
   it('should render expand button', () => {
     renderWithContext(<ControlBar />);
-    expect(screen.getByText('expand')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /expand all/i })).toBeInTheDocument();
   });
 
   it('should render copy JSON button', () => {
     renderWithContext(<ControlBar />);
-    expect(screen.getByText('copy JSON')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /copy JSON/i })).toBeInTheDocument();
   });
 
   it('should render export menu', () => {
@@ -82,7 +82,7 @@ describe('ControlBar Component', () => {
 
     renderWithContext(<ControlBar onCopy={handleCopy} />);
 
-    await user.click(screen.getByText('copy JSON'));
+    await user.click(screen.getByRole('button', { name: /copy JSON/i }));
     expect(handleCopy).toHaveBeenCalledTimes(1);
   });
 
@@ -90,7 +90,7 @@ describe('ControlBar Component', () => {
     const user = userEvent.setup();
     renderWithContext(<ControlBar />);
 
-    await user.click(screen.getByText('collapse'));
+    await user.click(screen.getByRole('button', { name: /collapse all/i }));
     expect(mockDispatch).toHaveBeenCalled();
   });
 
@@ -98,7 +98,7 @@ describe('ControlBar Component', () => {
     const user = userEvent.setup();
     renderWithContext(<ControlBar />);
 
-    await user.click(screen.getByText('expand'));
+    await user.click(screen.getByRole('button', { name: /expand all/i }));
     expect(mockDispatch).toHaveBeenCalled();
   });
 
@@ -106,7 +106,7 @@ describe('ControlBar Component', () => {
     const user = userEvent.setup();
     renderWithContext(<ControlBar />);
 
-    await user.click(screen.getByText('show sizes'));
+    await user.click(screen.getByRole('button', { name: /show sizes/i }));
     expect(mockDispatch).toHaveBeenCalled();
   });
 
@@ -134,8 +134,8 @@ describe('ControlBar Component', () => {
     const user = userEvent.setup();
     renderWithContext(<ControlBar />);
 
-    await user.click(screen.getByText('copy JSON'));
-    expect(screen.getByText('copy JSON')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /copy JSON/i }));
+    expect(screen.getByRole('button', { name: /copy JSON/i })).toBeInTheDocument();
   });
 
   it('should handle undefined onExport gracefully', async () => {
@@ -149,7 +149,7 @@ describe('ControlBar Component', () => {
   it('should have show sizes button highlighted', () => {
     const contextValue = { ...mockContextValue, showSizes: true };
     renderWithContext(<ControlBar />, contextValue);
-    const hideSizesButton = screen.getByText('hide sizes');
+    const hideSizesButton = screen.getByRole('button', { name: /hide sizes/i });
     expect(hideSizesButton).toBeInTheDocument();
   });
 });

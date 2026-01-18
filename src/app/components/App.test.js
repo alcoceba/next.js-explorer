@@ -82,7 +82,7 @@ describe('App Component', () => {
 
     await waitFor(
       () => {
-        expect(screen.getByText(/show sizes|hide sizes/)).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /show sizes|hide sizes/i })).toBeInTheDocument();
       },
       { timeout: 3000 }
     );
@@ -138,12 +138,12 @@ describe('App Component', () => {
 
     await waitFor(
       () => {
-        expect(screen.getByText(/copy JSON/)).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /copy JSON/i })).toBeInTheDocument();
       },
       { timeout: 3000 }
     );
 
-    await user.click(screen.getByText(/copy JSON/));
+    await user.click(screen.getByRole('button', { name: /copy JSON/i }));
 
     await waitFor(
       () => {
@@ -160,10 +160,10 @@ describe('App Component', () => {
     render(<App />);
 
     await waitFor(() => {
-      expect(screen.getByText(/copy JSON/)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /copy JSON/i })).toBeInTheDocument();
     });
 
-    await user.click(screen.getByText(/copy JSON/));
+    await user.click(screen.getByRole('button', { name: /copy JSON/i }));
 
     await waitFor(
       () => {
@@ -230,12 +230,12 @@ describe('App Component', () => {
 
     await waitFor(
       () => {
-        expect(screen.getByText(/copy JSON/)).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /copy JSON/i })).toBeInTheDocument();
       },
       { timeout: 2000 }
     );
 
-    await user.click(screen.getByText(/copy JSON/));
+    await user.click(screen.getByRole('button', { name: /copy JSON/i }));
 
     await waitFor(
       () => {
