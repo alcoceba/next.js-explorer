@@ -66,41 +66,27 @@ A comprehensive Jest test suite exists for all major components:
 
 ## File Organization
 
+
 ### Key Directories
 
-- **`src/background/`** - Service worker entry point (`index.js`)
-  - `utils/` - Background-specific utilities (e.g. decode.js, getObjSize.js, parseFlightPushData.js, tabs.js)
-- **`src/app/`** - Full explorer UI (React components and state management)
-  - `components/` - React components using atomic design pattern
-    - `core/` - Reusable atomic components
-      - `switch/` - Toggle checkbox component
-      - `loading/` - Loading spinner overlay with rocket emoji animation
-      - `message/` - Notification/toast messages
-      - `portal/` - React portal wrapper
-      - `truncated-text/` - Text truncation component with show more/less button (default 35 chars)
-      - `viewer/` - Agnostic JSON tree visualizer with search integration
-        - `tree/` - Recursive tree renderer with search filtering
-        - `key/` - Object/array key renderer with auto-expand on match
-        - `value/` - Leaf value renderer with highlighting
-        - `search/` - Search input component with focus animation and result counter
-    - `Header.js` - Navigation header
-    - `Footer.js` - Footer section
-    - `ControlBar.js` - Toolbar controls
-    - `PageInfo.js` - Pages Router information display (page, query, assets prefix)
-    - `App.js` - Root application component
-    - `Theme.js` - Theme provider wrapper
-  - `context/` - State management with Context API
-  - `hooks/` - Custom React hooks
-  - `utils/` - App-specific utilities (e.g. object.js, rows.js, sanitize.js, context.js, config.js, copy.js)
-  - `index.css` - Global and theme styles (unified)
-- **`src/popup/`** - Quick access popup UI
-- **`src/helpers/`** - Shared constants and classNames utility (only `constants.js` and `classNames.js` remain)
+- **`src/background/`**: Contains the service worker and background-specific utilities for data extraction, page inspection, and extension logic. AI agents should update or extend background logic here for new data sources or message handling.
+
+- **`src/app/`**: Main explorer UI. Contains:
+  - **components/core/**: Atomic UI components (buttons, inputs, modals, tooltips, JSON viewer, etc.) for building reusable interface elements.
+  - **components/**: Composite components that orchestrate core atoms and icons for feature-specific UI (app shell, toolbars, headers, footers, data viewers).
+  - **icons/**: All toolbar and UI icons in SVG format (18x18), used for actions and status indicators throughout the app.
+  - **context/**: State management using React Context API. Extend context here for new global state or actions.
+  - **hooks/**: Custom React hooks for encapsulating reusable logic.
+  - **utils/**: App-specific utility functions for object manipulation, config, copying, etc.
+
+- **`src/popup/`**: Quick-access popup UI for extension icon click. Update here for fast status or navigation features.
+
+- **`src/helpers/`**: Shared constants and utility functions. Add here for cross-cutting helpers used in multiple modules.
 
 ### Configuration Files
 
 - **`webpack.config.js`** - Module bundler configuration
 - **`tsconfig.json`** - TypeScript settings (strict mode enabled)
-- **`global.d.ts`** - Global type declarations for CSS Modules
 - **`eslint.config.mjs`** - ESLint configuration
 - **`manifest.chrome.json`** - Chrome extension manifest
 - **`manifest.firefox.json`** - Firefox extension manifest
@@ -145,18 +131,21 @@ Components combining atoms and providing feature-specific functionality:
 ### Background Script (`src/background/index.js`)
 
 The main service worker:
+
 - Detects Next.js apps and their router type
 - Extracts application data from the page
 - Manages extension badge state
 - Communicates with app and popup via message passing
 
 Key functions:
+
 - `getRawData()` - Extracts Next.js data from the page
 - `getIcon()` - Determines badge icon based on context
 
 ### Popup (`src/popup/`)
 
 Quick-access UI shown when extension icon is clicked:
+
 - Shows detected Next.js version
 - Links to open full explorer
 - Displays page status
@@ -183,6 +172,7 @@ Quick-access UI shown when extension icon is clicked:
 ## Extension Manifest Notes
 
 Two manifests maintained:
+
 - **`manifest.chrome.json`** - Chrome/Chromium manifest (MV3)
 - **`manifest.firefox.json`** - Firefox manifest (MV2 compatibility)
 
@@ -203,12 +193,45 @@ Build process selects appropriate manifest based on target browser.
 ## Dependencies
 
 Core dependencies (see `package.json` for versions):
-- **React** - UI framework
+
+- **react** - UI framework
+- **react-dom** - React DOM rendering
+- **prop-types** - Runtime type checking for React props
 - **webextension-polyfill** - Cross-browser API compatibility
-- **Webpack** - Module bundling
-- **Babel** - JavaScript transpilation
-- **ESLint** - Code linting
-- **StyleLint** - CSS linting
+- **webpack** - Module bundling
+- **babel-loader**, **@babel/core**, **@babel/preset-env**, **@babel/preset-react** - JavaScript/React transpilation
+- **eslint**, **eslint-plugin-react**, **@eslint/js** - Code linting
+- **prettier** - Code formatting
+- **stylelint**, **stylelint-config-standard-scss** - CSS linting
+- **css-loader**, **style-loader** - CSS Modules support
+- **copy-webpack-plugin**, **html-webpack-plugin** - Webpack plugins
+- **jest**, **@testing-library/react**, **@testing-library/jest-dom**, **@testing-library/user-event**, **babel-jest**, **identity-obj-proxy**, **jest-environment-jsdom** - Testing
+- **husky** - Git hooks
+- **globals** - Global variables for linting
+
+## Core Atomic Components (`src/app/components/core/`)
+
+Purpose: Contains general-purpose atomic UI components. These are simple, reusable, and self-contained building blocks for the app's interface (e.g., buttons, inputs, modals, tooltips, JSON viewer). Designed for maximum reusability and minimal dependencies. Use these to build higher-level UI features.
+
+## Icon Components (`src/app/icons/`)
+
+Purpose: Contains all toolbar and UI icons in SVG format. All icons are designed at 18x18 size for visual consistency and are used throughout the app for actions like collapse, expand, copy, export, info, theme switching, and search. Use these icons for any UI action or status indicator.
+
+## Composite Components (`src/app/components/`)
+
+Purpose: Composite components orchestrate atomic components to provide feature-specific UI and app logic. They combine multiple atoms (from core and icons) and manage state, context, and user interaction. Examples include the main app shell, toolbars, headers, footers, and data viewers. Use these as the main entry points for user-facing features and workflows.
+
+## Context
+
+Purpose: The project uses the React Context API for cross-component state management. Context provides a way to share state, actions, and configuration across atomic and composite components without prop drilling.
+
+Guidance for AI agents:
+
+- Use context to manage global state (e.g., theme, data, UI flags, modal visibility).
+- When adding new features that require shared state, extend the context provider and actions.
+- Access context in components using React's useContext hook.
+- Update context actions and reducers to support new state requirements.
+- Ensure context changes are reflected in all relevant components for a consistent user experience.
 
 ---
 

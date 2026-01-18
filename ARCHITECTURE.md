@@ -55,6 +55,7 @@ Components are organized by atomic design principles with three layers:
 **Core Atomic Components** (`src/app/components/core/`):
 - Self-contained, reusable components
 - Examples: switch, loading, message, portal, truncated-text, viewer (with tree, key, value, search)
+- All toolbar actions use custom SVG icons from `src/app/icons/` (see AGENTS.md for full list)
 
 **Composite Components** (`src/app/components/`):
 - Combine atomic components with feature-specific functionality
@@ -103,12 +104,12 @@ Shared utilities for data parsing, context, tabs, object utilities, config, and 
 
 ---
 
+
 ## Configuration & Technologies
 
-- **TypeScript** for type safety ([tsconfig.json](tsconfig.json))
-- **Prettier** for code formatting ([.prettierrc.json](.prettierrc.json))
-- **ESLint** for linting ([eslint.config.mjs](eslint.config.mjs))
-- **React 19** for UI
+- **react** (v19+) for UI
+- **react-dom** for DOM rendering
+- **prop-types** for runtime type checking
 - **webextension-polyfill** for browser API
 - **Webpack** for bundling
 - **CSS Modules** for styling
