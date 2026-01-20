@@ -10,6 +10,7 @@
 
 .header .h1 {
   display: flex;
+  flex-direction: column;
   align-items: center;
   margin: 0;
   padding: 0 1.5rem 0 0;
@@ -19,11 +20,31 @@
 }
 
 .header .h1 h1 {
-  transition: padding-top 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  height: 44px;
+  transition: padding-top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.header .h1 h1:hover {
+.header .h1:hover h1 {
   padding-top: 40px;
+}
+
+.header .h1 .github {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding-top: 6px;
+  max-width: 250px;
+  height: 44px;
+  margin-top: -44px;
+  transition: margin-top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  line-height: 15px;
+}
+
+.header .h1:hover .github {
+  margin-top: 0;
 }
 
 .labels {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Header from './Header';
@@ -28,6 +27,16 @@ describe('Header Component', () => {
     expect(screen.getByText(/Next.js 🚀 Explorer/i)).toBeInTheDocument();
   });
 
+  it('should render GitHub link with icon and text', () => {
+    renderWithContext(<Header router={ROUTER.App} />);
+    const githubLink = screen.getByTitle('Next.js Explorer GitHub Repository');
+    expect(githubLink).toBeInTheDocument();
+    expect(githubLink).toHaveAttribute('href', 'https://github.com/alcoceba/next.js-explorer');
+    expect(githubLink).toHaveAttribute('target', '_blank');
+    expect(githubLink).toHaveAttribute('rel', 'noreferrer');
+    expect(screen.getByText('GitHub')).toBeInTheDocument();
+  });
+
   it('should render App Router link when router is APP', () => {
     renderWithContext(<Header router={ROUTER.App} version="14.0.0" react="19.0.0" />);
     const routerLink = screen.getByText('APP Router');
@@ -51,11 +60,11 @@ describe('Header Component', () => {
 
   it('should not render version when not provided', () => {
     renderWithContext(<Header router={ROUTER.App} react="19.0.0" />);
-    // Check that Next.js version badge is not rendered (there should be exactly 2 badges: router and react)
+    // Check that Next.js version badge is not rendered (there should be exactly 3 links: GitHub, router, and react)
     const badges = screen.getAllByRole('link');
-    // badges[0] = APP/Pages Router, badges[1] = React (no Next.js version)
-    expect(badges.length).toBe(2);
-    expect(badges[1]).toHaveAttribute('href', expect.stringContaining('react.dev'));
+    // badges[0] = GitHub, badges[1] = APP/Pages Router, badges[2] = React (no Next.js version)
+    expect(badges.length).toBe(3);
+    expect(badges[2]).toHaveAttribute('href', expect.stringContaining('react.dev'));
   });
 
   it('should render React version when provided', () => {
@@ -91,5 +100,13 @@ describe('Header Component', () => {
 
     expect(versionLink).toBeInTheDocument();
     expect(reactLink).toBeInTheDocument();
+  });
+
+  it('should render GitHubIcon with correct attributes', () => {
+    const { container } = renderWithContext(<Header router={ROUTER.App} />);
+    const githubIcon = container.querySelector('svg');
+    expect(githubIcon).toBeInTheDocument();
+    expect(githubIcon).toHaveAttribute('width', '30');
+    expect(githubIcon).toHaveAttribute('height', '30');
   });
 });

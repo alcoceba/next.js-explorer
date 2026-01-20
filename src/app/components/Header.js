@@ -9,6 +9,7 @@ import * as styles from './Header.module.css';
 import Badge, { Variant as BadgeVariant } from './core/badge/Badge';
 import SunIcon from '../icons/SunIcon';
 import MoonIcon from '../icons/MoonIcon';
+import GitHubIcon from '../icons/GitHubIcon';
 
 function Header({ router, version, react }) {
   const [{ theme }, dispatch] = React.useContext(Context);
@@ -20,6 +21,22 @@ function Header({ router, version, react }) {
   return (
     <div className={styles.header}>
       <div className={styles.h1}>
+        <div className={styles.github}>
+          <div>
+            <GitHubIcon width="30" height="30" style={{ color: 'var(--color-primary)' }} />
+          </div>
+          <div>
+            View the source code of this extension on{' '}
+            <a
+              href="https://github.com/alcoceba/next.js-explorer"
+              target="_blank"
+              rel="noreferrer"
+              title="Next.js Explorer GitHub Repository"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
         <h1>Next.js 🚀 Explorer</h1>
       </div>
 
