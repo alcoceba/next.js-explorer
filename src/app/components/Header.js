@@ -26,7 +26,7 @@ function Header({ router, version, react }) {
             <GitHubIcon width="30" height="30" style={{ color: 'var(--color-primary)' }} />
           </div>
           <div>
-            Collaborate and contribute to this project on{' '}
+            View the source code of this extension on{' '}
             <a
               href="https://github.com/alcoceba/next.js-explorer"
               target="_blank"
