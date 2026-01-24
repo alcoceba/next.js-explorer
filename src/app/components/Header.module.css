@@ -40,7 +40,7 @@
   height: 44px;
   margin-top: -44px;
   transition: margin-top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  line-height: 15px;
+  line-height: 14px;
 }
 
 .header .h1:hover .github {
