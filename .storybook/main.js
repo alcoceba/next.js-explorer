@@ -1,14 +1,13 @@
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
 const config = {
   stories: ['../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  addons: ['@storybook/addon-essentials', '@storybook/addon-webpack5-compiler-babel'],
+  addons: ['@storybook/addon-webpack5-compiler-babel', '@storybook/addon-docs'],
+
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
   },
-  docs: {
-    autodocs: true,
-  },
+
   webpackFinal: async (config) => {
     // Remove existing CSS rules
     config.module.rules = config.module.rules.filter(
@@ -40,7 +39,7 @@ const config = {
     });
 
     return config;
-  },
+  }
 };
 
 export default config;

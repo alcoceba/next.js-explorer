@@ -1,6 +1,6 @@
 import '../src/app/index.css';
 
-/** @type { import('@storybook/react').Preview } */
+/** @type { import('@storybook/react-webpack5').Preview } */
 const preview = {
   parameters: {
     controls: {
@@ -10,13 +10,13 @@ const preview = {
       },
     },
     backgrounds: {
-      default: 'dark',
-      values: [
-        { name: 'dark', value: '#222' },
-        { name: 'light', value: '#fff' },
-      ],
+      options: {
+        dark: { name: 'dark', value: '#222' },
+        light: { name: 'light', value: '#fff' }
+      }
     },
   },
+
   decorators: [
     (Story, context) => {
       const theme = context.globals.backgrounds?.value === '#fff' ? 'light' : 'dark';
@@ -27,6 +27,14 @@ const preview = {
       );
     },
   ],
+
+  initialGlobals: {
+    backgrounds: {
+      value: 'dark'
+    }
+  },
+
+  tags: ['autodocs']
 };
 
 export default preview;
