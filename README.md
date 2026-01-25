@@ -1,5 +1,6 @@
 # Next.js Explorer
 
+[![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![CI](https://github.com/alcoceba/next.js-explorer/actions/workflows/ci.yml/badge.svg)](https://github.com/alcoceba/next.js-explorer/actions/workflows/ci.yml)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://prettier.io/)
 [![Coverage Status](https://img.shields.io/badge/coverage-auto-informational?style=flat)](./)
