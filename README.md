@@ -108,6 +108,17 @@ npm test:coverage       # Generate coverage reports
 
 All tests are located alongside their corresponding components with the `.test.js` suffix.
 
+#### Component Documentation (Storybook)
+
+Browse and develop UI components in isolation using Storybook:
+
+```bash
+npm run storybook       # Start Storybook dev server on port 6006
+npm run build-storybook # Build static documentation site
+```
+
+All core components have stories located alongside them with the `.stories.js` suffix.
+
 ### Building for Production
 
 To build the project for production:

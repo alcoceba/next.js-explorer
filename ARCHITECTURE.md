@@ -53,9 +53,11 @@ Main interface for exploring Next.js data.
 Components are organized by atomic design principles with three layers:
 
 **Core Atomic Components** (`src/app/components/core/`):
-- Self-contained, reusable components
-- Examples: switch, loading, message, portal, truncated-text, viewer (with tree, key, value, search)
-- All toolbar actions use custom SVG icons from `src/app/icons/` (see AGENTS.md for full list)
+- Self-contained, reusable components with no external dependencies
+- Each folder contains: component, CSS module, test, and Storybook story
+- Examples: badge, button, input, loading, message, modal, portal, radio-group, switch, tooltip, flat-tree
+- All components documented in Storybook (`npm run storybook`)
+- Icons in `src/app/icons/` as SVG components
 
 **Composite Components** (`src/app/components/`):
 - Combine atomic components with feature-specific functionality
@@ -113,6 +115,19 @@ Shared utilities for data parsing, context, tabs, object utilities, config, and 
 - **webextension-polyfill** for browser API
 - **Webpack** for bundling
 - **CSS Modules** for styling
+- **Storybook** for component documentation and development
+
+---
+
+## Component Documentation
+
+All core atomic components are documented using Storybook. Run `npm run storybook` to start the documentation server.
+
+Story files are co-located with components using the `.stories.js` suffix. The Storybook configuration in `.storybook/` includes:
+
+- CSS Modules support matching the main webpack config
+- Global styles from `index.css`
+- Theme switching (dark/light) via decorators
 
 ---
 

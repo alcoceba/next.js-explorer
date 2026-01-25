@@ -31,6 +31,19 @@ The built extension will be in the `dist/` folder.
 2. Load the unpacked extension from `dist/chrome/` or `dist/firefox/`
 3. The extension will activate on any page with a Next.js application detected
 
+### Storybook (Component Documentation)
+
+- **Start Storybook:** `npm run storybook` (runs on port 6006)
+- **Build static docs:** `npm run build-storybook`
+
+Storybook provides interactive documentation for all core UI components. Use it to:
+
+- Browse and test components in isolation
+- View component variants and props
+- Develop new components with live preview
+
+All story files are co-located with their components using the `.stories.js` suffix.
+
 ---
 
 ## Code Quality
@@ -101,18 +114,16 @@ The component structure follows **atomic design principles** with components org
 
 #### Core Atomic Components (`src/app/components/core/`)
 
-Simple, reusable, self-contained components with no dependencies on other custom components:
+Simple, reusable, self-contained components with no dependencies on other custom components. Each component folder contains:
 
-- **switch/** - Toggle checkbox for boolean inputs
-- **loading/** - Loading spinner and overlay display with animated 🚀 emoji
-- **message/** - Notification/toast message component
-- **portal/** - React portal wrapper for rendering outside DOM hierarchy
-- **truncated-text/** - Text truncation component that shows first 35 characters with "show more/show less" button for long text
-- **viewer/** - Agnostic JSON tree visualizer with integrated search (self-contained, reusable)
-  - **tree/** - Recursive tree structure renderer with search filtering (displays all children when parent key matches)
-  - **key/** - Object/array key with collapsible functionality, auto-expand on match, size display
-  - **value/** - Leaf value renderer with syntax highlighting
-  - **search/** - Search input with focus animation, clear button, result counter
+- Component file (e.g., `Button.js`)
+- CSS Module (e.g., `Button.module.css`)
+- Test file (e.g., `Button.test.js`)
+- Storybook story (e.g., `Button.stories.js`)
+
+Examples include: badge, button, input, loading, message, modal, portal, radio-group, switch, tooltip, flat-tree (JSON viewer with search).
+
+All core components are documented in Storybook - run `npm run storybook` to browse.
 
 #### Composite Components
 
@@ -208,6 +219,7 @@ Core dependencies (see `package.json` for versions):
 - **jest**, **@testing-library/react**, **@testing-library/jest-dom**, **@testing-library/user-event**, **babel-jest**, **identity-obj-proxy**, **jest-environment-jsdom** - Testing
 - **husky** - Git hooks
 - **globals** - Global variables for linting
+- **storybook**, **@storybook/react**, **@storybook/react-webpack5**, **@storybook/addon-essentials** - Component documentation
 
 ## Core Atomic Components (`src/app/components/core/`)
 
@@ -239,10 +251,14 @@ Guidance for AI agents:
 
 ### Adding a New Component
 
-1. Create `.js` file in `src/app/components/`
-2. Create corresponding `.module.css` file for styles
-3. Import and use in parent component
-4. Add any required Context hooks
+1. Create component file (e.g., `ComponentName.js`)
+2. Create corresponding CSS Module (e.g., `ComponentName.module.css`)
+3. Create test file (e.g., `ComponentName.test.js`)
+4. Create Storybook story (e.g., `ComponentName.stories.js`) for documentation
+5. Import and use in parent component
+6. Add any required Context hooks
+
+For core atomic components, place in `src/app/components/core/`. For composite components, place in `src/app/components/`.
 
 ### Adding a Helper Function
 
