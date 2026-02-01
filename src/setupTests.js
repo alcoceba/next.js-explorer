@@ -1,9 +1,18 @@
 /* eslint-disable no-undef */
 require('@testing-library/jest-dom');
-const { TextEncoder } = require('util');
+const { TextEncoder, TextDecoder } = require('util');
 
-// Polyfill TextEncoder for jsdom
+// Polyfill TextEncoder/TextDecoder for jsdom
 global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
+// Polyfill atob and btoa for Node.js test environment
+if (!global.atob) {
+  global.atob = (str) => Buffer.from(str, 'base64').toString('binary');
+}
+if (!global.btoa) {
+  global.btoa = (str) => Buffer.from(str, 'binary').toString('base64');
+}
 
 // Suppress non-critical act() warnings in tests
 // These warnings occur from async state updates in useEffect and don't indicate test failures

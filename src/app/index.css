@@ -3,6 +3,7 @@
   --color-primary: #01df74;
   --color-bg-primary: #222;
   --color-bg-secondary: #555;
+  --color-bg-tertiary: #6d6d6d;
   --color-text: #fff;
   --color-accent: #ff9800;
   --color-pre-key: #fff;
@@ -19,6 +20,7 @@
   --color-primary: #12b300;
   --color-bg-primary: #fff;
   --color-bg-secondary: #ddd;
+  --color-bg-tertiary: #eee;
   --color-text: #222;
   --color-accent: #ff9800;
   --color-pre-key: #222;
@@ -47,7 +49,7 @@ body {
 
 body {
   margin: 0 20px;
-  padding-bottom: 20px;
+  padding-bottom: 30px;
   background: var(--color-bg-primary);
   color: var(--color-text);
 }
