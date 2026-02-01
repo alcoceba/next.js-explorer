@@ -14,32 +14,24 @@
   text-align: center;
   line-height: 1.2;
   border-radius: 2px;
-  transition: all 0.2s ease-in-out;
+  transition: all 2s ease-in-out;
   opacity: 0;
   background: #295;
-  color: #dfe;
+  color: var(--color-text);
   z-index: 999999;
   animation: pop-in-and-out 2s ease-in-out forwards;
 }
 
 @keyframes pop-in-and-out {
   0% {
-    bottom: -20px;
-    opacity: 0;
-  }
-
-  5% {
-    bottom: 40px;
     opacity: 1;
   }
 
   90% {
-    bottom: 40px;
     opacity: 1;
   }
 
   100% {
-    bottom: 50px;
     opacity: 0;
   }
 }

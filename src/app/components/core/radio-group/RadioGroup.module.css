@@ -65,6 +65,12 @@
   border-color: var(--color-text);
 }
 
+.checked .button {
+  color: var(--color-bg-primary);
+  background-color: var(--color-text);
+  border-color: var(--color-text);
+}
+
 .input:not(:checked) + .button:hover {
   opacity: 0.8;
 }

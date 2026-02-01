@@ -39,8 +39,55 @@ describe('Input', () => {
     );
 
     const div = container.querySelector('div');
-    // Check that the div renders and has some content (the focused state is applied via CSS modules)
+
     expect(div).toBeInTheDocument();
     expect(div.querySelector('input')).toBeInTheDocument();
+  });
+
+  it('calls onFocus when input is focused', () => {
+    const handleFocus = jest.fn();
+    render(<Input placeholder="Test" value="" onChange={() => {}} onFocus={handleFocus} />);
+
+    const input = screen.getByPlaceholderText('Test');
+    fireEvent.focus(input);
+
+    expect(handleFocus).toHaveBeenCalled();
+  });
+
+  it('calls onBlur when input loses focus', () => {
+    const handleBlur = jest.fn();
+    render(<Input placeholder="Test" value="" onChange={() => {}} onBlur={handleBlur} />);
+
+    const input = screen.getByPlaceholderText('Test');
+    fireEvent.focus(input);
+    fireEvent.blur(input);
+
+    expect(handleBlur).toHaveBeenCalled();
+  });
+
+  it('forwards ref to input element', () => {
+    const ref = React.createRef();
+    render(<Input ref={ref} placeholder="Test" value="test value" onChange={() => {}} />);
+
+    expect(ref.current).toBeInstanceOf(HTMLInputElement);
+    expect(ref.current.value).toBe('test value');
+  });
+
+  it('has correct input type', () => {
+    render(<Input placeholder="Test" value="" onChange={() => {}} />);
+    const input = screen.getByPlaceholderText('Test');
+    expect(input).toHaveAttribute('type', 'text');
+  });
+
+  it('renders without contentLeft and contentRight', () => {
+    const { container } = render(<Input placeholder="Test" value="" onChange={() => {}} />);
+    const spans = container.querySelectorAll('span');
+    expect(spans).toHaveLength(0);
+  });
+
+  it('displays input value correctly', () => {
+    render(<Input placeholder="Test" value="hello" onChange={() => {}} />);
+    const input = screen.getByPlaceholderText('Test');
+    expect(input).toHaveValue('hello');
   });
 });

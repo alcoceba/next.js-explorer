@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Button, { Variant } from './Button';
+import Button, { Variant, Size } from './Button';
 
 describe('Button', () => {
   it('renders button with children', () => {
@@ -34,7 +34,7 @@ describe('Button', () => {
       </Button>
     );
     const button = container.querySelector('button');
-    // Check that button renders successfully with default variant
+
     expect(button).toBeInTheDocument();
     expect(button).toHaveTextContent('Default');
   });
@@ -46,8 +46,72 @@ describe('Button', () => {
       </Button>
     );
     const button = container.querySelector('button');
-    // Check that button renders successfully with critical variant
+
     expect(button).toBeInTheDocument();
     expect(button).toHaveTextContent('Critical');
+  });
+
+  it('renders with secondary variant', () => {
+    const { container } = render(
+      <Button onClick={() => {}} variant={Variant.SECONDARY}>
+        Secondary
+      </Button>
+    );
+    const button = container.querySelector('button');
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveTextContent('Secondary');
+  });
+
+  it('renders with accent variant', () => {
+    const { container } = render(
+      <Button onClick={() => {}} variant={Variant.ACCENT}>
+        Accent
+      </Button>
+    );
+    const button = container.querySelector('button');
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveTextContent('Accent');
+  });
+
+  it('renders with small size', () => {
+    const { container } = render(
+      <Button onClick={() => {}} size={Size.SMALL}>
+        Small
+      </Button>
+    );
+    const button = container.querySelector('button');
+    expect(button).toBeInTheDocument();
+  });
+
+  it('renders disabled button', () => {
+    const { container } = render(
+      <Button onClick={() => {}} disabled>
+        Disabled
+      </Button>
+    );
+    const button = container.querySelector('button');
+    expect(button).toBeDisabled();
+  });
+
+  it('does not call onClick when disabled', () => {
+    const handleClick = jest.fn();
+    render(
+      <Button onClick={handleClick} disabled>
+        Disabled
+      </Button>
+    );
+    const button = screen.getByText('Disabled');
+    fireEvent.click(button);
+    expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  it('accepts custom className', () => {
+    const { container } = render(
+      <Button onClick={() => {}} className="custom-class">
+        Button
+      </Button>
+    );
+    const button = container.querySelector('button');
+    expect(button).toHaveClass('custom-class');
   });
 });

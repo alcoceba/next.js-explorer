@@ -23,6 +23,7 @@ function Button({
   className,
   variant = Variant.DEFAULT,
   size = Size.DEFAULT,
+  disabled = false,
 }) {
   const variantClass = styles[`button_${variant}`] || '';
   const sizeClass = styles[`button_${size}`] || '';
@@ -33,6 +34,7 @@ function Button({
       className={classNames(styles.button, variantClass, sizeClass, className)}
       title={title}
       aria-label={ariaLabel}
+      disabled={disabled}
     >
       {children}
     </button>
@@ -47,6 +49,7 @@ Button.propTypes = {
   className: PropTypes.string,
   variant: PropTypes.oneOf(Object.values(Variant)),
   size: PropTypes.oneOf(Object.values(Size)),
+  disabled: PropTypes.bool,
 };
 
 export default Button;

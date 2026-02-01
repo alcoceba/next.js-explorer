@@ -2,10 +2,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import Badge, { Variant } from './Badge';
 
-// Mock CSS Module
 jest.mock('./Badge.module.css', () => ({
   badge: 'badge',
   badge_default: 'badge_default',
+  badge_primary: 'badge_primary',
   badge_accent: 'badge_accent',
   label: 'label',
   children: 'children',
@@ -73,5 +73,30 @@ describe('Badge', () => {
     );
     badge = container.firstChild;
     expect(badge.className).toContain('badge_accent');
+  });
+
+  it('renders with primary variant', () => {
+    const { container } = render(
+      <Badge label="Primary Label" variant={Variant.PRIMARY}>
+        Primary Child
+      </Badge>
+    );
+    const badge = container.firstChild;
+    expect(badge.className).toContain('badge');
+    expect(badge.className).toContain('badge_primary');
+  });
+
+  it('has correct structure with label and children divs', () => {
+    const { container } = render(<Badge label="Test Label">Test Child</Badge>);
+    const divs = container.querySelectorAll('div');
+    expect(divs.length).toBeGreaterThanOrEqual(3);
+    const labelDiv = Array.from(divs).find((div) => div.textContent === 'Test Label');
+    expect(labelDiv).toHaveClass('label');
+  });
+
+  it('handles undefined variant gracefully', () => {
+    const { container } = render(<Badge label="No Variant">Child</Badge>);
+    const badge = container.firstChild;
+    expect(badge).toBeInTheDocument();
   });
 });

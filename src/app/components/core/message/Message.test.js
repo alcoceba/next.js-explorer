@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Message from './Message';
 
@@ -57,5 +56,30 @@ describe('Message Component', () => {
   it('should render numeric content', () => {
     render(<Message>{12345}</Message>);
     expect(screen.getByText('12345')).toBeInTheDocument();
+  });
+
+  it('should render message within a wrapper div', () => {
+    const { container } = render(<Message>Test</Message>);
+    const wrapper = container.firstChild;
+    expect(wrapper).toBeInTheDocument();
+    expect(wrapper.tagName).toBe('DIV');
+  });
+
+  it('should handle null content gracefully', () => {
+    render(<Message>{null}</Message>);
+    const messageDiv = document.querySelector('div');
+    expect(messageDiv).toBeInTheDocument();
+  });
+
+  it('should render with boolean false as content', () => {
+    const { container } = render(<Message>{false}</Message>);
+    const messageDiv = container.firstChild;
+    expect(messageDiv).toBeInTheDocument();
+  });
+
+  it('should render long text content', () => {
+    const longText = 'a'.repeat(1000);
+    render(<Message>{longText}</Message>);
+    expect(screen.getByText(longText)).toBeInTheDocument();
   });
 });
