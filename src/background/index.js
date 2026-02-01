@@ -23,10 +23,52 @@ const getRawData = async () => {
         return window.__REACT_DEVTOOLS_GLOBAL_HOOK__?.renderers?.get(1)?.version;
       };
 
+      // Try to get data from window.__next_f first (Next.js 15 and earlier)
+      let appRawData = window?.__next_f;
+
+      // If __next_f is empty or undefined, extract from script tags (Next.js 16+)
+      // In Next.js 16, the data is pushed via script tags but may be consumed/cleared
+      if (!appRawData || appRawData.length === 0) {
+        const scriptTags = document.querySelectorAll('script');
+        const flightData = [];
+
+        for (const script of scriptTags) {
+          const content = script.textContent || '';
+          const pushMatches = content.matchAll(/self\.__next_f\.push\(\s*(\[[\s\S]*?\])\s*\)/g);
+
+          for (const match of pushMatches) {
+            try {
+              const parsed = JSON.parse(match[1]);
+              flightData.push(parsed);
+            } catch {
+              try {
+                const arrayContent = match[1];
+                const parsed = new Function('return ' + arrayContent)();
+                if (Array.isArray(parsed)) {
+                  flightData.push(parsed);
+                }
+              } catch {
+                // Skip malformed entries
+              }
+            }
+          }
+        }
+
+        if (flightData.length > 0) {
+          appRawData = flightData;
+        }
+      }
+
+      const isAppRouter = !!(
+        appRawData?.length > 0 ||
+        document.querySelector('script[data-next-rsc-inline]') ||
+        window?.__next_f
+      );
+
       return {
-        appRawData: window?.__next_f,
+        appRawData: appRawData,
         pagesRawData: document.getElementById('__NEXT_DATA__')?.textContent,
-        isAppRouter: !!window?.__next_f,
+        isAppRouter: isAppRouter,
         reactVersion: getReactVersion(),
         nextVersion: window?.next?.version,
       };
