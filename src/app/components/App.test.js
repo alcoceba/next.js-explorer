@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
@@ -93,7 +92,7 @@ describe('App Component', () => {
 
     await waitFor(
       () => {
-        expect(screen.getByText(/title|pageProps/)).toBeInTheDocument();
+        expect(screen.getByText('pageProps')).toBeInTheDocument();
       },
       { timeout: 3000 }
     );
@@ -288,7 +287,6 @@ describe('App Component', () => {
 
     await waitFor(
       () => {
-        // Check that the app rendered by looking for the search input
         expect(screen.getByPlaceholderText('Search keys and values...')).toBeInTheDocument();
       },
       { timeout: 3000 }

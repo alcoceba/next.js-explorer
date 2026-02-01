@@ -102,7 +102,9 @@ export const Sizes = {
       <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
         {[18, 24, 32].map((size) => (
           <div key={size} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <h4 style={{ color: 'var(--color-text)' }}>{size}x{size}px</h4>
+            <h4 style={{ color: 'var(--color-text)' }}>
+              {size}x{size}px
+            </h4>
             <div style={{ display: 'flex', gap: '1rem' }}>
               <div style={iconContainerStyles}>
                 <SearchIcon width={String(size)} height={String(size)} />

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ControlBar from './ControlBar';
@@ -15,6 +14,17 @@ describe('ControlBar Component', () => {
     theme: 'dark',
     showSizes: false,
     isCollapsed: false,
+    appData: {
+      nextjsRouter: 'app',
+      nextjsVersion: '16.0.0',
+      reactVersion: '18.0.0',
+      nextjsPagePath: '/test',
+      nextjsPageQuery: {},
+      nextjsPageAssetPrefix: '/',
+      pageDataSize: 1000,
+      pageDataKeys: 5,
+    },
+    isSearching: false,
   };
 
   const renderWithContext = (component, contextValue = mockContextValue) => {

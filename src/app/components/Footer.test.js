@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Footer from './Footer';
@@ -20,7 +19,7 @@ describe('Footer Component', () => {
 
   it('should render version information', () => {
     render(<Footer />);
-    expect(screen.getByText(/v1.9.0 \/ 1.3.0/)).toBeInTheDocument();
+    expect(screen.getByText(/v1.9.1 \/ 1.3.1/)).toBeInTheDocument();
   });
 
   it('should initialize with first heart emoji', () => {

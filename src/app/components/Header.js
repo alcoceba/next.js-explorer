@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { classNames } from '../utils/classNames';
 import { ROUTER, THEME } from '../../helpers/constants';
@@ -11,8 +10,11 @@ import SunIcon from '../icons/SunIcon';
 import MoonIcon from '../icons/MoonIcon';
 import GitHubIcon from '../icons/GitHubIcon';
 
-function Header({ router, version, react }) {
-  const [{ theme }, dispatch] = React.useContext(Context);
+function Header() {
+  const [{ theme, appData }, dispatch] = React.useContext(Context);
+  const router = appData.nextjsRouter;
+  const version = appData.nextjsVersion;
+  const react = appData.reactVersion;
 
   const handleOnThemeToggle = () => {
     dispatch(SetTheme(theme === THEME.Light ? THEME.Dark : THEME.Light));
@@ -26,7 +28,7 @@ function Header({ router, version, react }) {
             <GitHubIcon width="30" height="30" style={{ color: 'var(--color-primary)' }} />
           </div>
           <div>
-            View the source code of this extension on{' '}
+            View and contribute to the project on{' '}
             <a
               href="https://github.com/alcoceba/next.js-explorer"
               target="_blank"
@@ -87,11 +89,5 @@ function Header({ router, version, react }) {
     </div>
   );
 }
-
-Header.propTypes = {
-  router: PropTypes.oneOf([ROUTER.App, ROUTER.Pages]).isRequired,
-  version: PropTypes.string,
-  react: PropTypes.string,
-};
 
 export default Header;

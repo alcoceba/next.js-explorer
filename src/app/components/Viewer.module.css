@@ -15,6 +15,13 @@
   overflow: hidden auto;
 }
 
+.treeWrapper {
+  flex: 1;
+  background: var(--color-bg-secondary);
+  border-radius: var(--border-radius);
+  overflow: auto;
+}
+
 .loading {
   margin: 0.75rem 0;
   padding: 12px;
@@ -30,4 +37,17 @@
   padding: 0.75rem 0 0.5rem;
   z-index: 1;
   background-color: var(--color-bg-primary);
+}
+
+/* Size threshold colors for FlatTree */
+.warn {
+  color: var(--color-warn);
+}
+
+.alert {
+  color: var(--color-alert);
+}
+
+.critical {
+  color: var(--color-critical);
 }

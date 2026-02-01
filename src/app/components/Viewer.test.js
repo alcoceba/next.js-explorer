@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Viewer from './Viewer';
@@ -15,6 +14,17 @@ const renderWithContext = (component, contextValue = {}) => {
     showSizes: false,
     isCollapsed: false,
     showPageInfo: false,
+    appData: {
+      nextjsRouter: 'app',
+      nextjsVersion: '16.0.0',
+      reactVersion: '18.0.0',
+      nextjsPagePath: '/test',
+      nextjsPageQuery: {},
+      nextjsPageAssetPrefix: '/',
+      pageDataSize: 1000,
+      pageDataKeys: 5,
+    },
+    isSearching: false,
   };
   return render(
     <Context.Provider value={[{ ...defaultContext, ...contextValue }, jest.fn()]}>
@@ -27,7 +37,7 @@ describe('Viewer Component', () => {
   it('should render viewer container', () => {
     const mockJson = { key: 'value' };
     renderWithContext(<Viewer json={mockJson} />);
-    expect(screen.getByText('key:')).toBeInTheDocument();
+    expect(screen.getByText('key')).toBeInTheDocument();
   });
 
   it('should display no data message when json is empty', () => {
@@ -45,16 +55,16 @@ describe('Viewer Component', () => {
     expect(screen.getByText('No data was found')).toBeInTheDocument();
   });
 
-  it('should render pre element', () => {
+  it('should render tree container', () => {
     const mockJson = { key: 'value' };
     const { container } = renderWithContext(<Viewer json={mockJson} />);
-    expect(container.querySelector('pre')).toBeInTheDocument();
+    expect(container.querySelector('div')).toBeInTheDocument();
   });
 
   it('should render tree structure when json is provided', () => {
     const mockJson = { name: 'John', age: 30 };
     renderWithContext(<Viewer json={mockJson} />);
-    expect(screen.getByText('name:')).toBeInTheDocument();
+    expect(screen.getByText('name')).toBeInTheDocument();
   });
 
   it('should render multiple properties', () => {
@@ -64,9 +74,9 @@ describe('Viewer Component', () => {
       prop3: 'value3',
     };
     renderWithContext(<Viewer json={mockJson} />);
-    expect(screen.getByText('prop1:')).toBeInTheDocument();
-    expect(screen.getByText('prop2:')).toBeInTheDocument();
-    expect(screen.getByText('prop3:')).toBeInTheDocument();
+    expect(screen.getByText('prop1')).toBeInTheDocument();
+    expect(screen.getByText('prop2')).toBeInTheDocument();
+    expect(screen.getByText('prop3')).toBeInTheDocument();
   });
 
   it('should apply viewer class to container', () => {
@@ -126,7 +136,6 @@ describe('Viewer Component', () => {
     const searchInput = screen.getByPlaceholderText('Search keys and values...');
     await user.type(searchInput, 'xyz');
 
-    // Search input should accept the value
     expect(searchInput).toHaveValue('xyz');
   });
 
@@ -152,7 +161,6 @@ describe('Viewer Component', () => {
     const searchInput = screen.getByPlaceholderText('Search keys and values...');
     await user.type(searchInput, 'john');
 
-    // Should show result count
     expect(screen.getByText(/result.*found/)).toBeInTheDocument();
   });
 
@@ -168,7 +176,6 @@ describe('Viewer Component', () => {
     const searchInput = screen.getByPlaceholderText('Search keys and values...');
     await user.type(searchInput, 'name');
 
-    // Should show that results are found
     const resultText = screen.getByText(/result.*found/);
     expect(resultText).toBeInTheDocument();
   });
@@ -184,7 +191,6 @@ describe('Viewer Component', () => {
     const searchInput = screen.getByPlaceholderText('Search keys and values...');
     await user.type(searchInput, 'john');
 
-    // Should display search results
     expect(screen.getByText(/result.*found/)).toBeInTheDocument();
   });
 
@@ -200,8 +206,7 @@ describe('Viewer Component', () => {
     await user.type(searchInput, 'name');
     await user.clear(searchInput);
 
-    // Both properties should be visible again
-    expect(screen.getByText('name:')).toBeInTheDocument();
-    expect(screen.getByText('age:')).toBeInTheDocument();
+    expect(screen.getByText('name')).toBeInTheDocument();
+    expect(screen.getByText('age')).toBeInTheDocument();
   });
 });

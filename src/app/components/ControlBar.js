@@ -1,7 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { getShowSizes, setShowSizes } from '../utils/config';
-import { SetIsCollapsed, SetShowSizes } from '../context/actions';
+import { ROUTER } from '../../helpers/constants';
+import { SetShowSizes } from '../context/actions';
 import { Context } from '../context/context';
 import Button from './core/button/Button';
 import CollapseIcon from '../icons/CollapseIcon';
@@ -13,16 +14,17 @@ import SizesIcon from '../icons/SizesIcon';
 
 import * as styles from './ControlBar.module.css';
 
-function ControlBar({ onExport, onCopy, onShowInfo, isPagesRouter }) {
-  const [{ showSizes, isCollapsed }, dispatch] = React.useContext(Context);
+function ControlBar({ onExport, onCopy, onShowInfo, onExpandAll, onCollapseAll }) {
+  const [{ showSizes, appData, isSearching }, dispatch] = React.useContext(Context);
+  const isPagesRouter = appData.nextjsRouter === ROUTER.Pages;
 
   const handleOnShowSizesClick = () => {
     setShowSizes(!showSizes);
     dispatch(SetShowSizes(!showSizes));
   };
 
-  const handleOnCollapseClick = () => dispatch(SetIsCollapsed(isCollapsed + 1));
-  const handleOnExpandClick = () => dispatch(SetIsCollapsed(false));
+  const handleOnCollapseClick = () => onCollapseAll?.();
+  const handleOnExpandClick = () => onExpandAll?.();
   const handleOnCopy = () => onCopy?.();
 
   const handleOnExportRawClick = () => onExport?.(0);
@@ -57,13 +59,19 @@ function ControlBar({ onExport, onCopy, onShowInfo, isPagesRouter }) {
           <SizesIcon />
         </Button>
       </Tooltip>
-      <Tooltip content="Collapse all" position={Position.BOTTOM}>
-        <Button onClick={handleOnCollapseClick} ariaLabel="Collapse all">
+      <Tooltip
+        content={isSearching ? 'Collapse all (disabled during search)' : 'Collapse all'}
+        position={Position.BOTTOM}
+      >
+        <Button onClick={handleOnCollapseClick} ariaLabel="Collapse all" disabled={isSearching}>
           <CollapseIcon />
         </Button>
       </Tooltip>
-      <Tooltip content="Expand all" position={Position.BOTTOM}>
-        <Button onClick={handleOnExpandClick} ariaLabel="Expand all">
+      <Tooltip
+        content={isSearching ? 'Expand all (disabled during search)' : 'Expand all'}
+        position={Position.BOTTOM}
+      >
+        <Button onClick={handleOnExpandClick} ariaLabel="Expand all" disabled={isSearching}>
           <ExpandIcon />
         </Button>
       </Tooltip>
@@ -86,7 +94,8 @@ ControlBar.propTypes = {
   onCopy: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onShowInfo: PropTypes.func,
-  isPagesRouter: PropTypes.bool,
+  onExpandAll: PropTypes.func,
+  onCollapseAll: PropTypes.func,
 };
 
 export default ControlBar;

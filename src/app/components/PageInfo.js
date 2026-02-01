@@ -1,10 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
+import { Context } from '../context/context';
 import * as styles from './PageInfo.module.css';
 import { DEFAULT_SIZE } from '../../helpers/constants';
 
-function PageInfo({ size, keys, page, query, assetPrefix }) {
+function PageInfo() {
+  const [{ appData }] = React.useContext(Context);
+  const size = appData.pageDataSize;
+  const keys = appData.pageDataKeys;
+  const page = appData.nextjsPagePath;
+  const query = appData.nextjsPageQuery;
+  const assetPrefix = appData.nextjsPageAssetPrefix;
   return (
     <table className={styles.info}>
       <tbody>
@@ -30,13 +35,5 @@ function PageInfo({ size, keys, page, query, assetPrefix }) {
     </table>
   );
 }
-
-PageInfo.propTypes = {
-  size: PropTypes.number,
-  keys: PropTypes.number,
-  page: PropTypes.string,
-  query: PropTypes.object,
-  assetPrefix: PropTypes.string,
-};
 
 export default PageInfo;
