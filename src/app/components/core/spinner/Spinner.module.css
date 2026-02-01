@@ -1,0 +1,46 @@
+.spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: spin 1s linear infinite;
+}
+
+.small {
+  width: 14px;
+  height: 14px;
+}
+
+.medium {
+  width: 18px;
+  height: 18px;
+}
+
+.large {
+  width: 24px;
+  height: 24px;
+}
+
+.circle {
+  animation: spin-dash 1.5s ease-in-out infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-dash {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dashoffset: 22;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
