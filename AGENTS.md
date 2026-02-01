@@ -254,11 +254,24 @@ Guidance for AI agents:
 1. Create component file (e.g., `ComponentName.js`)
 2. Create corresponding CSS Module (e.g., `ComponentName.module.css`)
 3. Create test file (e.g., `ComponentName.test.js`)
-4. Create Storybook story (e.g., `ComponentName.stories.js`) for documentation
+4. Create Storybook story (e.g., `ComponentName.stories.js`) - **REQUIRED for all core UI components in `src/app/components/core/`**
 5. Import and use in parent component
 6. Add any required Context hooks
 
 For core atomic components, place in `src/app/components/core/`. For composite components, place in `src/app/components/`.
+
+### Code Comments Guidelines
+
+- **Only add comments for complex logic or non-obvious behavior** that requires explanation
+- **Do not add self-documenting comments** - code should be clear enough to understand without comments
+- Examples of good comments:
+  - Explaining why a particular algorithm or workaround is used
+  - Documenting non-standard patterns or performance optimizations
+  - Clarifying browser compatibility or edge case handling
+- Examples to avoid:
+  - `const name = getName(); // Get the name` - obvious from the code
+  - `if (x > 0) { // Check if x is greater than zero` - obvious from condition
+  - `parts.push(text); // Add text to parts` - obvious from the operation
 
 ### Adding a Helper Function
 
