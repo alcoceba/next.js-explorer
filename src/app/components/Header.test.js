@@ -38,24 +38,6 @@ describe('Header Component', () => {
       renderWithContext(<Header />);
       expect(screen.getByText(/Next.js 🚀 Explorer/i)).toBeInTheDocument();
     });
-
-    it('should render GitHub link with icon and text', () => {
-      renderWithContext(<Header />);
-      const githubLink = screen.getByTitle('Next.js Explorer GitHub Repository');
-      expect(githubLink).toBeInTheDocument();
-      expect(githubLink).toHaveAttribute('href', 'https://github.com/alcoceba/next.js-explorer');
-      expect(githubLink).toHaveAttribute('target', '_blank');
-      expect(githubLink).toHaveAttribute('rel', 'noreferrer');
-      expect(screen.getByText('GitHub')).toBeInTheDocument();
-    });
-
-    it('should render GitHubIcon with correct attributes', () => {
-      const { container } = renderWithContext(<Header />);
-      const githubIcon = container.querySelector('svg');
-      expect(githubIcon).toBeInTheDocument();
-      expect(githubIcon).toHaveAttribute('width', '30');
-      expect(githubIcon).toHaveAttribute('height', '30');
-    });
   });
 
   describe('Router Type Badges', () => {
@@ -147,8 +129,8 @@ describe('Header Component', () => {
       };
       renderWithContext(<Header />, contextNoVersions);
       const links = screen.getAllByRole('link');
-      // GitHub link + Router badge = 2 links
-      expect(links.length).toBe(2);
+      // Router badge only = 1 link
+      expect(links.length).toBe(1);
     });
   });
 
@@ -204,8 +186,8 @@ describe('Header Component', () => {
       };
       renderWithContext(<Header />, contextWithVersions);
       const links = screen.getAllByRole('link');
-      // GitHub + Router + Next.js + React = 4 links
-      expect(links.length).toBe(4);
+      // Router + Next.js + React = 3 links
+      expect(links.length).toBe(3);
     });
   });
 

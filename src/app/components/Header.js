@@ -8,7 +8,6 @@ import * as styles from './Header.module.css';
 import Badge, { Variant as BadgeVariant } from './core/badge/Badge';
 import SunIcon from '../icons/SunIcon';
 import MoonIcon from '../icons/MoonIcon';
-import GitHubIcon from '../icons/GitHubIcon';
 
 function Header() {
   const [{ theme, appData }, dispatch] = React.useContext(Context);
@@ -23,22 +22,6 @@ function Header() {
   return (
     <div className={styles.header}>
       <div className={styles.h1}>
-        <div className={styles.github}>
-          <div>
-            <GitHubIcon width="30" height="30" style={{ color: 'var(--color-primary)' }} />
-          </div>
-          <div>
-            View and contribute to the project on{' '}
-            <a
-              href="https://github.com/alcoceba/next.js-explorer"
-              target="_blank"
-              rel="noreferrer"
-              title="Next.js Explorer GitHub Repository"
-            >
-              GitHub
-            </a>
-          </div>
-        </div>
         <h1>Next.js 🚀 Explorer</h1>
       </div>
 
@@ -78,7 +61,7 @@ function Header() {
       </div>
 
       <div
-        className={classNames(styles.box, styles.theme)}
+        className={classNames(styles.theme)}
         onClick={handleOnThemeToggle}
         role="button"
         tabIndex={0}

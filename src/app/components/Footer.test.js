@@ -7,13 +7,13 @@ describe('Footer Component', () => {
 
   it('should render footer container', () => {
     render(<Footer />);
-    const footer = screen.getByText(/made with/i).closest('div');
+    const footer = screen.getByText(/Made with/i).closest('div');
     expect(footer).toBeInTheDocument();
   });
 
   it('should render footer text with default heart emoji', () => {
     render(<Footer />);
-    expect(screen.getByText(/made with/i)).toBeInTheDocument();
+    expect(screen.getByText(/Made with/i)).toBeInTheDocument();
     expect(screen.getByText('❤️')).toBeInTheDocument();
   });
 
@@ -32,7 +32,7 @@ describe('Footer Component', () => {
     const user = userEvent.setup();
     render(<Footer />);
 
-    const footer = screen.getByText(/made with/i).closest('div');
+    const footer = screen.getByText(/Made with/i).closest('div');
 
     const initialEmoji = screen.getByText(Hearts[0]);
     expect(initialEmoji).toBeInTheDocument();
@@ -57,7 +57,7 @@ describe('Footer Component', () => {
     const user = userEvent.setup();
     render(<Footer />);
 
-    const footer = screen.getByText(/made with/i).closest('div');
+    const footer = screen.getByText(/Made with/i).closest('div');
 
     await user.click(footer);
     expect(footer).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe('Footer Component', () => {
     const user = userEvent.setup();
     render(<Footer />);
 
-    const footer = screen.getByText(/made with/i).closest('div');
+    const footer = screen.getByText(/Made with/i).closest('div');
 
     await user.click(footer);
     await user.click(footer);
@@ -78,7 +78,16 @@ describe('Footer Component', () => {
 
   it('should contain all required text parts', () => {
     render(<Footer />);
-    expect(screen.getByText(/made with/)).toBeInTheDocument();
+    expect(screen.getByText(/Made with/)).toBeInTheDocument();
     expect(screen.getByText(/for all developers/)).toBeInTheDocument();
+  });
+
+  it('should render GitHub link in footer', () => {
+    render(<Footer />);
+    const githubLink = screen.getByTitle('Next.js Explorer GitHub Repository');
+    expect(githubLink).toBeInTheDocument();
+    expect(githubLink).toHaveAttribute('href', 'https://github.com/alcoceba/next.js-explorer');
+    expect(githubLink).toHaveAttribute('target', '_blank');
+    expect(githubLink).toHaveAttribute('rel', 'noreferrer');
   });
 });
