@@ -8,7 +8,7 @@ describe('parseFlightPushData', () => {
 
   it('parses Symbol type', () => {
     const result = parseFlightPushData('foo:"$Ssymbol"');
-    expect(result[0]).toMatchObject({ type: 'Symbol', key: 'foo', value: '$Ssymbol"' });
+    expect(result[0]).toMatchObject({ type: 'Symbol', key: 'foo', value: '$Ssymbol' });
   });
 
   it('parses Instance type (valid JSON)', () => {
@@ -104,6 +104,29 @@ describe('parseFlightPushData', () => {
 
   it('parses newer React symbol markers (e.g., $SR19)', () => {
     const result = parseFlightPushData('0:"$SR19"');
-    expect(result[0]).toMatchObject({ type: 'Symbol', key: '0', value: '$SR19"' });
+    expect(result[0]).toMatchObject({ type: 'Symbol', key: '0', value: '$SR19' });
+  });
+
+  it('respects the byte length prefix when the next row is on the same line', () => {
+    const result = parseFlightPushData('1:T5,hello2:["a"]');
+    expect(result).toHaveLength(2);
+    expect(result[0]).toMatchObject({ type: 'Text', key: '1', length: 5, value: 'hello' });
+    expect(result[1]).toMatchObject({ type: 'Data', key: '2', content: ['a'] });
+  });
+
+  it('respects the byte length prefix when the text contains newlines', () => {
+    // "hello\nworld" is 11 bytes (0xb)
+    const result = parseFlightPushData('1:Tb,hello\nworld\n2:["a"]');
+    expect(result).toHaveLength(2);
+    expect(result[0]).toMatchObject({ type: 'Text', key: '1', length: 11, value: 'hello\nworld' });
+    expect(result[1]).toMatchObject({ type: 'Data', key: '2', content: ['a'] });
+  });
+
+  it('respects the byte length prefix with multi-byte UTF-8 characters', () => {
+    // "héllo world" is 11 characters but 12 bytes (0xc)
+    const result = parseFlightPushData('1:Tc,héllo world2:["a"]');
+    expect(result).toHaveLength(2);
+    expect(result[0]).toMatchObject({ type: 'Text', key: '1', length: 12, value: 'héllo world' });
+    expect(result[1]).toMatchObject({ type: 'Data', key: '2', content: ['a'] });
   });
 });

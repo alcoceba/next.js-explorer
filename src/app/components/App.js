@@ -115,12 +115,7 @@ function AppContent() {
             json={json}
             onCopy={handleOnCopy}
             onCopyJson={handleOnCopyJson}
-            onExport={(space) =>
-              exportJson(
-                { next: { v: appData.nextjsVersion, router: appData.nextjsRouter } },
-                space
-              )
-            }
+            onExport={(space) => exportJson(json, space)}
             expandedPaths={expandedPaths}
             onTogglePath={handleTogglePath}
             onExpandAll={handleExpandAll}

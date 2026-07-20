@@ -32,18 +32,74 @@ const getRawData = async () => {
         const scriptTags = document.querySelectorAll('script');
         const flightData = [];
 
+        // Robustly extract self.__next_f.push(...) arguments, accounting for
+        // strings and nested brackets that a simple regex would misparse.
+        const parsePushCalls = (content) => {
+          const args = [];
+          const prefix = 'self.__next_f.push(';
+          let searchStart = 0;
+
+          while (true) {
+            const callIndex = content.indexOf(prefix, searchStart);
+            if (callIndex === -1) break;
+
+            const openParen = callIndex + prefix.length;
+            let depth = 0;
+            let inString = false;
+            let stringChar = null;
+            let escape = false;
+            let i = openParen;
+
+            for (; i < content.length; i++) {
+              const ch = content[i];
+
+              if (escape) {
+                escape = false;
+                continue;
+              }
+
+              if (ch === '\\') {
+                escape = true;
+                continue;
+              }
+
+              if (inString) {
+                if (ch === stringChar) inString = false;
+                continue;
+              }
+
+              if (ch === '"' || ch === "'") {
+                inString = true;
+                stringChar = ch;
+                continue;
+              }
+
+              if (ch === '(') {
+                depth++;
+              } else if (ch === ')') {
+                if (depth === 0) break;
+                depth--;
+              }
+            }
+
+            args.push(content.slice(openParen, i));
+            searchStart = i + 1;
+          }
+
+          return args;
+        };
+
         for (const script of scriptTags) {
           const content = script.textContent || '';
-          const pushMatches = content.matchAll(/self\.__next_f\.push\(\s*(\[[\s\S]*?\])\s*\)/g);
+          const args = parsePushCalls(content);
 
-          for (const match of pushMatches) {
+          for (const arg of args) {
             try {
-              const parsed = JSON.parse(match[1]);
+              const parsed = JSON.parse(arg);
               flightData.push(parsed);
             } catch {
               try {
-                const arrayContent = match[1];
-                const parsed = new Function('return ' + arrayContent)();
+                const parsed = new Function('return ' + arg)();
                 if (Array.isArray(parsed)) {
                   flightData.push(parsed);
                 }
