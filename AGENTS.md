@@ -10,7 +10,7 @@ For detailed architecture and component documentation, see [ARCHITECTURE.md](ARC
 
 - Install dependencies: `npm install`
 - The project uses npm with workspaces configured in `package.json`
-- Node.js 20+ is required
+- Node.js 24+ is required
 
 ---
 
